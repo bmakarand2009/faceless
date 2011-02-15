@@ -13,14 +13,22 @@ hibernate {
 environments {
     development {
         dataSource {
-            dbCreate = "create-drop" // one of 'create', 'create-drop','update'
-            url = "jdbc:hsqldb:mem:devDB"
+            dbCreate = "update"//create-drop" // one of 'create', 'create-drop','update'
+//            url = "jdbc:hsqldb:mem:devDB"
+			url = "jdbc:mysql://localhost/faceless2"
+			driverClassName = "com.mysql.jdbc.Driver"
+			username = "root"
+			password = "mysql"
         }
     }
     test {
         dataSource {
             dbCreate = "update"
-            url = "jdbc:hsqldb:mem:testDb"
+//            url = "jdbc:hsqldb:mem:testDb"
+			url = "jdbc:mysql://localhost/testfaceless2"
+			driverClassName = "com.mysql.jdbc.Driver"
+			username = "root"
+			password = "mysql"
         }
     }
     production {

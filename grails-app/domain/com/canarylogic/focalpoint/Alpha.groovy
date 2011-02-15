@@ -1,10 +1,12 @@
 package com.canarylogic.focalpoint
 
 class Alpha {
-	
+
 	String c1;
 	String c2;
 
+	
+	
     static constraints = {
 	}
     
