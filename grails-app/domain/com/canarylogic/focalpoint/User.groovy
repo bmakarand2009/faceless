@@ -26,9 +26,9 @@ class User {
 		return role
 	}
 	
-	def assignRole(String roleName) {
+	def assignRole(String roleName,boolean isflush=false) {
 		Role role = Role.findByRoleName(roleName)
-		UserRole.create (this, role)
+		UserRole.create (this, role,isflush)
 	}
 	
 	

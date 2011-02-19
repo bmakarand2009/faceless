@@ -4,7 +4,7 @@ import grails.test.*
 
 class ClientTests extends GrailsUnitTestCase {
 	
-	def transactional = false
+	def transactional = true
 	def sessionFactory
 	
     protected void setUp() {
@@ -83,6 +83,17 @@ class ClientTests extends GrailsUnitTestCase {
 		sessionFactory.currentSession.clear()
 		myAdminGroup1 = Groups.findByGrpName(grp1Name)
 		assertEquals 1,myAdminGroup1.users.size()
+		
+		
+		//Assign a Role to a user
+		sessionFactory.currentSession.clear()
+		u1 = User.findByUsername(user1)
+		assertNotNull u1.assignRole( adminRole1.roleName,true)
+		sessionFactory.currentSession.clear()
+		u1 = User.findByUsername(user1)
+		def u1RoleName = u1.findRole().roleName
+		assert u1RoleName==adminRole1.roleName
+		
 		
     }
 }
