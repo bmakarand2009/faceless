@@ -1,4 +1,5 @@
 package com.canarylogic.focalpoint
+import com.canarylogic.focalpoint.utils.EncryptionUtils;
 
 class User {
 
@@ -45,7 +46,9 @@ class User {
 		def client = Client.findByOrgId(orgId)
 		if(!client) return null		
 		Groups grp = Groups.findByGrpNameAndParent(groupName,client)
-		if(!grp) return null
+		if(!grp) return null		
+		
+		password = EncryptionUtils.encrypToMd5(password)
 		save(flush:isFlush)
 		grp.addToUsers(this)
 		grp.save(flush:isFlush)
