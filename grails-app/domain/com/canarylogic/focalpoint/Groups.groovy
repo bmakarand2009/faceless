@@ -15,18 +15,12 @@ class Groups implements Serializable {
 		grpName(unique:'parent')
 	}
 	
-	Groups addGroup(String orgId) {
+	Groups createGroup(String orgId) {
 		def client =  Client.findByOrgId(orgId)
 		if(!client) return null
 		this.parent = client
 		save(flush: true, insert: true)
 	}
 	
-//	def addUser(User u) {
-//		def userList = users
-//		if(!userList) userList = []
-//		userList.add(u)
-//		save(flush:true)
-//	}
-	
+
 }

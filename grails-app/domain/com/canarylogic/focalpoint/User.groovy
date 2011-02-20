@@ -15,6 +15,8 @@ class User {
 	static constraints = {
 		username blank: false, unique: true, email:true
 		password blank: false
+		groups(minSize:1)
+		
 	}
 
 	static mapping = {
@@ -26,8 +28,10 @@ class User {
 		return role
 	}
 	
-	def assignRole(String roleName,boolean isflush=false) {
-		Role role = Role.findByRoleName(roleName)
+	def assignRole(String roleName,String orgId, boolean isflush=false) {
+		def client = Client.findByOrgId(orgId)
+		if(!client) return null
+		Role role = Role.findByRoleNameAndParent(roleName,client)
 		UserRole.create (this, role,isflush)
 	}
 	
@@ -37,10 +41,14 @@ class User {
         username
     }
 	
-	def createUser(String groupName) {
-		Groups grp = Groups.findByGrpName(groupName)
+	def create(String groupName,String orgId, boolean isFlush=true) {
+		def client = Client.findByOrgId(orgId)
+		if(!client) return null		
+		Groups grp = Groups.findByGrpNameAndParent(groupName,client)
 		if(!grp) return null
-		if(!this.groups) groups = []	
-		groups.add()
+		save(flush:isFlush)
+		grp.addToUsers(this)
+		grp.save(flush:isFlush)
+		
 	}
 }

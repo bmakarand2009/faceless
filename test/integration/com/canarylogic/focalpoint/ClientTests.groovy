@@ -56,10 +56,10 @@ class ClientTests extends GrailsUnitTestCase {
 		Groups mkgGroup1   =  new Groups(grpName:grp2Name,grpLabel:"c1 mkg")
 		Groups adminGroup2 =  new Groups(grpName:grp1Name,grpLabel:"c2 admin")
 		Groups mkgGroup2   =  new Groups(grpName:grp2Name,grpLabel:"c2 mkg")
-		assertNotNull adminGroup1.addGroup (c1OrgId)
-		assertNotNull mkgGroup1.addGroup (c1OrgId)
-		assertNotNull adminGroup2.addGroup (c2OrgId)
-		assertNotNull mkgGroup2.addGroup (c2OrgId)
+		assertNotNull adminGroup1.createGroup (c1OrgId)
+		assertNotNull mkgGroup1.createGroup (c1OrgId)
+		assertNotNull adminGroup2.createGroup (c2OrgId)
+		assertNotNull mkgGroup2.createGroup (c2OrgId)
 		
 		sessionFactory.currentSession.clear()
 		c1 =  Client.findByOrgId(c1OrgId)
@@ -70,25 +70,17 @@ class ClientTests extends GrailsUnitTestCase {
 		//Add Users to Groups
 		String user1="mark@gmail.com"
 		User u1 = new User(username:user1,password:"abcd")
-		u1.groups = []
-		assertNotNull u1.save()
-		sessionFactory.currentSession.clear()
-		
-		def myAdminGroup1 = Groups.findByGrpName(grp1Name)		
-		u1 = User.findByUsername(user1)
-		myAdminGroup1.addToUsers(u1)
-		assertEquals 1, myAdminGroup1.users.size()
-		assertNotNull myAdminGroup1.save(flush:true)
+		assertNotNull u1.create(grp1Name,c1OrgId)
 		
 		sessionFactory.currentSession.clear()
-		myAdminGroup1 = Groups.findByGrpName(grp1Name)
+		def myAdminGroup1 = Groups.findByGrpName(grp1Name)
 		assertEquals 1,myAdminGroup1.users.size()
 		
 		
 		//Assign a Role to a user
 		sessionFactory.currentSession.clear()
 		u1 = User.findByUsername(user1)
-		assertNotNull u1.assignRole( adminRole1.roleName,true)
+		assertNotNull u1.assignRole( adminRole1.roleName,c1OrgId,true)
 		sessionFactory.currentSession.clear()
 		u1 = User.findByUsername(user1)
 		def u1RoleName = u1.findRole().roleName

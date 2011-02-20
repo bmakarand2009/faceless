@@ -34,11 +34,11 @@ class EntityController extends BaseController{
 //						.addToUsers(moName:"user2@gmail.com",clientId:"client123",password:"admin123").save()
 						
 
-		def groupMo = 	GroupMo.get(1)
-		UserMo user2 = new UserMo(moName:"user5@gmail.com",clientId:"myOtherClient",password:"admin1234")
-		user2.save()
-		groupMo.addUserToGroup(user2)					
-		return "hello"
+//		def groupMo = 	GroupMo.get(1)
+//		UserMo user2 = new UserMo(moName:"user5@gmail.com",clientId:"myOtherClient",password:"admin1234")
+//		user2.save()
+//		groupMo.addUserToGroup(user2)					
+//		return "hello"
 		
 	}
 
