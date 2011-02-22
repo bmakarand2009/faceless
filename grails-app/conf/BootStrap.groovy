@@ -1,4 +1,3 @@
-import com.canarylogic.focalpoint.Alpha;
 
 import org.codehaus.groovy.grails.commons.GrailsApplication
 import grails.util.GrailsUtil
@@ -87,13 +86,19 @@ class BootStrap {
 		adminGroup2.createGroup (c2OrgId)
 		
 		//Step3: Create Users and assign to groups
-		User u1 = new User(username:"mark@canary",password:"abcd")
-		u1.create(grp1Name,c1OrgId)
-		u1.assignRole( adminRole1.roleName,c1OrgId)
 		
-		User u2 = new User(username:"mark@harvest",password:"abcd")
-		u2.create(grp1Name,c2OrgId)
-		u2.assignRole( adminRole2.roleName,c2OrgId)
+		def c1 =  Client.findByOrgId(c1OrgId)
+		def c2 = Client.findByOrgId(c2OrgId)
+		User u1 = new User(username:"mark@canary.com",password:"abcd")
+		u1.parent = c1 
+		u1.save()
+		u1.assignGroup(grp1Name)
+
+				User u2 = new User(username:"mark@harvest.com",password:"abcd")
+		u2.parent = c2
+		u2.save()
+		u2.assignGroup(grp1Name)
+		u2.assignRole( adminRole2.roleName)
 		
 		new Alpha(c1:"sgg",c2:"sar").save()
 		new Alpha(c1:"devJohn",c2:"walker").save()

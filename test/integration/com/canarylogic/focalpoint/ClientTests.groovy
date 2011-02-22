@@ -70,7 +70,9 @@ class ClientTests extends GrailsUnitTestCase {
 		//Add Users to Groups
 		String user1="mark@gmail.com"
 		User u1 = new User(username:user1,password:"abcd")
-		assertNotNull u1.create(grp1Name,c1OrgId)
+		u1.parent = c1
+		assertNotNull u1.save()
+		assertNotNull u1.assignGroup(grp1Name)
 		
 		sessionFactory.currentSession.clear()
 		def myAdminGroup1 = Groups.findByGrpName(grp1Name)
@@ -80,7 +82,7 @@ class ClientTests extends GrailsUnitTestCase {
 		//Assign a Role to a user
 		sessionFactory.currentSession.clear()
 		u1 = User.findByUsername(user1)
-		assertNotNull u1.assignRole( adminRole1.roleName,c1OrgId,true)
+		assertNotNull u1.assignRole( adminRole1.roleName,true)
 		sessionFactory.currentSession.clear()
 		u1 = User.findByUsername(user1)
 		def u1RoleName = u1.findRole().roleName

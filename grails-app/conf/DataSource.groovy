@@ -25,7 +25,7 @@ environments {
         dataSource {
             dbCreate = "update"
 //            url = "jdbc:hsqldb:mem:testDb"
-			url = "jdbc:mysql://localhost/testfaceless2"
+			url = "jdbc:mysql://localhost/faceless2"
 			driverClassName = "com.mysql.jdbc.Driver"
 			username = "root"
 			password = "mysql"

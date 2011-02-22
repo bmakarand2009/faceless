@@ -1,20 +1,20 @@
 package com.canarylogic.base
 
 class BaseController {
-
+	AuthService authService
+	
     def index = { }
 	
 	def beforeInterceptor=[action:this.&auth,except:['goldSuccess','goldFailure','mchook']]	
 	
 	def auth(){
-//		try{			
-//			if(params.applicationId == null || params.service == null )
-//			    throw new RestException(ExMessages.AUTHENCIATION_FAILED, "Invalid applicationId or serviceName")
-//		   }catch(Exception ex){
-//			  displayError(ex)
-//			  return false
-//		   }
-//		 return true
+		try{			
+				println "AUTH method called for $params"
+				authService.authUser(params)				
+		   }catch(Exception ex){
+			  displayError(ex)
+			  return false
+		   }
 		return true
 	 }
 	

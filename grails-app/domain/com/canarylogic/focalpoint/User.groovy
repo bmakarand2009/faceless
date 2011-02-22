@@ -10,8 +10,11 @@ class User {
 	boolean accountLocked=false;
 	boolean passwordExpired=false;
 
+
 	static hasMany =[groups:Groups]
 	static belongsTo = Groups
+	Client parent	
+	
 	
 	static constraints = {
 		username blank: false, unique: true, email:true
@@ -24,31 +27,35 @@ class User {
 		password column: '`password`'
 	}
 
+	
 	Role findRole() {
 		def role = UserRole.findByUser(this).role
 		return role
 	}
 	
-	def assignRole(String roleName,String orgId, boolean isflush=false) {
-		def client = Client.findByOrgId(orgId)
-		if(!client) return null
-		Role role = Role.findByRoleNameAndParent(roleName,client)
+	def assignRole(String roleName, boolean isflush=false) {
+		Role role = Role.findByRoleNameAndParent(roleName,parent)
 		UserRole.create (this, role,isflush)
 	}
 	
-	
+	static User findUser(String userId, String orgId) {
+		User user
+		Client parent = Client.findByOrgId(orgId)
+		if(parent)
+			user = User.findByUsernameAndParent(userId,parent)
+			
+		return user
+	}
     
     String toString(){
         username
     }
 	
-	def create(String groupName,String orgId, boolean isFlush=true) {
-		def client = Client.findByOrgId(orgId)
+	def assignGroup(String groupName, boolean isFlush=true) {
+		def client = parent
 		if(!client) return null		
 		Groups grp = Groups.findByGrpNameAndParent(groupName,client)
-		if(!grp) return null		
-		
-		password = EncryptionUtils.encrypToMd5(password)
+		if(!grp) return null	
 		save(flush:isFlush)
 		grp.addToUsers(this)
 		grp.save(flush:isFlush)

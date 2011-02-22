@@ -8,7 +8,7 @@ class EntityController extends BaseController{
     def index = { }
 	
 	def create = {
-		log.debug "create called for $params.applicationId"
+		log.debug "create called for $params.appId"
 		
 	}
 	
