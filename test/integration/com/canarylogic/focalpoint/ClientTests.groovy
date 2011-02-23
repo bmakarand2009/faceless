@@ -4,7 +4,7 @@ import grails.test.*
 
 class ClientTests extends GrailsUnitTestCase {
 	
-	def transactional = true
+	def transactional = false
 	def sessionFactory
 	
     protected void setUp() {
@@ -34,15 +34,41 @@ class ClientTests extends GrailsUnitTestCase {
 		//Add roles to C1 and C2		
 		//Create Roles for Organization
 		sessionFactory.currentSession.clear()
-		Role adminRole1 = new Role(roleName:"admin",isAccess:true,isDelete:true,isUpdate:true,isSelfGroup:false,label:"sample Desc")		
-		Role recRole1 = new Role(roleName:"recruiter",isAccess:true,isDelete:true,isUpdate:true,isSelfGroup:true,label:"sample desc")
+		
+
+		Role adminRole1 = new Role(roleName:"admin",label:"sampledesc")		
+		Role recRole1 = new Role(roleName:"recruiter",label:"sample desc")
+	
 		assertNotNull adminRole1.addRole (c1OrgId)
 		assertNotNull recRole1.addRole (c1OrgId)
 
-		Role adminRole2 = new Role(roleName:"admin",isAccess:true,isDelete:true,isUpdate:true,isSelfGroup:false,label:"sample Desc")
-		Role recRole2 = new Role(roleName:"recruiter",isAccess:true,isDelete:true,isUpdate:true,isSelfGroup:true,label:"sample desc")
+		Services candServiceForAdmin1 = new Services(serviceName:ServiceDefineEnum.CANDIDATE_SERVICE.toString(),isAccess:true,isDelete:true,isUpdate:true,isSelfGroup:false)
+		candServiceForAdmin1.role = adminRole1
+		if(!candServiceForAdmin1.validate()) {
+			String myErrs=""
+			candServiceForAdmin1.errors.allErrors.each { myErrs = "$myErrs ${it.defaultMessage} $it" }
+			assert myErrs == "hello"
+		}
+		assertNotNull candServiceForAdmin1.save()
+		
+		Services candServiceForRec1 = new Services(serviceName:ServiceDefineEnum.CANDIDATE_SERVICE.toString(),isAccess:true,isDelete:true,isUpdate:true,isSelfGroup:false)
+		candServiceForRec1.role = recRole1
+		assertNotNull candServiceForRec1.save()
+
+		
+		Role adminRole2 = new Role(roleName:"admin",label:"sample Desc")
+		Role recRole2 = new Role(roleName:"recruiter",label:"sample desc")
 		assertNotNull adminRole2.addRole (c2OrgId)
 		assertNotNull recRole2.addRole (c2OrgId)
+		
+		Services candServiceForAdmin2 = new Services(serviceName:ServiceDefineEnum.CANDIDATE_SERVICE.toString(),isAccess:true,isDelete:true,isUpdate:true,isSelfGroup:false)
+		candServiceForAdmin2.role = adminRole2
+		assertNotNull candServiceForAdmin2.save()
+		
+		Services candServiceForRec2 = new Services(serviceName:ServiceDefineEnum.CANDIDATE_SERVICE.toString(),isAccess:true,isDelete:true,isUpdate:true,isSelfGroup:true)
+		candServiceForRec2.role = recRole2
+		assertNotNull candServiceForRec2.save()
+
 		
 		sessionFactory.currentSession.clear()		
 		c1 =  Client.findByOrgId(c1OrgId)

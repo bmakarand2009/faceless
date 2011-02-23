@@ -7,11 +7,8 @@ class Role  implements Serializable {
 	String roleName
 	String label
 	
-	boolean isAccess
-	boolean isUpdate
-	boolean isDelete
-	boolean isSelfGroup
-
+	static hasMany=[services:Services]
+	
 	static belongsTo = [parent:Client]
 	
 	static constraints = {

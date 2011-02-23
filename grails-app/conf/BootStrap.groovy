@@ -33,11 +33,6 @@ class BootStrap {
 		 String.metaClass.shout = {->
 			 return delegate.toUpperCase()+"META"
 		  }
-//		 
-//		 GroupMo.metaClass.addUserToGroup= { userMo ->
-//			 userMo.clientId = delegate.clientId
-//			 delegate.addToUsers(userMo)			
-//		 }
 		   
 	 }
     def destroy = {
@@ -72,10 +67,22 @@ class BootStrap {
 		
 		//Step2: Add a AdminRole
 		sessionFactory.currentSession.clear()
-		Role adminRole1 = new Role(roleName:"admin",isAccess:true,isDelete:true,isUpdate:true,isSelfGroup:false,label:"sample Desc")
-		Role adminRole2 = new Role(roleName:"admin",isAccess:true,isDelete:true,isUpdate:true,isSelfGroup:true,label:"sample desc")
+		Role adminRole1 = new Role(roleName:"admin",label:"sample Desc")
+		Role adminRole2 = new Role(roleName:"admin",label:"sample desc")
 		adminRole1.addRole (c1OrgId)
 		adminRole2.addRole (c2OrgId)
+		
+		//Step3:Add Services to Roles		
+		Services candServiceRole1 = new Services(serviceName:ServiceDefineEnum.CANDIDATE_SERVICE.toString(),
+			isAccess:true,isDelete:true,isUpdate:true,isSelfGroup:false)
+		candServiceRole1.role = adminRole1
+		candServiceRole1.save()
+		
+		Services candServiceRole2 = new Services(serviceName:ServiceDefineEnum.CANDIDATE_SERVICE.toString(),
+			isAccess:true,isDelete:true,isUpdate:true,isSelfGroup:true)
+		candServiceRole2.role = adminRole2
+		candServiceRole2.save()
+		
 
 		//Step3: Add a AdminGroup
 		String grp1Name = "admin"
