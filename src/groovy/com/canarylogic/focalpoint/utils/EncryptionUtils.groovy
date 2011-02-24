@@ -55,12 +55,12 @@ class EncryptionUtils {
 		def calculatedSignature =  calcSignature(signatureUrl,secretKey)
 		def usersSig = paramsMap.signature
 		def repUserSig = usersSig.replaceAll("%2B","+")
-//		 log.debug "Users signature is ${paramsMap.signature} and calculate one is $calculatedSignature"
 		if(repUserSig != calculatedSignature) {
 			println """FAILED !!! $paramsMap.userId signature is $repUserSig
 			and Calculated Signature is $calculatedSignature, systems url is $signatureUrl"""
 			throw new RestException(ExMessages.AUTHENCIATION_FAILED, "Signature mismatch $repUserSig (userSign) does not match $calculatedSignature")
 		}
+		return true
 	}
 	
 	def static ACTION_SERVICE_MAP=['auth': Services.IS_ACCESS]
@@ -81,6 +81,14 @@ class EncryptionUtils {
 		if(!isAuthorized)
 			throw new RestException(ExMessages.AUTHENCIATION_FAILED,"User ${paramsMap.userId} does not have priviledges for $paramsMap.action and $privName")
 		return isAuthorized
+	}
+	
+	public static boolean authCredentials(def paramsMap) {
+		User curUser = User.findUser(paramsMap.userId, paramsMap.applicationId)
+		if(!curUser)
+			throw new RestException(ExMessages.AUTHENCIATION_FAILED,"Invalid user")
+		validateSignature(paramsMap,curUser.password)
+		return true
 	}
 	
 			

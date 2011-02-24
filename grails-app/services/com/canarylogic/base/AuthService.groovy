@@ -31,13 +31,7 @@ class AuthService {
 		return true
     }
 	
-	private boolean authCredentials(def paramsMap) {
-		User curUser = User.findUser(paramsMap.userId, paramsMap.applicationId)
-		if(!curUser)
-			throw new RestException(ExMessages.AUTHENCIATION_FAILED,"Invalid user")
-		EncryptionUtils.validateSignature(paramsMap,curUser.password)
-		return true
-	}
+	
 	
 	
 	
