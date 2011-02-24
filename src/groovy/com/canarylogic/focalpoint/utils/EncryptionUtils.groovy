@@ -8,7 +8,9 @@ import org.codehaus.groovy.grails.commons.ConfigurationHolder
 import com.canarylogic.base.RestException;
 import com.canarylogic.base.ExMessages
 
-
+import com.canarylogic.focalpoint.User;
+import com.canarylogic.focalpoint.Role;
+import com.canarylogic.focalpoint.Services;
 class EncryptionUtils {
 	private static final def DEFAULT_ENCODING = "UTF-8"
 	private static final String HMAC_SHA256_ALGORITHM = "HmacSHA256";
@@ -60,6 +62,27 @@ class EncryptionUtils {
 			throw new RestException(ExMessages.AUTHENCIATION_FAILED, "Signature mismatch $repUserSig (userSign) does not match $calculatedSignature")
 		}
 	}
+	
+	def static ACTION_SERVICE_MAP=['auth': Services.IS_ACCESS]
+	public static  boolean isActionAuthorized(def paramsMap) {
+		User curUser = User.findUser(paramsMap.userId, paramsMap.applicationId)
+			if(!curUser) throw new RestException(ExMessages.AUTHENCIATION_FAILED,"No valid user found for $paramsMap.userId with $paramsMap.applicationId")
+
+		Role curRole = curUser.findRole()
+		if(!curRole)
+			throw new RestException(ExMessages.AUTHENCIATION_FAILED,"No Role defined for ${paramsMap.userId}")
+		
+		String serviceName = paramsMap.service
+		Services servicePriv = Services.findByServiceNameAndRole(serviceName,curRole)
+		if(!servicePriv) throw new RestException(ExMessages.AUTHENCIATION_FAILED,"No Valid service priviledges found with name $serviceName for role $curRole.roleName")
+		String privName = ACTION_SERVICE_MAP.get(paramsMap.action)
+		boolean isAuthorized = servicePriv.isAuthroized(privName)
+		
+		if(!isAuthorized)
+			throw new RestException(ExMessages.AUTHENCIATION_FAILED,"User ${paramsMap.userId} does not have priviledges for $paramsMap.action and $privName")
+		return isAuthorized
+	}
+	
 			
 	
 }
