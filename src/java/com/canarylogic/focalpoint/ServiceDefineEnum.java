@@ -1,7 +1,7 @@
 package com.canarylogic.focalpoint;
 
 public enum ServiceDefineEnum {
-	CANDIDATE_SERVICE("Alpha");
+	candidate("Alpha");
 	
 	private final String tableName;
 

@@ -8,8 +8,8 @@ import grails.test.ControllerUnitTestCase;
 class BaseControllerTests  extends ControllerUnitTestCase {
 	def authService
 	
-	static String CANARY_APP_ID="foc-canary"
-	static String CANARY_USER="mark@canary.com"
+	static String CANARY_APP_ID="foc-harvest"
+	static String CANARY_USER="mark@harvest.com"
 	
 	 protected void setUp() {
 		super.setUp()
@@ -27,7 +27,7 @@ class BaseControllerTests  extends ControllerUnitTestCase {
 		 mockParams.timestamp = new Date().time
 		 mockParams.controller ="base"
 		 mockParams.action ="auth"
-		 mockParams.service = ServiceDefineEnum.CANDIDATE_SERVICE
+		 mockParams.service = ServiceDefineEnum.candidate.toString()
 		 mockParams.signature = calcSignature()
 		 mockRequest.contentType = "application/xml"
 	  }
