@@ -1,5 +1,6 @@
 package com.canarylogic.focalpoint
 
+import com.canarylogic.base.*;
 class Services {
 	
 	public static String IS_ACCESS="isAccess"
@@ -28,4 +29,14 @@ class Services {
 		else return false
 	}
 	
+	static findServicesByUser(String userId,String appId, String serviceName) {
+		User curUser = User.findUser(userId, appId)
+		if(!curUser) throw new RestException(ExMessages.AUTHENCIATION_FAILED,"No valid user found for $userId with $appId")
+
+		Role curRole = curUser.findRole()
+		if(!curRole)
+			throw new RestException(ExMessages.AUTHENCIATION_FAILED,"No Role defined for $userId")
+		Services servicePriv = Services.findByServiceNameAndRole(serviceName,curRole)
+		return servicePriv
+	}
 }

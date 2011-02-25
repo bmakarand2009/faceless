@@ -15,7 +15,6 @@ class User {
 	static belongsTo = Groups
 	Client parent	
 	
-	
 	static constraints = {
 		username blank: false, unique: true, email:true
 		password blank: false

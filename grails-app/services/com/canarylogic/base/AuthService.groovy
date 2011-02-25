@@ -28,13 +28,7 @@ class AuthService {
 		if(!authCredentials(paramsMap))
 			throw new RestException(ExMessages.AUTHENCIATION_FAILED,"Invalid Credentials")
 		isAuth = EncryptionUtils.isActionAuthorized(paramsMap);
-		return true
+		return isAuth
     }
-	
-	
-	
-	
-	
-	
 
 }
