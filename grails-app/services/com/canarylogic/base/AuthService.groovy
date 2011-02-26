@@ -25,7 +25,7 @@ class AuthService {
 		println "AuthencateUser called for $paramsMap "
 		boolean isAuth
 		 EncryptionUtils.checkMandatoryParams(paramsMap)
-		if(!authCredentials(paramsMap))
+		if(!EncryptionUtils.authCredentials(paramsMap))
 			throw new RestException(ExMessages.AUTHENCIATION_FAILED,"Invalid Credentials")
 		isAuth = EncryptionUtils.isActionAuthorized(paramsMap);
 		return isAuth

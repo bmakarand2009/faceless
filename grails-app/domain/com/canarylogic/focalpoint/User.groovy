@@ -1,6 +1,7 @@
 package com.canarylogic.focalpoint
 import com.canarylogic.focalpoint.utils.EncryptionUtils;
 
+import com.canarylogic.base.*;
 class User {
 
     String username
@@ -50,14 +51,13 @@ class User {
         username
     }
 	
-	def assignGroup(String groupName, boolean isFlush=true) {
+	Groups assignGroup(String groupName, boolean isFlush=true) {
 		def client = parent
 		if(!client) return null		
-		Groups grp = Groups.findByGrpNameAndParent(groupName,client)
+		Groups grp = Groups.findByGrpNameAndParent(groupName,client)		
 		if(!grp) return null	
-		save(flush:isFlush)
 		grp.addToUsers(this)
-		grp.save(flush:isFlush)
-		
+		def result = grp.save(flush:isFlush)
+		return result
 	}
 }

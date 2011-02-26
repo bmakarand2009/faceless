@@ -33,7 +33,11 @@ class BaseControllerTests  extends ControllerUnitTestCase {
 	  }
 	 
 	 void testAuth() {
-		 setCommonParams()
+		 try {
+			 setCommonParams()
+		 }catch(RestException ex) {
+		 	throw new Exception("$ex.message $ex.additionalInfo")
+		 }
 		 def isAuth = controller.auth()
 		 if(!isAuth) {
 			 def xmlResp = controller.response.getContentAsString()
@@ -45,6 +49,7 @@ class BaseControllerTests  extends ControllerUnitTestCase {
 	 
 	 private String calcSignature() {
 		User curUser = User.findUser(mockParams.userId, mockParams.applicationId)
+		assertNotNull curUser
 		String secKey = curUser.password
 		String sigUrl = EncryptionUtils.getSignatureUrl(mockParams)
 		String signature = EncryptionUtils.calcSignature(sigUrl, secKey)

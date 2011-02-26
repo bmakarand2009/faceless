@@ -12,7 +12,7 @@ class Groups implements Serializable {
 	
 	
     static constraints = {
-		grpName(unique:'parent')
+		grpName(unique:'parent',minLength:4)
 	}
 	
 	Groups createGroup(String orgId) {

@@ -62,21 +62,14 @@ class EncryptionUtils {
 		}
 		return true
 	}
-	
-	def static ACTION_SERVICE_MAP=['auth': Services.IS_ACCESS]
+	def static ACTION_SERVICE_MAP=[ "candidate": ['auth': Services.IS_ACCESS] ,
+		                            "admin" : ['createGroup' : Services.IS_CREATE]
+								 ]
 	public static  boolean isActionAuthorized(def paramsMap) {
-//		User curUser = User.findUser(paramsMap.userId, paramsMap.applicationId)
-//			if(!curUser) throw new RestException(ExMessages.AUTHENCIATION_FAILED,"No valid user found for $paramsMap.userId with $paramsMap.applicationId")
-//
-//		Role curRole = curUser.findRole()
-//		if(!curRole)
-//			throw new RestException(ExMessages.AUTHENCIATION_FAILED,"No Role defined for ${paramsMap.userId}")
-//		
-//		String serviceName = paramsMap.service
-//		Services servicePriv = Services.findByServiceNameAndRole(serviceName,curRole)
 		Services servicePriv = Services.findServicesByUser(paramsMap.userId,paramsMap.applicationId, paramsMap.service)
 		if(!servicePriv) throw new RestException(ExMessages.AUTHENCIATION_FAILED,"No Valid service priviledges found with name ${paramsMap.service}")
-		String privName = ACTION_SERVICE_MAP.get(paramsMap.action)
+		def actionPrivMap = ACTION_SERVICE_MAP.get(paramsMap.service)
+		String privName = actionPrivMap.get(paramsMap.action)
 		boolean isAuthorized = servicePriv.isAuthroized(privName)
 		
 		if(!isAuthorized)

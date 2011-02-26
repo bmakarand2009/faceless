@@ -74,12 +74,12 @@ class BootStrap {
 		
 		//Step3:Add Services to Roles		
 		Services candServiceRole1 = new Services(serviceName:ServiceDefineEnum.candidate.toString(),
-			isAccess:true,isDelete:true,isUpdate:true,isSelfGroup:false)
+			isAccess:true,isDelete:true,isUpdate:true,isSelfGroup:false,isCreate:true)
 		candServiceRole1.role = adminRole1
 		candServiceRole1.save()
 		
 		Services candServiceRole2 = new Services(serviceName:ServiceDefineEnum.candidate.toString(),
-			isAccess:true,isDelete:true,isUpdate:true,isSelfGroup:true)
+			isAccess:true,isDelete:true,isUpdate:true,isSelfGroup:true,isCreate:true)
 		candServiceRole2.role = adminRole2
 		candServiceRole2.save()
 		

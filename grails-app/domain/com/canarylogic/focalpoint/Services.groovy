@@ -4,6 +4,7 @@ import com.canarylogic.base.*;
 class Services {
 	
 	public static String IS_ACCESS="isAccess"
+	public static String IS_CREATE="isCreate"
 	public static String IS_UPDATE="isUpdate"
 	public static String IS_DELETE="isDelete" 
 	
@@ -13,6 +14,7 @@ class Services {
 	boolean isAccess
 	boolean isUpdate
 	boolean isDelete
+	boolean isCreate
 	boolean isSelfGroup
 
 	static belongsTo = [role:Role]
@@ -26,6 +28,7 @@ class Services {
 		if(privName.equals(IS_ACCESS)) 	return isAccess
 		else if(privName.equals(IS_UPDATE)) return isUpdate
 		else if(privName.equals(IS_DELETE)) return isDelete
+		else if(privName.equals(IS_CREATE)) return isCreate
 		else return false
 	}
 	
