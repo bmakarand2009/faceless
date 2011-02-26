@@ -13,6 +13,7 @@ class UserControllerTests extends ControllerUnitTestCase {
 	static String CANARY_USER="mark@harvest.com"
 	
 	static String EXISTING_GRP="admin"
+	static String EXISTING_ROLE="admin"
 	
 	protected void setUp() {
 		super.setUp()
@@ -46,14 +47,20 @@ class UserControllerTests extends ControllerUnitTestCase {
 		 assert cParser.groupName.text() == grpName
 	 }
 
+	 void testCreateRole() {
+		 setCommonParams()
+		 def roleName = "role${new Date().time}"
+		 mockParams.roleName =roleName
+		 mockParams.roleLabel ="this is a test role label"
+		 controller.createRole()
+		 def xmlResp = controller.response.getContentAsString()
+		 def cParser = new XmlParser().parseText(xmlResp)
+		 assert cParser.roleName.text() == roleName
+	 }
+	 
 	 void testAssignGroup() {
 		 //Create a User 
-		 def c1 =  Client.findByOrgId(CANARY_APP_ID)
-		 String user1="trial@gmail.com"
-		 User u1 = new User(username:user1,password:"abcd")
-		 u1.parent = c1
-		 assertNotNull u1.save()
-		 
+		 def user1 = createTestUser()
 		 mockParams.userName = user1
 		 mockParams.grpName  = EXISTING_GRP
 		 controller.assignUsersToGroup()
@@ -63,6 +70,24 @@ class UserControllerTests extends ControllerUnitTestCase {
 		 
 	 }
 	 
+	 void testAssignRoleToUser() {
+		 def user1 = createTestUser()
+		 mockParams.userName = user1
+		 mockParams.roleName = EXISTING_ROLE
+		 controller.assignRoleToUser()
+		 def xmlResp = controller.response.getContentAsString()
+		 def cParser = new XmlParser().parseText(xmlResp)
+		 assert cParser.roleName.text() == EXISTING_ROLE
+	}
 	 
+	 
+	 private User createTestUser() {
+		 def c1 =  Client.findByOrgId(CANARY_APP_ID)
+		 String user1="trial@gmail.com"
+		 User u1 = new User(username:user1,password:"abcd")
+		 u1.parent = c1
+		 assertNotNull u1.save()
+		 return u1
+	 }
 	 
 }

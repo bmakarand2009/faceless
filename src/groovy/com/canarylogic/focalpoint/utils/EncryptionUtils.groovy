@@ -15,6 +15,16 @@ class EncryptionUtils {
 	private static final def DEFAULT_ENCODING = "UTF-8"
 	private static final String HMAC_SHA256_ALGORITHM = "HmacSHA256";
 
+	
+	def static ACTION_SERVICE_MAP=[ "candidate": ['auth': Services.IS_ACCESS] ,
+		"admin" : ['createGroup' : Services.IS_CREATE,
+			       'assignUsersToGroup' : Services.IS_UPDATE,
+				   'assignRoleToUser' : Services.IS_UPDATE]
+	 ]
+
+	
+	
+	
 	public static String encrypToMd5(String plainPassword) {
 		byte[] md5hash = MessageDigest.getInstance("MD5").digest(plainPassword.getBytes("UTF-8"));
 		StringBuilder hexString = new StringBuilder(md5hash.length * 2);
@@ -62,9 +72,6 @@ class EncryptionUtils {
 		}
 		return true
 	}
-	def static ACTION_SERVICE_MAP=[ "candidate": ['auth': Services.IS_ACCESS] ,
-		                            "admin" : ['createGroup' : Services.IS_CREATE]
-								 ]
 	public static  boolean isActionAuthorized(def paramsMap) {
 		Services servicePriv = Services.findServicesByUser(paramsMap.userId,paramsMap.applicationId, paramsMap.service)
 		if(!servicePriv) throw new RestException(ExMessages.AUTHENCIATION_FAILED,"No Valid service priviledges found with name ${paramsMap.service}")
