@@ -80,6 +80,18 @@ class UserControllerTests extends ControllerUnitTestCase {
 		 assert cParser.roleName.text() == EXISTING_ROLE
 	}
 	 
+	void testAddServicePrivToRole() {
+		 def user1 = createTestUser()
+		 mockParams.roleName = EXISTING_ROLE
+		 mockParams.serviceName = ServiceDefineEnum.candidate.toString()
+		 mockParams.isCreate = false
+		 mockParams.isUpdate = false
+		 
+		 controller.addServicePrivToRole()
+		 def xmlResp = controller.response.getContentAsString()
+		 def cParser = new XmlParser().parseText(xmlResp)
+		 assert cParser.serviceName.text() == ServiceDefineEnum.candidate.toString()
+	}
 	 
 	 private User createTestUser() {
 		 def c1 =  Client.findByOrgId(CANARY_APP_ID)

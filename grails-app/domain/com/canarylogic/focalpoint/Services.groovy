@@ -42,4 +42,11 @@ class Services {
 		Services servicePriv = Services.findByServiceNameAndRole(serviceName,curRole)
 		return servicePriv
 	}
+	
+	def assignRole(String roleName, boolean isFlush=false) {
+		Role aRole = Role.findByRoleName(roleName)
+		if(!aRole) return null
+		this.role = aRole
+		save(flush:isFlush)
+	}
 }

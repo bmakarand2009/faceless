@@ -18,6 +18,7 @@ class EncryptionUtils {
 	
 	def static ACTION_SERVICE_MAP=[ "candidate": ['auth': Services.IS_ACCESS] ,
 		"admin" : ['createGroup' : Services.IS_CREATE,
+				'createRole' : Services.IS_CREATE,
 			       'assignUsersToGroup' : Services.IS_UPDATE,
 				   'assignRoleToUser' : Services.IS_UPDATE]
 	 ]

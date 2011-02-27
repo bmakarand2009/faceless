@@ -51,9 +51,42 @@ class UserController extends BaseController{
 		 
 	 }
 
+	 //add a Services to a Role
 	 //addServicePrivToRole(service,isAccess,isUpdate,isDelete,isSelfGroup,isCreate)
 	 def addServicePrivToRole= {
-		 
+		 boolean isAccess = params.isAccess ? params.boolean('isAccess') : false
+		 boolean isUpdate = params.isUpdate ? params.boolean('isUpdate') : false
+		 boolean isDelete = params.isDelete ? params.boolean('isAccess') : false
+		 boolean isCreate = params.isCreate ? params.boolean('isAccess') : false
+		 boolean isSelfGroup = params.isSelfGroup ? params.boolean('isAccess') : false
+		 try {
+			 String roleName = params.roleName
+			 String serviceName = params.serviceName
+			 if(!roleName || !serviceName) throw new RestException(ExMessages.UPDATE_OBJECT_FAILED,"No Valid roleName/servicName found for $serviceName ")
+			 //check if the Services exists, if yes update the ame service
+			 Role aRole = Role.findByRoleName(roleName)
+			 if(!aRole) throw new RestException(ExMessages.UPDATE_OBJECT_FAILED,"No Valid Role found with $roleName")
+			 def aService = Services.findByServiceNameAndRole(serviceName,aRole)
+			 def serviceInstance
+			 if(aService) {
+			 	aService.properties = params
+				 serviceInstance = aService.save()
+			 }else {
+			 	aService = new Services(serviceName:serviceName,isAccess:true,isDelete:true,isUpdate:true,isSelfGroup:false,isCreate:true)
+				serviceInstance = aService.assignRole(roleName)
+			 }
+			 if (serviceInstance!=null) {
+				 displayXmlResult("addServicePrivToRole","serviceName",serviceInstance.serviceName)
+			 }else {
+				 String myErrs=""
+				 serviceInstance.errors.allErrors.each { myErrs = "$myErrs ${it.defaultMessage} $it" }
+				 throw new RestException(ExMessages.UPDATE_OBJECT_FAILED,myErrs)
+			 }
+	 
+		 }catch(Exception ex) {
+                displayError(ex)
+        }
+ 
 	 }	
 	  	
 	//assginUsersToGroup(grpName:, userName:)
