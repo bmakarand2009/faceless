@@ -11,7 +11,12 @@ class Alpha {
 	}
     
 	public String getFieldVal(String fieldName){
-		if(fieldName == "c1") return c1
+		if(fieldName =="id") return id
+		else if(fieldName == "version") return version
+		else if(fieldName == "c1") return c1
 		else if(fieldName == "c2")	return c2
+		
+		
+		
 	}
 }

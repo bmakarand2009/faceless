@@ -40,5 +40,26 @@ class BaseController {
 		 }
 		 return
 	}
+	
+	def displayXmlResult = {responseName,fieldName,fieldVal ->
+		String respName = responseName
+		render(contentType:"text/xml"){
+			"${respName}Response" {
+				"$fieldName"(fieldVal)
+				"status"("success")
+			}
+		}//end of contenttype
+	}
  
+	def displayXmlRes = {responseName,fieldMap ->
+		String respName = responseName
+		render(contentType:"text/xml"){
+			"${respName}Response" {
+				fieldMap.each{key,val ->
+					"$key"("$val")
+				}
+				"status"("success")
+			}
+		}//end of contenttype
+	}
 }

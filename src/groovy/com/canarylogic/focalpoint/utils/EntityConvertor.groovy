@@ -3,7 +3,14 @@ import groovy.xml.MarkupBuilder
 
 class EntityConvertor {
 
-	
+	/**
+	 * Convert List of Candidates to corresponding XML based on client
+	 * Note: for each enity defined make sure getFieldVal() method is implemented in i
+	 * @param entityList
+	 * @param applicationId
+	 * @param serviceName
+	 * @return
+	 */
 	public static String convertEntityListToXml(def entityList, String applicationId, String serviceName) {
 		def cParser = new XmlParser().parseText(CLIENT_TEMPLATE)
 		def clientList = convertToClientMap(entityList,cParser,serviceName)
@@ -11,8 +18,17 @@ class EntityConvertor {
 		return clientXml
 	}
 	
+	public static String convertEntityToXml(def aEntity, String applicationId, String serviceName) {
+		def cParser = new XmlParser().parseText(CLIENT_TEMPLATE)
+		def clientList = convertToClientMap([aEntity],cParser,serviceName)
+		String clientXml = convertToXml(clientList)
+		return clientXml
+	}
 	
-	def static getDomainName(def clientParser, String serviceName ) {
+	
+	
+	
+	public def static getDomainName(def clientParser, String serviceName ) {
 		def serviceRecord = clientParser.service.find{it.@name == serviceName }
 		def  entityMapping = serviceRecord.entityMapping[0]
 		String entityName = entityMapping.@name
@@ -21,10 +37,17 @@ class EntityConvertor {
 	}	
 	
 	
+	    def static convertToEntityMap(def attribMap,String serviceName) {
+			def cParser = new XmlParser().parseText(CLIENT_TEMPLATE)
+			convertToEntityMap(attribMap,cParser,serviceName)
+		}
+
+	
 	/*
 	 * @param attribMap = [firstName:"john", lastName="martin"]
 	 * @param serviceName e.g "candidateService
 	 * @clientParser : new XmlParser().parseText(xml)
+	 * @return [c1:john,c2:martin]
 	 * 
 	 */
 	
@@ -53,7 +76,7 @@ class EntityConvertor {
 	
 	
 		
-	def static convertToClientMap(def entityList,def clientParser, String serviceName) {
+	private def static convertToClientMap(def entityList,def clientParser, String serviceName) {
         println "convertToClientMap called for $serviceName"
         def clientList=[]
         def serviceRecord = clientParser.service.find{it.@name == serviceName }
@@ -80,7 +103,7 @@ class EntityConvertor {
        return clientList
 }
 	
-	def static convertToXml(def clientList){
+	private def static convertToXml(def clientList){
 		def writer = new StringWriter()
 		def xml= new MarkupBuilder(writer)
 		xml.records() {
@@ -98,11 +121,15 @@ class EntityConvertor {
  }
 	
 	
+
 	static def CLIENT_TEMPLATE = '''
 	   <client applicationId= 'b653b3e0-cc6f-4115-8e93-02142b03d8dd-foc' name='internalClient'>
-			<service name='candidateService' isHotList='true' isDeleteCol='true'>
+	   
+	
+			<service name='candidate' isHotList='true' isDeleteCol='true'>
 				
 				<entityMapping name='Alpha'>
+					<column name='id' alias='id'/>
 					<column name='c1' alias='firstName'/>
 					<column name='c2' alias='lastName'/>
 				</entityMapping>
@@ -110,6 +137,11 @@ class EntityConvertor {
 				
 				
 				<viewMapping name='CandidateView'>
+					<attribute nodeName='id' displayLabel='Id' listPanelIdx='-1' isSearchField='true'
+						toolTip='false'  isDetailsPanel='true' >
+						<attributeType type='textBox' tabName='1' columnNo='0'/>
+					</attribute>
+
 					<attribute nodeName='firstName' displayLabel='First Name'   listPanelIdx='1' isSearchField='true'
 						toolTip='false'  isDetailsPanel='true' >
 						<attributeType type='textBox' tabName='1' columnNo='1'/>
@@ -121,8 +153,31 @@ class EntityConvertor {
 					</attribute>
 				</viewMapping>
 				
-				
 			</service>
+			
+    		<service name='admin' isHotList='false' isDeleteCol='false'>
+			 <entityMapping name='User'>
+				 <column name='username' alias='userName'/>
+				 <column name='enabled' alias='enabled'/>
+				 <column name='accountExpired' alias='accountExpired'/>
+				 <column name='accountLocked' alias='accountLocked'/>
+				 <column name='passwordExpired' alias='passwordExpired'/>
+			 </entityMapping>
+		 
+			 <viewMapping name='UserView'>
+				 <attribute nodeName='userName' displayLabel='User Name'   listPanelIdx='1' isSearchField='true'
+					 toolTip='false'  isDetailsPanel='true' >
+					 <attributeType type='textBox' tabName='1' columnNo='1'/>
+				 </attribute>
+				 
+				 <attribute nodeName='lastName' displayLabel='Last Name' listPanelIdx='-1' isSearchField='true'
+					 toolTip='false'  isDetailsPanel='true' >
+					 <attributeType type='textBox' tabName='1' columnNo='1'/>
+				 </attribute>
+			 </viewMapping>
+		 
+			</service>
+
 			
 			
 	   </client>

@@ -25,22 +25,6 @@ class EntityController extends BaseController{
 		}
 	}
 	
-	
-	def trel= {
-		log.debug ("Setting up the Development Database")
-		String testClient = "testClient123"		
-		//create group
-//		def groupMo = new GroupMo(clientId:testClient,moName:"testDefault",moDesc:"this is a default testgroup")
-//						.addToUsers(moName:"user2@gmail.com",clientId:"client123",password:"admin123").save()
-						
-
-//		def groupMo = 	GroupMo.get(1)
-//		UserMo user2 = new UserMo(moName:"user5@gmail.com",clientId:"myOtherClient",password:"admin1234")
-//		user2.save()
-//		groupMo.addUserToGroup(user2)					
-//		return "hello"
-		
-	}
 
 	
 }

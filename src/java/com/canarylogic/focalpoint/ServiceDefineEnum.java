@@ -1,16 +1,26 @@
 package com.canarylogic.focalpoint;
 
 public enum ServiceDefineEnum {
-	candidate("Alpha"), //if this value is changed, maek sure EncrytionUtils.ACTION_SERVICE_MAP is also changed
-	admin("User");
+	candidate(Alpha.class), //if this value is changed, maek sure EncrytionUtils.ACTION_SERVICE_MAP is also changed
+	admin(User.class);
 	
-	private final String tableName;
+	private final Class tableName;
 
-	public String getTableName() {
+	public Class getTableName() {
 		return tableName;
 	}
 	
-	ServiceDefineEnum(String tableName) {
+	ServiceDefineEnum(Class tableName) {
 		this.tableName = tableName;
 	}
+	
+	public static Class getTableName(String serviceName) {
+		if(serviceName.equals(ServiceDefineEnum.candidate.toString() ))
+			return ServiceDefineEnum.candidate.getTableName();
+		else if( serviceName.equals(ServiceDefineEnum.admin.toString() ))
+			return ServiceDefineEnum.admin.getTableName();	
+		else
+			return null;
+	}
+	
 }
