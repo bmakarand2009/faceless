@@ -1,10 +1,12 @@
 package com.canarylogic.focalpoint.base
 
+
+
 import grails.test.ControllerUnitTestCase;
 import com.canarylogic.focalpoint.utils.EncryptionUtils;
 import com.canarylogic.focalpoint.ServiceDefineEnum
 import com.canarylogic.focalpoint.*
-
+import com.canarylogic.base.TestConfig;
 //grails test-app UserController
 class UserControllerTests extends ControllerUnitTestCase {
 	def authService
@@ -26,14 +28,7 @@ class UserControllerTests extends ControllerUnitTestCase {
 	 }
 	 
 	 private void setCommonParams(){
-		 mockParams.userId = CANARY_USER
-		 mockParams.applicationId = CANARY_APP_ID
-		 mockParams.timestamp = new Date().time
-		 mockParams.controller ="user"
-		 mockParams.action ="createGroup"
-		 mockParams.service = ServiceDefineEnum.candidate.toString()
-		 mockParams.signature = "mysingatur"
-		 mockRequest.contentType = "application/xml"
+		 TestConfig.setCommonParams(mockParams,mockRequest)
 	 }
 	 
 	 void testCreateGroup() {

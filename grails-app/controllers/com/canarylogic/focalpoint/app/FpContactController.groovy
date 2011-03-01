@@ -4,21 +4,44 @@ import com.canarylogic.base.*
 import com.canarylogic.focalpoint.*;
 import com.canarylogic.focalpoint.utils.*;
 
-class FpContactController {//extends BaseController{
+class FpContactController extends BaseController{
 
+	def static int DEFAULT_PAGE_SIZE=50
     def index = { }
-	
-	def listRecords = {
-		params.max = Math.min(params.max ? params.int('max') : 3, 100)
-		params.offset = params.offset? params.int('offset'):0		
-		def pagnParams = [max:params.max,offset:params.offset]
-		def tableClass = ServiceDefineEnum.getTableName(params.service)
 		
-		try {
+	//list or searchRecords(searcParams from a list and need to create a query based on that)
+	//searchRecords([searchKey:SearchValue],service,applicationId,offset,max,orderField,order(asc,desc)
+	def listRecords = {
+		log.debug "search Records Called for $params.service"
+		try  {
+			//check if mandatory params are present
+			log.debug "Search Record  params recieved are $params"
+			params.max = Math.min(params.max ? params.int('max') : DEFAULT_PAGE_SIZE,100)
+			params.offset = params.offset? params.int('offset'):0
+			String orderField = params.orderField?params.String(orderField):'id'
+			String orderType=params.order?params.String(order):'asc'
+			
+			def tableClass = ServiceDefineEnum.getTableName(params.service)
 			if(!tableClass) throw new RestException(ExMessages.LIST_OBJECT_FAILED,"No Domain  found for $params.service")
-			def entityList = tableClass.list(pagnParams)
-			String xmlResp = EntityConvertor.convertEntityListToXml(entityList,params.applicationId,params.service)
-			render(text: xmlResp as String, contentType:"text/xml", encoding:"UTF-8")
+			
+			def searchParamsMap = EntityConvertor.convertToEntityMap(params, params.service)
+			def client = Client.findByOrgId(params.applicationId)
+			if(!client) throw new RestException(ExMessages.LIST_OBJECT_FAILED,"Invalid applicationI $params.applicationId")
+			def resultList = tableClass.withCriteria {
+				maxResults(params.max)
+				firstResult(params.offset)
+				order(orderField,orderType)
+				and{
+					eq('parent', client)
+				}
+				or {
+					searchParamsMap.each{k,v->
+						like(k,"%$v%")
+					}
+				 }
+			} 
+			String xmlResp = EntityConvertor.convertEntityListToXml(resultList,params.applicationId,params.service)
+			render(text: xmlResp as String, contentType:"text/xml", encoding:"UTF-8")			
 		}catch(Exception ex) {
 			displayError(ex)
 		}
@@ -102,51 +125,5 @@ class FpContactController {//extends BaseController{
 	
 	
 	
-	
-	protected def displayError(Exception ex) {
-		def info = "NA"
-		if(ex instanceof RestException)   {
-			def restEx = (RestException) ex
-			info = restEx.additionalInfo
-		}
 		
-		def messageStr = ExMessages.msgMap[ex.message]
-		if(!messageStr) messageStr = 'Reason Not Available'
-
-		render(contentType:"text/xml"){
-			capi{
-				errors(){
-					error(code:ex.message){
-						message(messageStr)
-						additionalInfo(info)
-					}
-				}
-			}
-		 }
-		 return
-	}
-	
-	def displayXmlResult = {responseName,fieldName,fieldVal ->
-		String respName = responseName
-		render(contentType:"text/xml"){
-			"${respName}Response" {
-				"$fieldName"(fieldVal)
-				"status"("success")
-			}
-		}//end of contenttype
-	}
- 
-	def displayXmlRes = {responseName,fieldMap ->
-		String respName = responseName
-		render(contentType:"text/xml"){
-			"${respName}Response" {
-				fieldMap.each{key,val ->
-					"$key"("$val")
-				}
-				"status"("success")
-			}
-		}//end of contenttype
-	}
-	
-	
 }

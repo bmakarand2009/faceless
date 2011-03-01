@@ -130,6 +130,7 @@ class EntityConvertor {
 				
 				<entityMapping name='Alpha'>
 					<column name='id' alias='id'/>
+					<column name='pkey' alias='pkey'/>
 					<column name='c1' alias='firstName'/>
 					<column name='c2' alias='lastName'/>
 				</entityMapping>
@@ -141,6 +142,12 @@ class EntityConvertor {
 						toolTip='false'  isDetailsPanel='true' >
 						<attributeType type='textBox' tabName='1' columnNo='0'/>
 					</attribute>
+					
+					<attribute nodeName='pkey' displayLabel='email' listPanelIdx='-1' isSearchField='true'
+						toolTip='false'  isDetailsPanel='true' >
+						<attributeType type='textBox' tabName='1' columnNo='0'/>
+					</attribute>
+					
 
 					<attribute nodeName='firstName' displayLabel='First Name'   listPanelIdx='1' isSearchField='true'
 						toolTip='false'  isDetailsPanel='true' >

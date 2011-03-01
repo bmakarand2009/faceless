@@ -107,9 +107,14 @@ class BootStrap {
 		u2.assignGroup(grp1Name)
 		u2.assignRole( adminRole2.roleName)
 		
-		new Alpha(c1:"sgg",c2:"sar").save()
-		new Alpha(c1:"devJohn",c2:"walker").save()
-		
+		for (i in 1..10) {
+			def alphaInst1 = new Alpha(c1:"Burt$i",c2:"Charles$i",pkey:"key$i",parent:c1).save()		
+			def alphaInst2 = new Alpha(c1:"Bob$i",c2:"Cat$i",pkey:"bobkey$i",parent:c1).save()	
+			def alphaInst3 = new Alpha(c1:"Zing$i",c2:"Zend$i",pkey:"key$i",parent:c2).save()
+			def alphaInst4 = new Alpha(c1:"Zeta$i",c2:"Jones$i",pkey:"zetakey$i",parent:c2).save()
+			if(!alphaInst1 || !alphaInst2 || !alphaInst3 || !alphaInst4)
+				throw new Exception("Alpa records could not be initialized")
+		}		
 	}
  
 	def initProd = {
