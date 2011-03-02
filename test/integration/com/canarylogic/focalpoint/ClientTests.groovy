@@ -1,6 +1,7 @@
 package com.canarylogic.focalpoint
 
 import grails.test.*
+import com.canarylogic.focalpoint.utils.EntityConvertor
 
 class ClientTests extends GrailsUnitTestCase {
 	
@@ -42,7 +43,7 @@ class ClientTests extends GrailsUnitTestCase {
 		assertNotNull adminRole1.addRole (c1OrgId)
 		assertNotNull recRole1.addRole (c1OrgId)
 
-		Services candServiceForAdmin1 = new Services(serviceName:ServiceDefineEnum.candidate.toString(),isAccess:true,isDelete:true,isUpdate:true,isSelfGroup:false,isCreate:true)
+		Services candServiceForAdmin1 = new Services(serviceName:EntityConvertor.CAND_SERVICE,isAccess:true,isDelete:true,isUpdate:true,isSelfGroup:false,isCreate:true)
 		candServiceForAdmin1.role = adminRole1
 		if(!candServiceForAdmin1.validate()) {
 			String myErrs=""
@@ -51,7 +52,7 @@ class ClientTests extends GrailsUnitTestCase {
 		}
 		assertNotNull candServiceForAdmin1.save()
 		
-		Services candServiceForRec1 = new Services(serviceName:ServiceDefineEnum.candidate.toString(),isAccess:true,isDelete:true,isUpdate:true,isSelfGroup:false,isCreate:true)
+		Services candServiceForRec1 = new Services(serviceName:EntityConvertor.CAND_SERVICE,isAccess:true,isDelete:true,isUpdate:true,isSelfGroup:false,isCreate:true)
 		candServiceForRec1.role = recRole1
 		assertNotNull candServiceForRec1.save()
 
@@ -61,11 +62,11 @@ class ClientTests extends GrailsUnitTestCase {
 		assertNotNull adminRole2.addRole (c2OrgId)
 		assertNotNull recRole2.addRole (c2OrgId)
 		
-		Services candServiceForAdmin2 = new Services(serviceName:ServiceDefineEnum.candidate.toString(),isAccess:true,isDelete:true,isUpdate:true,isSelfGroup:false,isCreate:true)
+		Services candServiceForAdmin2 = new Services(serviceName:EntityConvertor.CAND_SERVICE,isAccess:true,isDelete:true,isUpdate:true,isSelfGroup:false,isCreate:true)
 		candServiceForAdmin2.role = adminRole2
 		assertNotNull candServiceForAdmin2.save()
 		
-		Services candServiceForRec2 = new Services(serviceName:ServiceDefineEnum.candidate.toString(),isAccess:true,isDelete:true,isUpdate:true,isSelfGroup:true,isCreate:true)
+		Services candServiceForRec2 = new Services(serviceName:EntityConvertor.CAND_SERVICE,isAccess:true,isDelete:true,isUpdate:true,isSelfGroup:true,isCreate:true)
 		candServiceForRec2.role = recRole2
 		assertNotNull candServiceForRec2.save()
 

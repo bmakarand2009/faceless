@@ -1,6 +1,5 @@
 package com.canarylogic.base
-
-import com.canarylogic.focalpoint.ServiceDefineEnum;
+import com.canarylogic.focalpoint.utils.EntityConvertor
 class TestConfig {
 	static String CANARY_APP_ID="foc-harvest"
 	static String CANARY_USER="mark@harvest.com"
@@ -14,7 +13,7 @@ class TestConfig {
 		mockParams.timestamp = new Date().time
 		mockParams.controller ="user"
 		mockParams.action ="createGroup"
-		mockParams.service = ServiceDefineEnum.candidate.toString()
+		mockParams.service = EntityConvertor.CAND_SERVICE
 		mockParams.signature = "mysingatur"
 		mockRequest.contentType = "application/xml"
 	}

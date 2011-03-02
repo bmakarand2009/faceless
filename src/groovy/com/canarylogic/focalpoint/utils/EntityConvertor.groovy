@@ -1,8 +1,14 @@
 package com.canarylogic.focalpoint.utils
 import groovy.xml.MarkupBuilder
 
+import com.canarylogic.focalpoint.*
 class EntityConvertor {
 
+	public static String CAND_SERVICE="candidate"
+	public static String ADMIN_SERVICE="admin"
+	
+	def static SERVICE_DOMAIN_MAP=['admin':User.class]
+	def static ENTITY_MAP=['Alpha':Alpha.class]
 	/**
 	 * Convert List of Candidates to corresponding XML based on client
 	 * Note: for each enity defined make sure getFieldVal() method is implemented in i
@@ -26,22 +32,19 @@ class EntityConvertor {
 	}
 	
 	
-	
-	
-	public def static getDomainName(def clientParser, String serviceName ) {
-		def serviceRecord = clientParser.service.find{it.@name == serviceName }
-		def  entityMapping = serviceRecord.entityMapping[0]
-		String entityName = entityMapping.@name
-//		log.debug "getDomainName for $serviceName returned $entityName"
-		return entityName
+	public def static getDomainClass(String applicationId, String serviceName ) {
+		def clientParser = new XmlParser().parseText(CLIENT_TEMPLATE)
+		def domainClass = SERVICE_DOMAIN_MAP.get(serviceName)
+		if(!domainClass) {
+			def serviceRecord = clientParser.service.find{it.@name == serviceName }
+			def  entityMapping = serviceRecord.entityMapping[0]
+			String entityName = entityMapping.@name
+			domainClass = ENTITY_MAP[entityName]		
+		}
+		println "getDomainName for $serviceName returned $domainClass.name"
+		return domainClass
 	}	
 	
-	
-	    def static convertToEntityMap(def attribMap,String serviceName) {
-			def cParser = new XmlParser().parseText(CLIENT_TEMPLATE)
-			convertToEntityMap(attribMap,cParser,serviceName)
-		}
-
 	
 	/*
 	 * @param attribMap = [firstName:"john", lastName="martin"]
@@ -51,9 +54,11 @@ class EntityConvertor {
 	 * 
 	 */
 	
-    def static convertToEntityMap(def attribMap, def clientParser, String serviceName) {
+    public def static convertToEntityMap(def attribMap, String applicationId, String serviceName) {
         //find the domainObject
 //        log.debug "convertToEntityMap called attribMap is $attribMap"
+		def clientParser = new XmlParser().parseText(CLIENT_TEMPLATE)
+		
         def resultAttribMap=[:]
         def serviceRecord = clientParser.service.find{it.@name == serviceName }
         def  entityMapping = serviceRecord.entityMapping[0]
@@ -75,6 +80,9 @@ class EntityConvertor {
     }
 	
 	
+	
+	
+	/////////////////////////////////////////
 		
 	private def static convertToClientMap(def entityList,def clientParser, String serviceName) {
         println "convertToClientMap called for $serviceName"

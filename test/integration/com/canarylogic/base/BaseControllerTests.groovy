@@ -2,7 +2,7 @@ package com.canarylogic.base
 
 import com.canarylogic.focalpoint.*
 import com.canarylogic.focalpoint.utils.EncryptionUtils;
-
+import com.canarylogic.focalpoint.utils.EntityConvertor;
 import grails.test.ControllerUnitTestCase;
 
 class BaseControllerTests  extends ControllerUnitTestCase {
@@ -27,7 +27,7 @@ class BaseControllerTests  extends ControllerUnitTestCase {
 		 mockParams.timestamp = new Date().time
 		 mockParams.controller ="base"
 		 mockParams.action ="auth"
-		 mockParams.service = ServiceDefineEnum.candidate.toString()
+		 mockParams.service = EntityConvertor.CAND_SERVICE
 		 mockParams.signature = calcSignature()
 		 mockRequest.contentType = "application/xml"
 	  }

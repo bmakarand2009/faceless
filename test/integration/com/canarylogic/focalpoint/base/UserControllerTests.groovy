@@ -4,7 +4,7 @@ package com.canarylogic.focalpoint.base
 
 import grails.test.ControllerUnitTestCase;
 import com.canarylogic.focalpoint.utils.EncryptionUtils;
-import com.canarylogic.focalpoint.ServiceDefineEnum
+import com.canarylogic.focalpoint.utils.EntityConvertor;
 import com.canarylogic.focalpoint.*
 import com.canarylogic.base.TestConfig;
 //grails test-app UserController
@@ -78,14 +78,14 @@ class UserControllerTests extends ControllerUnitTestCase {
 	void testAddServicePrivToRole() {
 		 def user1 = createTestUser()
 		 mockParams.roleName = EXISTING_ROLE
-		 mockParams.serviceName = ServiceDefineEnum.candidate.toString()
+		 mockParams.serviceName = EntityConvertor.CAND_SERVICE
 		 mockParams.isCreate = false
 		 mockParams.isUpdate = false
 		 
 		 controller.addServicePrivToRole()
 		 def xmlResp = controller.response.getContentAsString()
 		 def cParser = new XmlParser().parseText(xmlResp)
-		 assert cParser.serviceName.text() == ServiceDefineEnum.candidate.toString()
+		 assert cParser.serviceName.text() == EntityConvertor.CAND_SERVICE
 	}
 	 
 	 private User createTestUser() {

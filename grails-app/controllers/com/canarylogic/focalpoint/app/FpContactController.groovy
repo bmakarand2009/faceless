@@ -21,10 +21,10 @@ class FpContactController extends BaseController{
 			String orderField = params.orderField?params.String(orderField):'id'
 			String orderType=params.order?params.String(order):'asc'
 			
-			def tableClass = ServiceDefineEnum.getTableName(params.service)
+			def tableClass = EntityConvertor.getDomainClass(params.applicationId, params.service)
 			if(!tableClass) throw new RestException(ExMessages.LIST_OBJECT_FAILED,"No Domain  found for $params.service")
 			
-			def searchParamsMap = EntityConvertor.convertToEntityMap(params, params.service)
+			def searchParamsMap = EntityConvertor.convertToEntityMap(params,params.applicationId, params.service)
 			def client = Client.findByOrgId(params.applicationId)
 			if(!client) throw new RestException(ExMessages.LIST_OBJECT_FAILED,"Invalid applicationI $params.applicationId")
 			def resultList = tableClass.withCriteria {
@@ -51,7 +51,8 @@ class FpContactController extends BaseController{
 	def getRecord = {
 		log.debug "get Record Called for $params.service"
 		try {
-			def tableClass = ServiceDefineEnum.getTableName(params.service)
+//			def tableClass = ServiceDefineEnum.getTableName(params.service)
+			def tableClass = EntityConvertor.getDomainClass(params.applicationId, params.service)
 			def tableInst = tableClass.get(params.id)
 			if(tableInst) {
 				String xmlResp =  EntityConvertor.convertEntityToXml(tableInst, params.applicationId, params.service)
@@ -67,10 +68,10 @@ class FpContactController extends BaseController{
 	def updateRecord = {
 		log.debug "Update Record Called for $params.service and $params.id"
 		try {
-			def tableClass = ServiceDefineEnum.getTableName(params.service)
+			def tableClass = EntityConvertor.getDomainClass(params.applicationId, params.service)
 			def tableInst = tableClass.get(params.id)
 			if(!tableInst)throw new RestException(ExMessages.UPDATE_OBJECT_FAILED,"No Record found for $params.service and $params.id")
-			def tableParams = EntityConvertor.convertToEntityMap(params, params.service)
+			def tableParams = EntityConvertor.convertToEntityMap(params, params.applicationId, params.service)
 			tableInst.properties = tableParams
 			def updatedInst = tableInst.save()
 			if(updatedInst) {
@@ -87,7 +88,7 @@ class FpContactController extends BaseController{
 	def deleteRecord = {
 		log.debug "Delete Record Called for $params.service and $params.id"
 		try {
-			def tableClass = ServiceDefineEnum.getTableName(params.service)
+			def tableClass = EntityConvertor.getDomainClass(params.applicationId, params.service)
 			def tableInst = tableClass.get(params.id)
 			if(tableInst) {
 				tableInst.delete(flush: true)
@@ -105,7 +106,7 @@ class FpContactController extends BaseController{
 		try  {
 			//check if mandatory params are present
 			log.debug "Create Record  params recieved are $params"
-			def tableClass = ServiceDefineEnum.getTableName(params.service)
+			def tableClass = EntityConvertor.getDomainClass(params.applicationId, params.service)
 			def tableParams = EntityConvertor.convertToEntityMap(params, params.service)
 			def tableInst = tableClass.newInstance()
 			tableInst.properties = tableParams

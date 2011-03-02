@@ -4,6 +4,7 @@ import grails.util.GrailsUtil
 import grails.util.Environment
 
 import com.canarylogic.focalpoint.*;
+import com.canarylogic.focalpoint.utils.EntityConvertor;
 
 class BootStrap {
 
@@ -73,12 +74,12 @@ class BootStrap {
 		adminRole2.addRole (c2OrgId)
 		
 		//Step3:Add Services to Roles		
-		Services candServiceRole1 = new Services(serviceName:ServiceDefineEnum.candidate.toString(),
+		Services candServiceRole1 = new Services(serviceName:EntityConvertor.CAND_SERVICE,
 			isAccess:true,isDelete:true,isUpdate:true,isSelfGroup:false,isCreate:true)
 		candServiceRole1.role = adminRole1
 		candServiceRole1.save()
 		
-		Services candServiceRole2 = new Services(serviceName:ServiceDefineEnum.candidate.toString(),
+		Services candServiceRole2 = new Services(serviceName:EntityConvertor.CAND_SERVICE,
 			isAccess:true,isDelete:true,isUpdate:true,isSelfGroup:true,isCreate:true)
 		candServiceRole2.role = adminRole2
 		candServiceRole2.save()
