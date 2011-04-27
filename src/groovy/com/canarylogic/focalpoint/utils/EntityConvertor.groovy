@@ -4,6 +4,7 @@ import groovy.xml.MarkupBuilder
 import com.canarylogic.focalpoint.*
 class EntityConvertor {
 
+	
 	public static String CAND_SERVICE="candidate"
 	public static String ADMIN_SERVICE="admin"
 	
@@ -15,25 +16,25 @@ class EntityConvertor {
 	 * @param entityList
 	 * @param applicationId
 	 * @param serviceName
-	 * @return
+	 * @returns
 	 */
-	public static String convertEntityListToXml(def entityList, String applicationId, String serviceName) {
-		def cParser = new XmlParser().parseText(CLIENT_TEMPLATE)
+	public static String convertEntityListToXml(def entityList, String aPod, String serviceName) {
+		def cParser = new XmlParser().parseText(aPod)
 		def clientList = convertToClientMap(entityList,cParser,serviceName)
 		String clientXml = convertToXml(clientList)
 		return clientXml
 	}
 	
-	public static String convertEntityToXml(def aEntity, String applicationId, String serviceName) {
-		def cParser = new XmlParser().parseText(CLIENT_TEMPLATE)
+	public static String convertEntityToXml(def aEntity, String aPod, String serviceName) {
+		def cParser = new XmlParser().parseText(aPod)
 		def clientList = convertToClientMap([aEntity],cParser,serviceName)
 		String clientXml = convertToXml(clientList)
 		return clientXml
 	}
 	
 	
-	public def static getDomainClass(String applicationId, String serviceName ) {
-		def clientParser = new XmlParser().parseText(CLIENT_TEMPLATE)
+	public def static getDomainClass(String aPod, String serviceName ) {
+		def clientParser = new XmlParser().parseText(aPod)
 		def domainClass = SERVICE_DOMAIN_MAP.get(serviceName)
 		if(!domainClass) {
 			def serviceRecord = clientParser.service.find{it.@name == serviceName }
@@ -54,10 +55,10 @@ class EntityConvertor {
 	 * 
 	 */
 	
-    public def static convertToEntityMap(def attribMap, String applicationId, String serviceName) {
+    public def static convertToEntityMap(def attribMap, String aPod, String serviceName) {
         //find the domainObject
 //        log.debug "convertToEntityMap called attribMap is $attribMap"
-		def clientParser = new XmlParser().parseText(CLIENT_TEMPLATE)
+		def clientParser = new XmlParser().parseText(aPod)
 		
         def resultAttribMap=[:]
         def serviceRecord = clientParser.service.find{it.@name == serviceName }

@@ -71,6 +71,10 @@ log4j = {
 	//    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
 	//}
 
+	debug 'grails.app',
+	'grails.app.Services',
+   'grails.app.Controllers'
+   
 	error  'org.codehaus.groovy.grails.web.servlet',  //  controllers
 		   'org.codehaus.groovy.grails.web.pages', //  GSP
 		   'org.codehaus.groovy.grails.web.sitemesh', //  layouts
@@ -93,5 +97,5 @@ log4j = {
 awsS3{
 	accessKey="AKIAJMFD4VQXJ53CIA6Q"
 	secretKey="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"
-	baseBucket="canaryheadless"
+	baseBucket="canaryfaceless"
 }

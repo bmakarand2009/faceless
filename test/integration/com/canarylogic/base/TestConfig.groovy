@@ -1,7 +1,7 @@
 package com.canarylogic.base
 import com.canarylogic.focalpoint.utils.EntityConvertor
 class TestConfig {
-	static String CANARY_APP_ID="foc-harvest"
+	static String CANARY_APP_ID="canary-test-123"
 	static String CANARY_USER="mark@harvest.com"
 	
 	static String EXISTING_GRP="admin"

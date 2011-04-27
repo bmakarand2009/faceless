@@ -15,20 +15,25 @@ environments {
         dataSource {
             dbCreate = "update"//create-drop" // one of 'create', 'create-drop','update'
 //            url = "jdbc:hsqldb:mem:devDB"
-			url = "jdbc:mysql://localhost/faceless2"
+			url = "jdbc:mysql://mycanarydb.c8mvjbrpgxos.us-east-1.rds.amazonaws.com/devfaceless"
 			driverClassName = "com.mysql.jdbc.Driver"
-			username = "root"
-			password = "mysql"
+			username = "faceless_admin"
+			password = "tiger"
         }
     }
     test {
         dataSource {
             dbCreate = "update"
 //            url = "jdbc:hsqldb:mem:testDb"
-			url = "jdbc:mysql://localhost/faceless2"
+			url = "jdbc:mysql://mycanarydb.c8mvjbrpgxos.us-east-1.rds.amazonaws.com/devfaceless"
 			driverClassName = "com.mysql.jdbc.Driver"
-			username = "root"
-			password = "mysql"
+			username = "faceless_admin"
+			password = "tiger"
+			
+//			url = "jdbc:mysql://localhost/faceless2"
+//			driverClassName = "com.mysql.jdbc.Driver"
+//			username = "root"
+//			password = "mysql"
         }
     }
     production {

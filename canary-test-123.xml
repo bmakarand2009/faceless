@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<client applicationId= 'canary-test-123' name='internalClient'>
+	<service name='candidate' isHotList='true' isDeleteCol='true'>
+		
+		<entityMapping name='Alpha'>
+			<column name='id' alias='id'/>
+			<column name='pkey' alias='pkey'/>
+			<column name='c1' alias='firstName'/>
+			<column name='c2' alias='lastName'/>
+		</entityMapping>
+		
+		
+		
+		<viewMapping name='CandidateView'>
+			<attribute nodeName='id' displayLabel='Id' listPanelIdx='-1' isSearchField='true'
+				toolTip='false'  isDetailsPanel='true' >
+				<attributeType type='textBox' tabName='1' columnNo='0'/>
+			</attribute>
+			
+			<attribute nodeName='pkey' displayLabel='email' listPanelIdx='-1' isSearchField='true'
+				toolTip='false'  isDetailsPanel='true' >
+				<attributeType type='textBox' tabName='1' columnNo='0'/>
+			</attribute>
+			
+
+			<attribute nodeName='firstName' displayLabel='First Name'   listPanelIdx='1' isSearchField='true'
+				toolTip='false'  isDetailsPanel='true' >
+				<attributeType type='textBox' tabName='1' columnNo='1'/>
+			</attribute>
+			
+			<attribute nodeName='lastName' displayLabel='Last Name' listPanelIdx='-1' isSearchField='true'
+				toolTip='false'  isDetailsPanel='true' >
+				<attributeType type='textBox' tabName='1' columnNo='1'/>
+			</attribute>
+		</viewMapping>
+		
+	</service>
+	
+  		<service name='admin' isHotList='false' isDeleteCol='false'>
+	 <entityMapping name='User'>
+		 <column name='username' alias='userName'/>
+		 <column name='enabled' alias='enabled'/>
+		 <column name='accountExpired' alias='accountExpired'/>
+		 <column name='accountLocked' alias='accountLocked'/>
+		 <column name='passwordExpired' alias='passwordExpired'/>
+	 </entityMapping>
+ 
+	 <viewMapping name='UserView'>
+		 <attribute nodeName='userName' displayLabel='User Name'   listPanelIdx='1' isSearchField='true'
+			 toolTip='false'  isDetailsPanel='true' >
+			 <attributeType type='textBox' tabName='1' columnNo='1'/>
+		 </attribute>
+		 
+		 <attribute nodeName='lastName' displayLabel='Last Name' listPanelIdx='-1' isSearchField='true'
+			 toolTip='false'  isDetailsPanel='true' >
+			 <attributeType type='textBox' tabName='1' columnNo='1'/>
+		 </attribute>
+	 </viewMapping>
+ 
+	</service>
+</client>

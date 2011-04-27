@@ -41,10 +41,6 @@ class BootStrap {
 	
 	
 	def initTest = {
-		
-		//new Alpha(c1:"shyam",c2:"sundar").save()
-		//new Alpha(c1:"shivaji",c2:"sardar").save()
-
 	}
 	 
 	private def createClient(String orgId,String orgDesc) {
@@ -52,16 +48,15 @@ class BootStrap {
 		c1.save()
 	}
 	def initDev = {		
-		String c1OrgId = "foc-canary",c1OrgName='canary'
+		String c1OrgId = "canary-test-123",c1OrgName='canary'
 		def client = Client.findByOrgId(c1OrgId)
 		if(!client)
-			setupDevClient()
+			setupDevClient(c1OrgId,c1OrgName)
 		
 	}
 		
-	private def setupDevClient() {
+	private def setupDevClient(String c1OrgId,String c1OrgName) {
 		//Step1: Create Clients Canary and Harvest
-		String c1OrgId = "foc-canary",c1OrgName='canary'
 		String c2OrgId = "foc-harvest",c2OrgName='harvest'
 		createClient(c1OrgId,c1OrgName)
 		createClient(c2OrgId,c2OrgName)

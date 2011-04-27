@@ -32,7 +32,7 @@ class FpContactControllerTests extends ControllerUnitTestCase {
 	 */
 	void testSearchRecords() {
 		setCommonParams()
-		def searchParamsMap = [firstName:"zing"]
+		def searchParamsMap = [firstName:"bob"]
 		searchParamsMap.each{k,v ->
 			 mockParams."${k.toString()}" = v.toString()
 		}
