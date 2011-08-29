@@ -1,5 +1,6 @@
 package com.canarylogic.focalpoint.utils
 import groovy.xml.MarkupBuilder
+import com.canarylogic.focalpoint.contacts.*
 
 import com.canarylogic.focalpoint.*
 class EntityConvertor {
@@ -7,9 +8,10 @@ class EntityConvertor {
 	
 	public static String CAND_SERVICE="candidate"
 	public static String ADMIN_SERVICE="admin"
+	public static String VENDOR_SERVICE="vendor"
 	
 	def static SERVICE_DOMAIN_MAP=['admin':User.class]
-	def static ENTITY_MAP=['Alpha':Alpha.class]
+	def static ENTITY_MAP=['Alpha':Alpha.class,'VendorsMo':VendorsMo.class]
 	/**
 	 * Convert List of Candidates to corresponding XML based on client
 	 * Note: for each enity defined make sure getFieldVal() method is implemented in i
@@ -55,9 +57,9 @@ class EntityConvertor {
 	 * 
 	 */
 	
-    public def static convertToEntityMap(def attribMap, String aPod, String serviceName) {
+    public def  convertToEntityMap(def attribMap, String aPod, String serviceName) {
         //find the domainObject
-//        log.debug "convertToEntityMap called attribMap is $attribMap"
+        log.debug "convertToEntityMap called attribMap is $attribMap"
 		def clientParser = new XmlParser().parseText(aPod)
 		
         def resultAttribMap=[:]
@@ -70,13 +72,16 @@ class EntityConvertor {
         String entityName = entityMapping.@name
         
         def viewMappingRecord = serviceRecord.viewMapping[0]
+
+				
         viewMappingRecord.attribute.each{
            String nodeName = it.@nodeName
+		   log.debug "finding mapping for $nodeName"
            if(columnMap[nodeName] != null &&  attribMap[nodeName] != null){
                resultAttribMap.put(columnMap[nodeName], attribMap[nodeName])
             }
         }
-//        log.debug "convertToEntityMap  for service $serviceName returned $resultAttribMap"
+        log.debug "convertToEntityMap  for service $serviceName returned $resultAttribMap"
         return resultAttribMap
     }
 	
@@ -130,73 +135,4 @@ class EntityConvertor {
  }
 	
 	
-
-	static def CLIENT_TEMPLATE = '''
-	   <client applicationId= 'b653b3e0-cc6f-4115-8e93-02142b03d8dd-foc' name='internalClient'>
-	   
-	
-			<service name='candidate' isHotList='true' isDeleteCol='true'>
-				
-				<entityMapping name='Alpha'>
-					<column name='id' alias='id'/>
-					<column name='pkey' alias='pkey'/>
-					<column name='c1' alias='firstName'/>
-					<column name='c2' alias='lastName'/>
-				</entityMapping>
-				
-				
-				
-				<viewMapping name='CandidateView'>
-					<attribute nodeName='id' displayLabel='Id' listPanelIdx='-1' isSearchField='true'
-						toolTip='false'  isDetailsPanel='true' >
-						<attributeType type='textBox' tabName='1' columnNo='0'/>
-					</attribute>
-					
-					<attribute nodeName='pkey' displayLabel='email' listPanelIdx='-1' isSearchField='true'
-						toolTip='false'  isDetailsPanel='true' >
-						<attributeType type='textBox' tabName='1' columnNo='0'/>
-					</attribute>
-					
-
-					<attribute nodeName='firstName' displayLabel='First Name'   listPanelIdx='1' isSearchField='true'
-						toolTip='false'  isDetailsPanel='true' >
-						<attributeType type='textBox' tabName='1' columnNo='1'/>
-					</attribute>
-					
-					<attribute nodeName='lastName' displayLabel='Last Name' listPanelIdx='-1' isSearchField='true'
-						toolTip='false'  isDetailsPanel='true' >
-						<attributeType type='textBox' tabName='1' columnNo='1'/>
-					</attribute>
-				</viewMapping>
-				
-			</service>
-			
-    		<service name='admin' isHotList='false' isDeleteCol='false'>
-			 <entityMapping name='User'>
-				 <column name='username' alias='userName'/>
-				 <column name='enabled' alias='enabled'/>
-				 <column name='accountExpired' alias='accountExpired'/>
-				 <column name='accountLocked' alias='accountLocked'/>
-				 <column name='passwordExpired' alias='passwordExpired'/>
-			 </entityMapping>
-		 
-			 <viewMapping name='UserView'>
-				 <attribute nodeName='userName' displayLabel='User Name'   listPanelIdx='1' isSearchField='true'
-					 toolTip='false'  isDetailsPanel='true' >
-					 <attributeType type='textBox' tabName='1' columnNo='1'/>
-				 </attribute>
-				 
-				 <attribute nodeName='lastName' displayLabel='Last Name' listPanelIdx='-1' isSearchField='true'
-					 toolTip='false'  isDetailsPanel='true' >
-					 <attributeType type='textBox' tabName='1' columnNo='1'/>
-				 </attribute>
-			 </viewMapping>
-		 
-			</service>
-
-			
-			
-	   </client>
-	'''
-
 }

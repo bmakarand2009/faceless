@@ -68,12 +68,26 @@ class EntityXmlService {
 		String xmlResp=null;
 		String aPod = podsFile(params.applicationId)
 		def tableClass = EntityConvertor.getDomainClass(aPod, params.service)
-		def tableParams = EntityConvertor.convertToEntityMap(params,aPod, params.service)
+		//log.debug "tableClass received is $tableClass"
+		def tableParams = convertToEntityMap(params,aPod, params.service)
+		//log.debug "converted tableParams are $tableParams"
+		def client = Client.findByOrgId(params.applicationId)
+		if(!client) throw new RestException(ExMessages.LIST_OBJECT_FAILED,"Invalid applicationI $params.applicationId")
+		tableParams.put("parent",client)
+		
 		def tableInst = tableClass.newInstance()
 		tableInst.properties = tableParams
-		def tableNewInst= tableInst.save()
-		if(tableNewInst!=null)
-			xmlResp = EntityConvertor.convertEntityToXml(tableNewInst, aPod, params.service)
+		
+		if (!tableInst.hasErrors() && tableInst.save(flush: true)) {
+			xmlResp = EntityConvertor.convertEntityToXml(tableInst, aPod, params.service)
+			log.debug "$xmlResp"
+			log.debug "new tableInst createed"
+		}else{
+			tableInst.errors.each {
+				log.debug it
+				xmlResp = it
+		   }
+		}
 		return xmlResp	
 	}
 	
@@ -101,5 +115,54 @@ class EntityXmlService {
 			xmlResp = EntityConvertor.convertEntityToXml(tableInst, aPod, params.service)
 		return xmlResp	
 	}
+	
+	
+	
+	/////////////////////////
+	///Following methods are private and static, copied form EntityConvertor, slowly
+	//we will move metods from EntityConvertor to this class to avoid confusion of two classes
+	
+	
+	/*
+	* @param attribMap = [firstName:"john", lastName="martin"]
+	* @param serviceName e.g "candidateService
+	* @clientParser : new XmlParser().parseText(xml)
+	* @return [c1:john,c2:martin]
+	*
+	*/
+   
+    def convertToEntityMap(def attribMap, String aPod, String serviceName) {
+	   //find the domainObject
+	  // log.debug "convertToEntityMap called attribMap is $attribMap"
+	   def clientParser = new XmlParser().parseText(aPod)
+	   
+	   def resultAttribMap=[:]
+	   def serviceRecord = clientParser.service.find{it.@name == serviceName }
+	   //log.debug "service record found $serviceRecord"
+	   def  entityMapping = serviceRecord.entityMapping[0]
+	   def columnMap = [:]
+	   entityMapping.column.each{
+		  columnMap.put(it.@alias,it.@name)
+	   }
+	  // log.debug "columnMap value is $columnMap"
+	   String entityName = entityMapping.@name
+	   
+	   def viewMappingRecord = serviceRecord.viewMapping[0]
+	   
+	   //log.debug "start looping for viewMapping Records $viewMappingRecord"
+	   viewMappingRecord.attribute.each{
+		  String nodeName = it.@nodeName
+		 // log.debug "finding mapping for $nodeName"
+		  if(columnMap[nodeName] != null &&  attribMap[nodeName] != null){
+			  resultAttribMap.put(columnMap[nodeName], attribMap[nodeName])
+		   }
+		  //log.debug "going for next nodeName"
+	   }
+        log.debug "convertToEntityMap  for service $serviceName returned $resultAttribMap"
+	   return resultAttribMap
+   }
+   
+   
+   
 
 }

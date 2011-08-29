@@ -88,8 +88,5 @@ class FpContactController extends BaseController{
 			displayError(ex)
 		}
 	}
-	
-	
-	
 		
 }

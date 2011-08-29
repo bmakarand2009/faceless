@@ -3,6 +3,8 @@ package com.canarylogic.focalpoint.app
 import grails.test.*
 import com.canarylogic.focalpoint.*;
 import com.canarylogic.base.TestConfig;
+import com.canarylogic.focalpoint.utils.EntityConvertor
+
 
 class FpContactControllerTests extends ControllerUnitTestCase {
 	
@@ -54,11 +56,27 @@ class FpContactControllerTests extends ControllerUnitTestCase {
 	
 	void testCreateRecord() {
 		setCommonParams()
-		mockParams.firstName = "myFirstCandName"
-		mockParams.lastName = "mylastName"
+		if(mockParams.service == EntityConvertor.VENDOR_SERVICE){
+			mockParams.company = "${new Date().time}company"
+			mockParams.firstName = "myfirstVendorName"
+			mockParams.lastName  = "mylastVendorName"
+			mockParams.hasClients = "true2"
+			mockParams.hasCandidates = "false2"
+			mockParams.city = "alpharetta"
+			mockParams.state ="ga"
+			mockParams.zip = "30022"
+			mockParams.expertiseArea = "java"
+			mockParams.notes="has a strong foothold in atlanta"
+			mockParams.isDesi ="true2"
+		}else{
+		    mockParams.pkey = "${new Date().time}cand"
+			mockParams.firstName = "myFirstCandName"
+			mockParams.lastName = "mylastName"
+		}
 		
 		controller.createRecord()
 		def xmlResp = controller.response.getContentAsString()
+		assert xmlResp == "hello"
 		def cParser = new XmlParser().parseText(xmlResp)
 		assertNotNull cParser.record.id.text()
 		cParser.record.firstName.text() == mockParams.lastName

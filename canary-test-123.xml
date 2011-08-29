@@ -34,9 +34,90 @@
 			</attribute>
 		</viewMapping>
 		
+	</service >
+	
+	<service name='vendor' isHotList='false' isDeleteCol='true'>
+		<entityMapping name='VendorsMo'>
+			<column name='id' alias='id'/>
+			<column name='pkey' alias='company'/>
+			<column name='c1' alias='firstName'/>
+			<column name='c2' alias='lastName'/>
+			<column name='c3' alias='hasClients'/>
+			<column name='c4' alias='hasCandidates'/>
+			<column name='c5' alias='city'/>
+			<column name='c6' alias='state'/>
+			<column name='c7' alias='zip'/>
+			<column name='c8' alias='expertiseAreas'/>
+			<column name='c9' alias='notes'/>
+			<column name='c10' alias='isDesi'/>
+		</entityMapping>
+		
+		<viewMapping name='VendorView'>
+			<attribute nodeName='id' displayLabel='Id' listPanelIdx='-1' isSearchField='true'
+				toolTip='false'  isDetailsPanel='true' >
+				<attributeType type='textBox' tabName='1' columnNo='0'/>
+			</attribute>
+			
+			<attribute nodeName='company' displayLabel='email' listPanelIdx='-1' isSearchField='true'
+				toolTip='false'  isDetailsPanel='true' >
+				<attributeType type='textBox' tabName='1' columnNo='0'/>
+			</attribute>
+			
+
+			<attribute nodeName='firstName' displayLabel='First Name'   listPanelIdx='1' isSearchField='true'
+				toolTip='false'  isDetailsPanel='true' >
+				<attributeType type='textBox' tabName='1' columnNo='1'/>
+			</attribute>
+			
+			<attribute nodeName='lastName' displayLabel='Last Name' listPanelIdx='-1' isSearchField='true'
+				toolTip='false'  isDetailsPanel='true' >
+				<attributeType type='textBox' tabName='1' columnNo='1'/>
+			</attribute>
+			
+			<attribute nodeName='hasClients' displayLabel='Last Name' listPanelIdx='-1' isSearchField='true'
+				toolTip='false'  isDetailsPanel='true' >
+				<attributeType type='textBox' tabName='1' columnNo='1'/>
+			</attribute>
+			
+			<attribute nodeName='hasCandidates' displayLabel='Last Name' listPanelIdx='-1' isSearchField='true'
+				toolTip='false'  isDetailsPanel='true' >
+				<attributeType type='textBox' tabName='1' columnNo='1'/>
+			</attribute>
+			
+			<attribute nodeName='city' displayLabel='Last Name' listPanelIdx='-1' isSearchField='true'
+				toolTip='false'  isDetailsPanel='true' >
+				<attributeType type='textBox' tabName='1' columnNo='1'/>
+			</attribute>
+			
+			<attribute nodeName='state' displayLabel='Last Name' listPanelIdx='-1' isSearchField='true'
+				toolTip='false'  isDetailsPanel='true' >
+				<attributeType type='textBox' tabName='1' columnNo='1'/>
+			</attribute>
+			
+			<attribute nodeName='zip' displayLabel='Last Name' listPanelIdx='-1' isSearchField='true'
+				toolTip='false'  isDetailsPanel='true' >
+				<attributeType type='textBox' tabName='1' columnNo='1'/>
+			</attribute>
+			
+			<attribute nodeName='expertiseAreas' displayLabel='Last Name' listPanelIdx='-1' isSearchField='true'
+				toolTip='false'  isDetailsPanel='true' >
+				<attributeType type='textBox' tabName='1' columnNo='1'/>
+			</attribute>
+			
+			<attribute nodeName='notes' displayLabel='Last Name' listPanelIdx='-1' isSearchField='true'
+				toolTip='false'  isDetailsPanel='true' >
+				<attributeType type='textBox' tabName='1' columnNo='1'/>
+			</attribute>
+			<attribute nodeName='isDesi' displayLabel='Last Name' listPanelIdx='-1' isSearchField='true'
+				toolTip='false'  isDetailsPanel='true' >
+				<attributeType type='textBox' tabName='1' columnNo='1'/>
+			</attribute>
+			
+		</viewMapping>
 	</service>
 	
-  		<service name='admin' isHotList='false' isDeleteCol='false'>
+		
+  	<service name='admin' isHotList='false' isDeleteCol='false'>
 	 <entityMapping name='User'>
 		 <column name='username' alias='userName'/>
 		 <column name='enabled' alias='enabled'/>
