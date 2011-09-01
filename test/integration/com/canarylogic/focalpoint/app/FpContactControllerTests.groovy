@@ -4,6 +4,7 @@ import grails.test.*
 import com.canarylogic.focalpoint.*;
 import com.canarylogic.base.TestConfig;
 import com.canarylogic.focalpoint.utils.EntityConvertor
+import com.canarylogic.focalpoint.contacts.VendorsMo
 
 
 class FpContactControllerTests extends ControllerUnitTestCase {
@@ -21,6 +22,7 @@ class FpContactControllerTests extends ControllerUnitTestCase {
 
 	private void setCommonParams(){
 		TestConfig.setCommonParams(mockParams,mockRequest)
+		
 	}
 	
 	
@@ -34,7 +36,12 @@ class FpContactControllerTests extends ControllerUnitTestCase {
 	 */
 	void testSearchRecords() {
 		setCommonParams()
-		def searchParamsMap = [firstName:"bob"]
+		def searchParamsMap = [:]
+		if(mockParams.service == EntityConvertor.VENDOR_SERVICE){
+			searchParamsMap.put("firstName","myfirstVendorName")
+		}else{
+			 searchParamsMap.put("firstName","bob")
+		}
 		searchParamsMap.each{k,v ->
 			 mockParams."${k.toString()}" = v.toString()
 		}
@@ -51,7 +58,7 @@ class FpContactControllerTests extends ControllerUnitTestCase {
 		controller.listRecords()
 		def xmlResult = controller.response.getContentAsString()
 		def cParser = new XmlSlurper().parseText(xmlResult)
-		assert cParser.record.size() == 20
+		assert cParser.record.size() >= 10
     }
 	
 	void testCreateRecord() {
@@ -93,7 +100,7 @@ class FpContactControllerTests extends ControllerUnitTestCase {
 	
 	void testUpdateRecord() {
 		setCommonParams()
-		mockParams.id=1 //TBD : make sure this record exists
+		mockParams.id=21 //TBD : make sure this record exists
 		mockParams.firstName = "updatedName"
 		controller.updateRecord()
 		def xmlResp = controller.response.getContentAsString()

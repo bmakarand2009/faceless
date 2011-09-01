@@ -13,7 +13,7 @@ class TestConfig {
 		mockParams.timestamp = new Date().time
 		mockParams.controller ="user"
 		mockParams.action ="createGroup"
-		mockParams.service = EntityConvertor.CAND_SERVICE
+		mockParams.service = EntityConvertor.VENDOR_SERVICE
 		mockParams.signature = "mysingatur"
 		mockRequest.contentType = "application/xml"
 	}
