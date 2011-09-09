@@ -3,6 +3,7 @@ import org.codehaus.groovy.grails.commons.GrailsApplication
 import grails.util.GrailsUtil
 import grails.util.Environment
 import com.canarylogic.focalpoint.contacts.VendorsMo
+import com.canarylogic.focalpoint.contacts.ChildVendorsMo
 
 import com.canarylogic.focalpoint.*;
 import com.canarylogic.focalpoint.utils.EntityConvertor;
@@ -18,7 +19,7 @@ class BootStrap {
 		 switch(GrailsUtil.environment){
 			 case "development":
 			   println "#### Development Mode (Start Up)"
-			  // initDev()
+			  initDev()
 			   break
 			 case "test":
 			   println "#### Test Mode (Start Up)"
@@ -120,10 +121,15 @@ class BootStrap {
 			def vendorInst1 = new VendorsMo(pkey:"${new Date().time}company$i",c1:"myfirstVendorName$i",c2:"mylastVendorName",
 				c3:"true",c4:"false",c5:"alpharetta",c6:"ga",c7:"30022",c8:"java",c9:"has a strong foothold in atlanta",
 				c10:"true2",parent:client)
-				
+			
 			println "Vendor parent assigent as $client.orgId"
 			if (!vendorInst1.hasErrors() && vendorInst1.save(flush: true)) {
+				def childVendorsMo = new ChildVendorsMo(pkey:"abc@gmail.com",c2:"hello",c3:"world",c4:"goodness")
+				childVendorsMo.parent = vendorInst1
 				println "new tableInst createed"
+				childVendorsMo.save(flush:true)
+				//Add some childs over htere
+				
 			}else{
 				vendorInst1.errors.each {
 					throw new Exception(it)

@@ -22,6 +22,9 @@ class VendorsMo {
 	String c11;
 	String c12;
 	
+	static hasMany=[child1:ChildVendorsMo]
+	
+	
 	Client parent
 	
 	

@@ -10,6 +10,7 @@ class Alpha {
 	String c2;
 	
 	Client parent
+	static hasMany=[child:ChildAlpha]
 	
 	
     static constraints = {

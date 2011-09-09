@@ -83,7 +83,7 @@ class FpContactControllerTests extends ControllerUnitTestCase {
 		
 		controller.createRecord()
 		def xmlResp = controller.response.getContentAsString()
-		assert xmlResp == "hello"
+//		assert xmlResp == "hello"
 		def cParser = new XmlParser().parseText(xmlResp)
 		assertNotNull cParser.record.id.text()
 		cParser.record.firstName.text() == mockParams.lastName
@@ -100,7 +100,7 @@ class FpContactControllerTests extends ControllerUnitTestCase {
 	
 	void testUpdateRecord() {
 		setCommonParams()
-		mockParams.id=21 //TBD : make sure this record exists
+		mockParams.id=9 //TBD : make sure this record exists
 		mockParams.firstName = "updatedName"
 		controller.updateRecord()
 		def xmlResp = controller.response.getContentAsString()

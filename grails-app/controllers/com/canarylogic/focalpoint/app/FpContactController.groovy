@@ -19,7 +19,7 @@ class FpContactController extends BaseController{
 	//list or searchRecords(searcParams from a list and need to create a query based on that)
 	//searchRecords([searchKey:SearchValue],service,applicationId,offset,max,orderField,order(asc,desc)
 	def listRecords = {
-		log.debug "search Records Called for $params.service"
+		log.debug "search or List Records Called for $params.service"
 
 		try  {
 			//check if mandatory params are present

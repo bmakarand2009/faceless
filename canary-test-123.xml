@@ -50,6 +50,7 @@
 			<column name='c8' alias='expertiseAreas'/>
 			<column name='c9' alias='notes'/>
 			<column name='c10' alias='isDesi'/>
+			
 		</entityMapping>
 		
 		<viewMapping name='VendorView'>
@@ -112,6 +113,8 @@
 				toolTip='false'  isDetailsPanel='true' >
 				<attributeType type='textBox' tabName='1' columnNo='1'/>
 			</attribute>
+			
+			
 			
 		</viewMapping>
 	</service>
