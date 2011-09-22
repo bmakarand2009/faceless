@@ -1,10 +1,10 @@
 package com.canarylogic.focalpoint
 
-class ContactService {
+class ContactService {	
 
-    static transactional = true
+    static transactional = false
 
-    def serviceMethod() {
+    def creat() {
 
     }
 }
