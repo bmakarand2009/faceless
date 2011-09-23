@@ -2,6 +2,10 @@ package com.canarylogic.sing
 
 class ContactDetails {
 
+	static searchable = {
+	     root false
+	}
+	
 	String contactType // is it email/webaddress/simpleaddrss/phonenumber
 	String contactValue //value of te field, can be address too
 	String category //if home/work/other

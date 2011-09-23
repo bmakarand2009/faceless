@@ -2,6 +2,8 @@ package com.canarylogic.sing
 
 class ContactAddress {
 
+//	static searchable = true
+	
 	String street
 	String city
 	String state

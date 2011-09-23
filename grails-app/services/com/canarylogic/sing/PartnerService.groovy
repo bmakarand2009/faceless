@@ -7,13 +7,25 @@ class PartnerService {
     }
 	
 	def createContact(def paramsMap,Client parent,def addressList, def contactDetailsList=null){
+		
+		
 		Contact c = new Contact(paramsMap)
 		c.parent = parent
-		if(addressList)
-			c.addressList = addressList
-		if(contactDetailsList)
+
+		if(addressList){
+			c.contactAddresses = addressList
+			c.contactAddresses.each{
+				it.contact = c
+			}
+		}
+		if(contactDetailsList){
 			c.contactDetailsList = contactDetailsList
-		c.save(failOnError: true)
+			c.contactDetailsList.each{
+				it.contact = c
+			}
+		}
+		c.save(failOnError:true)
+		return c
 	}
 	
 }

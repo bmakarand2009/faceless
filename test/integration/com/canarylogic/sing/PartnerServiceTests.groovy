@@ -20,31 +20,47 @@ class PartnerServiceTests extends GrailsUnitTestCase {
 		
 	}
 	void testCreatePartner() {
-		def params=[suffix:"Mr",firstName:"john",lastName:"martin",createdBy:"testUser",updatedBy:"testUser"]
 		def client = Client.findByOrgId(CANARY_APP_ID)
 		assert client!= null
 		String streetName = "statebridge road"
-		ContactAddress aContactAddress = new ContactAddress(street:streetName,city:"alpharetta")
-		def contactAddressList = [aContactAddress]
-		String emailType = 'email'
-		ContactDetails aContactDetails = new ContactDetails(contactType:emailType,contactValue:'hello@abc.com',category:'home')
-		def contactDetailsList = [aContactDetails]
-		
-		def aPartner = partnerService.createContact(params,client,contactAddressList,contactDetailsList)
+				
+		def resultMap = createContactObjectParams("john","martin","john.martin@ipilong.com",streetName,"alpharetta")
+		def contactAddressList = resultMap.contactAddresses
+		contactAddressList.each{
+			log.debug it.street
+		}
+		def aPartner = partnerService.createContact(resultMap.paramsMap,client,contactAddressList,resultMap.contactDetailsList)
 		assertNotNull aPartner
-		def aList = aPartner.addressList
+		assertNotNull aPartner.dateCreated
+		assertNotNull aPartner.contactAddresses
+		
+		def aList = aPartner.contactAddresses
 		assert aList.size() == 1
 		aList.each{
-			assert it.street == streetName
+			assertNotNull it.id
 		}
 		def cList = aPartner.contactDetailsList
 		assert cList.size() ==1
 		cList.each{
-			assert it.contactType == emailType
+			assertNotNull it.id
 		}
-		
-		
-		//get partner
-		def aContact = Contact.findBy
     }
+	
+	private def createContactObjectParams(String firstNameStr, String lastNameStr,String emailStr,String streetName,String cityName){
+		ContactAddress aContactAddress = new ContactAddress(street:streetName,city:cityName)
+		def contactAddressList = [aContactAddress]
+		
+		String emailType = 'email'
+		ContactDetails aContactDetails = new ContactDetails(contactType:emailType,contactValue:emailStr,category:'home')
+		def contactDetailsList = [aContactDetails]
+		
+		def paramsMap=[suffix:"Mr",firstName:firstNameStr,lastName:lastNameStr,createdBy:"testUser",updatedBy:"testUser"]
+		
+		def resultMap=[:]
+		resultMap.contactAddresses = contactAddressList
+		resultMap.contactDetailsList = contactDetailsList
+		resultMap.paramsMap = paramsMap
+		resultMap.emailType = emailType
+		return resultMap
+	}
 }

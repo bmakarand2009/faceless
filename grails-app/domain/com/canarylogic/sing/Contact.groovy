@@ -6,6 +6,8 @@ import com.canarylogic.focalpoint.Client
 
 class Contact {
 
+	static hasMany = [contactAddresses:ContactAddress,contactDetailsList:ContactDetails]
+	
 	Date dateCreated, lastUpdated
 	String createdBy
 	String updatedBy
@@ -15,23 +17,24 @@ class Contact {
 	String suffix
 	String firstName
 	String lastName
-	transient String fullName
-	
 	
 	String getFullName() {
-		toString()
-	}
-	
-	String toString() {
 		"$firstName $lastName ${(suffix) ? (suffix) :''}"
 	}
+	
+	
+	static searchable = {
+		contactDetailsList component: true
+	}
+	//static transients = ["fullName"]
+//	
 	static constraints = {
-		fullName(unique:'parent',nullable:false)
+		parent(nullable:false)
+	//	fullName(unique:'parent')
 		firstName(blank:false)
 		lastName(blank:false)
 		suffix(blank:true)
 	}
-	static hasMany = [contactDetailsList:ContactDetails, addressList:ContactAddress]
 
     
 }

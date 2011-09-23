@@ -6,6 +6,7 @@ import com.canarylogic.focalpoint.contacts.VendorsMo
 import com.canarylogic.focalpoint.contacts.ChildVendorsMo
 
 import com.canarylogic.focalpoint.*;
+import com.canarylogic.sing.*
 import com.canarylogic.focalpoint.utils.EntityConvertor;
 
 class BootStrap {
@@ -116,27 +117,38 @@ class BootStrap {
 //				throw new Exception("Alpa records could not be initialized")
 //		}		
 		
-		for (i in 1..10) {
-			println "creating vendorsMo"
-			def vendorInst1 = new VendorsMo(pkey:"${new Date().time}company$i",c1:"myfirstVendorName$i",c2:"mylastVendorName",
-				c3:"true",c4:"false",c5:"alpharetta",c6:"ga",c7:"30022",c8:"java",c9:"has a strong foothold in atlanta",
-				c10:"true2",parent:client)
-			
-			println "Vendor parent assigent as $client.orgId"
-			if (!vendorInst1.hasErrors() && vendorInst1.save(flush: true)) {
-				def childVendorsMo = new ChildVendorsMo(pkey:"abc@gmail.com",c2:"hello",c3:"world",c4:"goodness")
-				childVendorsMo.parent = vendorInst1
-				println "new tableInst createed"
-				childVendorsMo.save(flush:true)
-				//Add some childs over htere
-				
-			}else{
-				vendorInst1.errors.each {
-					throw new Exception(it)
-			   }
-			}
+//		for (i in 1..10) {
+//			println "creating vendorsMo"
+//			def vendorInst1 = new VendorsMo(pkey:"${new Date().time}company$i",c1:"myfirstVendorName$i",c2:"mylastVendorName",
+//				c3:"true",c4:"false",c5:"alpharetta",c6:"ga",c7:"30022",c8:"java",c9:"has a strong foothold in atlanta",
+//				c10:"true2",parent:client)
+//			
+//			println "Vendor parent assigent as $client.orgId"
+//			if (!vendorInst1.hasErrors() && vendorInst1.save(flush: true)) {
+//				def childVendorsMo = new ChildVendorsMo(pkey:"abc@gmail.com",c2:"hello",c3:"world",c4:"goodness")
+//				childVendorsMo.parent = vendorInst1
+//				println "new tableInst createed"
+//				childVendorsMo.save(flush:true)
+//				//Add some childs over htere
+//				
+//			}else{
+//				vendorInst1.errors.each {
+//					throw new Exception(it)
+//			   }
+//			}
+//		}
+	
+		for( i in 1..10){
+			def paramsMap=[suffix:"Mr",firstName:"manmohan$i",lastName:"singh$i",createdBy:"testUser",updatedBy:"testUser"]
+			Contact c = new Contact(paramsMap)
+			c.parent = client
+			c.save(failOnError: true)
+			ContactAddress aContactAddress = new ContactAddress(street:"oldmilton$i",city:"johnscreek")
+			def contactAddressList = [aContactAddress]
+			ContactDetails aContactDetails = new ContactDetails(contactType:"email",contactValue:"richtest@gmail.com$i",category:'home')
+			def contactDetailsList = [aContactDetails]
+			c.save(failOnError: true)
 		}
-
 		
 		
 		
