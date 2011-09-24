@@ -13,6 +13,7 @@ class ContactAddress {
 	static belongsTo = [contact:Contact]
 	
 	
+	
     static constraints = {
 		street(nullable:true)
 		city(nullable:true)

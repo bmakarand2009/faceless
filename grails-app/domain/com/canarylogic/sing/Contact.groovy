@@ -17,21 +17,21 @@ class Contact {
 	String suffix
 	String firstName
 	String lastName
-	
-	String getFullName() {
+
+		String toString(){
 		"$firstName $lastName ${(suffix) ? (suffix) :''}"
 	}
 	
-	
-	static searchable = {
-		contactDetailsList component: true
+//	static searchable = {
+//		contactDetailsList component: true
+//	}
+
+	static mapping = {
+		contactAddresses cascade: "all-delete-orphan"
 	}
-	//static transients = ["fullName"]
-//	
 	static constraints = {
 		parent(nullable:false)
-	//	fullName(unique:'parent')
-		firstName(blank:false)
+		firstName(unique:['lastName', 'suffix','parent'])
 		lastName(blank:false)
 		suffix(blank:true)
 	}
