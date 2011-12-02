@@ -23,8 +23,8 @@ class PartnerServiceTests extends GrailsUnitTestCase {
 		def client1 = Client.findByOrgId(CANARY_APP_ID)
 		assert client1!= null
 		
-		def client2 = Client.findByOrgId(FOC_HARVEST_APP_ID)
-		assert client2!= null
+//		def client2 = Client.findByOrgId(FOC_HARVEST_APP_ID)
+//		assert client2!= null
 		String streetName = "statebridge road"
 				
 		def resultMap = createContactObjectParams("john","martin","john.martin@ipilong.com",streetName,"alpharetta")
@@ -32,7 +32,7 @@ class PartnerServiceTests extends GrailsUnitTestCase {
 		contactAddressList.each{
 			log.debug it.street
 		}
-		def aPartner = partnerService.createContact(resultMap.paramsMap,client1,contactAddressList,resultMap.contactDetailsList)
+		def aPartner = partnerService.createContact(client1,resultMap.paramsMap,contactAddressList,resultMap.contactDetailsList)
 		assertNotNull aPartner
 		assertNotNull aPartner.dateCreated
 		assertNotNull aPartner.contactAddresses
@@ -49,12 +49,26 @@ class PartnerServiceTests extends GrailsUnitTestCase {
 		}
 		
 		//create one more record for same client to see it fails
-		def resultMap1 = createContactObjectParams("john","martin","john.martin@ipilong.com",streetName,"alpharetta")
-		def aPartner1 = partnerService.createContact(resultMap1.paramsMap,client2,resultMap1.contactAddresses,resultMap.contactDetailsList)
+		def resultMap1 = createContactObjectParams("john1","martin","john.martin@ipilong.com",streetName,"alpharetta")
+		def aPartner1 = partnerService.createContact(client1,resultMap1.paramsMap,resultMap1.contactAddresses,resultMap1.contactDetailsList)
 		assertNotNull aPartner1.id
 		
-		
-    }
+//		def resultMap2 = createContactObjectParams("john","martin","john.martin@ipilong.com",streetName,"alpharetta")
+//		def aPartner2 = partnerService.createContact(client2,resultMap2.paramsMap,resultMap2.contactAddresses,resultMap2.contactDetailsList)
+//		assertNotNull aPartner2
+	}
+	
+	
+	void testListRecords(){
+		def client1 = Client.findByOrgId(CANARY_APP_ID)
+		assert client1!= null
+		def paramsMap=[max:5]
+		def recList = partnerService.listRecords(client1,new Contact(),paramsMap)
+		assertNotNull recList
+		assert recList.size() > 0
+		assert recList[0] == "hell"
+	}
+	
 	
 	private def createContactObjectParams(String firstNameStr, String lastNameStr,String emailStr,String streetName,String cityName){
 		ContactAddress aContactAddress = new ContactAddress(street:streetName,city:cityName)

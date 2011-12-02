@@ -15,9 +15,9 @@ environments {
         dataSource {
             dbCreate = "update"//create-drop" // one of 'create', 'create-drop','update'
 //            url = "jdbc:hsqldb:mem:devDB"
-			url = "jdbc:mysql://mycanarydb.c8mvjbrpgxos.us-east-1.rds.amazonaws.com/devfaceless"
+			url = "jdbc:mysql://localhost:3306/faceless_local"
 			driverClassName = "com.mysql.jdbc.Driver"
-			username = "faceless_admin"
+			username = "root"
 			password = "tiger"
         }
     }
@@ -25,9 +25,9 @@ environments {
         dataSource {
             dbCreate = "update"
 //            url = "jdbc:hsqldb:mem:testDb"
-			url = "jdbc:mysql://mycanarydb.c8mvjbrpgxos.us-east-1.rds.amazonaws.com/devfaceless"
+			url = "jdbc:mysql://localhost:3306/faceless_local"
 			driverClassName = "com.mysql.jdbc.Driver"
-			username = "faceless_admin"
+			username = "root"
 			password = "tiger"
 			
 //			url = "jdbc:mysql://localhost/faceless2"

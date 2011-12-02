@@ -18,13 +18,13 @@ class Contact {
 	String firstName
 	String lastName
 
-		String toString(){
+	String toString(){
 		"$firstName $lastName ${(suffix) ? (suffix) :''}"
 	}
 	
-//	static searchable = {
-//		contactDetailsList component: true
-//	}
+	static searchable = {
+		contactDetailsList component: true
+	}
 
 	static mapping = {
 		contactAddresses cascade: "all-delete-orphan"

@@ -6,7 +6,29 @@ class PartnerService {
 
     }
 	
-	def createContact(def paramsMap,Client parent,def addressList, def contactDetailsList=null){
+	def listRecords(Client parent, Object domainName, def params){
+		def tableClass = domainName.class
+		String orderType=params.order?params.String(order):'asc'
+		def max = params.max?params.max:10
+		def offset = params.offset?params.offset:0
+		String orderField = params.orderField?params.String(orderField):'id'
+		
+		def resultList = tableClass.withCriteria {
+			maxResults(max)
+			firstResult(offset)
+			order(orderField,orderType)
+			and{
+				eq('parent', parent)
+			}
+//			or {
+//				searchParamsMap.each{k,v->
+//					like(k,"%$v%")
+//				}
+//			 }
+		}
+		
+	}
+	def createContact(Client parent,def paramsMap,def addressList, def contactDetailsList=null){
 		
 		
 		Contact c = new Contact(paramsMap)

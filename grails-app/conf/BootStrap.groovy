@@ -52,8 +52,6 @@ class BootStrap {
 	}
 	def initDev = {		
 		String c1OrgId = "canary-test-123",c1OrgName='canary'
-		def client = Client.findByOrgId(c1OrgId)
-		//if(!client)
 			setupDevClient(c1OrgId,c1OrgName)
 		
 	}
@@ -63,9 +61,9 @@ class BootStrap {
 		def client = Client.findByOrgId(c1OrgId)
 		if(!client){
 			createClient(c1OrgId,c1OrgName)
-			createClient(c2OrgId,c2OrgName)
+			//createClient(c2OrgId,c2OrgName)
 		}
-		
+		client = Client.findByOrgId(c1OrgId)
 		//Step2: Add a AdminRole
 //		sessionFactory.currentSession.clear()
 //		Role adminRole1 = new Role(roleName:"admin",label:"sample Desc")
