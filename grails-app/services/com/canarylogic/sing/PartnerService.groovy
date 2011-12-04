@@ -25,7 +25,8 @@ class PartnerService {
 //					like(k,"%$v%")
 //				}
 //			 }
-		}
+        }
+        return resultList
 		
 	}
 	def createContact(Client parent,def paramsMap,def addressList, def contactDetailsList=null){

@@ -21,4 +21,16 @@ class ContactAddress {
 		zip(nullable:true)
 		country(nullable:true)
     }
+
+     def toXml(builder){
+      def mkp = builder.getMkp()
+      builder.address(){
+          street(street)
+          city(city)
+          state(state)
+          zip(zip)
+          country(country)
+      }
+
+    }
 }

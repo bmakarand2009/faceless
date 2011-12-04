@@ -17,4 +17,14 @@ class ContactDetails {
 		category(nullable:true)
 		additionalInfo(nullable:true)
     }
+
+    def toXml(def builder){
+        def mkp = builder.getMkp()
+        builder."$contactType"(){
+            value(contactValue)
+            category(category)
+            mkp.comment("home | work| other")
+            additionalInfo(additionalInfo)
+        }
+    }
 }

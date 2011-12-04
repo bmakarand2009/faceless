@@ -36,5 +36,34 @@ class Contact {
 		suffix(blank:true)
 	}
 
+    def toXml(def builder,boolean isList=false){
+      def mkp = builder.getMkp()
+      builder.person(){
+          id(id)
+          firstName(firstName)
+          mkp.comment("required")
+          lastName(lastName)
+          mkp.comment("required")
+          address_list(){
+              contactAddresses.each { aAddress ->
+                  aAddress.toXml(builder)
+              }
+          }
+//        if(!isList){
+              contact_data_list(){
+                  contactDetailsList.each { cdetails ->
+                      cdetails.toXml(builder)
+                  }
+              }
+//        }
+          date_created(type:'datetime',dateCreated)
+          last_updated(type:'datetime',lastUpdated)
+          createdBy(createdBy)
+
+      }
+
+    }
+
+
     
 }
