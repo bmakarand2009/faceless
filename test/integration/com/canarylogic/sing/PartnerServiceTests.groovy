@@ -56,29 +56,18 @@ class PartnerServiceTests extends GrailsUnitTestCase {
 //		def aPartner2 = partnerService.createContact(client2,resultMap2.paramsMap,resultMap2.contactAddresses,resultMap2.contactDetailsList)
 //		assertNotNull aPartner2
 	}
-	
-	
-//	void testListRecords(){
-//		def client1 = Client.findByOrgId(CANARY_APP_ID)
-//		assert client1!= null
-//		def paramsMap=[max:5]
-//		def recList = partnerService.listRecords(client1,new Contact(),paramsMap)
-//		assertNotNull recList
-//		assert recList.size() > 0
-//		assert recList[0] == "hell"
-//	}
-	
-	
+
+
 	private def createContactObjectParams(String firstNameStr, String lastNameStr,String emailStr,String streetName,String cityName){
 		ContactAddress aContactAddress = new ContactAddress(street:streetName,city:cityName)
 		def contactAddressList = [aContactAddress]
-		
+
 		String emailType = 'email'
 		ContactDetails aContactDetails = new ContactDetails(contactType:emailType,contactValue:emailStr,category:'home')
 		def contactDetailsList = [aContactDetails]
-		
+
 		def paramsMap=[suffix:"Mr",firstName:firstNameStr,lastName:lastNameStr,createdBy:"testUser",updatedBy:"testUser"]
-		
+
 		def resultMap=[:]
 		resultMap.contactAddresses = contactAddressList
 		resultMap.contactDetailsList = contactDetailsList

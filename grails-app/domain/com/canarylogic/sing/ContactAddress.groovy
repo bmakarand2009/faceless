@@ -3,14 +3,16 @@ package com.canarylogic.sing
 class ContactAddress {
 
 //	static searchable = true
-	
+    def static XML_ELEMENT_MAP=[city:"city"]
+
+
 	String street
 	String city
 	String state
 	String zip
 	String country
 	
-	static belongsTo = [contact:Contact]
+	static belongsTo = [person:Person]
 	
 	
 	
@@ -33,4 +35,10 @@ class ContactAddress {
       }
 
     }
+
+    def createObj(def aMap){
+         ContactAddress a = new ContactAddress()
+         a.city = aMap.city
+         return a
+     }
 }

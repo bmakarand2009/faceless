@@ -20,7 +20,7 @@ class BootStrap {
 		 switch(GrailsUtil.environment){
 			 case "development":
 			   println "#### Development Mode (Start Up)"
-			  initDev()
+			  //initDev()
 			   break
 			 case "test":
 			   println "#### Test Mode (Start Up)"
@@ -28,7 +28,7 @@ class BootStrap {
 			   break
 			 case "production":
 			   println "#### Production Mode (Start Up)"
-			   initProd()
+			   //initProd()
 			   break
 		 }
 	}
@@ -138,12 +138,16 @@ class BootStrap {
 	
 		for( i in 1..10){
 			def paramsMap=[suffix:"Mr",firstName:"manmohan$i",lastName:"singh$i",createdBy:"testUser",updatedBy:"testUser"]
-			Contact c = new Contact(paramsMap)
+			Person c = new Person(paramsMap)
 			c.parent = client
-			c.save(failOnError: true)
+			//c.save(failOnError: true)
+
 			ContactAddress aContactAddress = new ContactAddress(street:"oldmilton$i",city:"johnscreek")
+            aContactAddress.person = c
 			def contactAddressList = [aContactAddress]
+
 			ContactDetails aContactDetails = new ContactDetails(contactType:"email",contactValue:"richtest@gmail.com$i",category:'home')
+            aContactDetails.person = c
 			def contactDetailsList = [aContactDetails]
 			c.save(failOnError: true)
 		}

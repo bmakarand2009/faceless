@@ -4,10 +4,15 @@ import java.util.Date;
 
 import com.canarylogic.focalpoint.Client
 
-class Contact {
+class Person {
 
-	static hasMany = [contactAddresses:ContactAddress,contactDetailsList:ContactDetails]
-	
+    def static XML_ELEMENT_MAP = [firstName:"firstName",lastName:"lastName",
+                  count:"count",last_updated:"lastUpdated",date_created:"dateCreated",
+                  address_list:"contactAddressList"]
+
+	static hasMany = [contactAddressList:ContactAddress,contactDetailsList:ContactDetails]
+
+
 	Date dateCreated, lastUpdated
 	String createdBy
 	String updatedBy
@@ -22,13 +27,13 @@ class Contact {
 		"$firstName $lastName ${(suffix) ? (suffix) :''}"
 	}
 	
-	static searchable = {
-		contactDetailsList component: true
-	}
+	//static searchable = {
+	//	contactDetailsList component: true
+	//}
 
-	static mapping = {
-		contactAddresses cascade: "all-delete-orphan"
-	}
+//	static mapping = {
+//		contactAddresses cascade: "all-delete-orphan"
+//	}
 	static constraints = {
 		parent(nullable:false)
 		firstName(unique:['lastName', 'suffix','parent'])
@@ -45,7 +50,7 @@ class Contact {
           lastName(lastName)
           mkp.comment("required")
           address_list(){
-              contactAddresses.each { aAddress ->
+              contactAddressList.each { aAddress ->
                   aAddress.toXml(builder)
               }
           }
@@ -61,8 +66,19 @@ class Contact {
           createdBy(createdBy)
 
       }
-
     }
+
+     def createObj(def aMap){
+         Person pBean = new Person()
+         pBean.firstName = aMap.firstName
+         pBean.lastName = aMap.lastName
+         aMap.contactAddressList.each{ aAddress->
+            aAddress.person = pBean
+         }
+         pBean.contactAddressList = aMap.contactAddressList
+       //  pBean.save()
+         return pBean
+      }
 
 
     

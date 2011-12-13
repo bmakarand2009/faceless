@@ -10,7 +10,9 @@ class ContactDetails {
 	String contactValue //value of te field, can be address too
 	String category //if home/work/other
 	String additionalInfo //in case of webaddress, it can be linkedin,facebook,bing,blog..
-	static belongsTo = [contact:Contact]
+
+
+	static belongsTo = [person:Person]
 
     static constraints = {
 		contactType(inList:['email','phone','website'])

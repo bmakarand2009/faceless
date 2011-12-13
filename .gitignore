@@ -1,2 +1,4 @@
 target
+out
+stacktrace.log
 web-app/WEB-INF/classes

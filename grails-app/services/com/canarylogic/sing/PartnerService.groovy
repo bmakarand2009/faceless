@@ -21,7 +21,7 @@ class PartnerService {
 				eq('parent', parent)
 			}
 //			or {
-//				searchParamsMap.each{k,v->
+//				params.each{k,v->
 //					like(k,"%$v%")
 //				}
 //			 }
@@ -30,14 +30,12 @@ class PartnerService {
 		
 	}
 	def createContact(Client parent,def paramsMap,def addressList, def contactDetailsList=null){
-		
-		
-		Contact c = new Contact(paramsMap)
+    	Person c = new Person(paramsMap)
 		c.parent = parent
 
 		if(addressList){
-			c.contactAddresses = addressList
-			c.contactAddresses.each{
+			c.contactAddressList = addressList
+			c.contactAddressList.each{
 				it.contact = c
 			}
 		}
@@ -50,5 +48,46 @@ class PartnerService {
 		c.save(failOnError:true)
 		return c
 	}
+
+    def create(Client parent,def createXmlBody){
+        def proot = new XmlParser().parseText(createXmlBody)
+        def personObj = pxmlClosure(proot)
+        return personObj
+    }
+
+
+    def domainObjectsMap=[person:new Person(), address:new ContactAddress()]
+
+    def pxmlClosure = { pRoot ->
+         def xmlMap=[:]
+         def domainObj = domainObjectsMap."${pRoot.name()}"
+         println "domain class is ${domainObj.class.name}"
+
+         def xmlElementsMap = domainObj.XML_ELEMENT_MAP
+         xmlElementsMap.each{k,v->
+            def childElem = pRoot."$k"[0]
+            if(childElem){
+                def childElemName = childElem.name()
+                def childElemVal = childElem.value()[0]
+                String aType = childElem.attribute("type")
+                if(!aType){
+                   if(childElemName.endsWith("_list")){
+                       def xmlListObj=[]
+                       childElem.children().each{ it ->
+                          xmlListObj<<pxmlClosure(it)
+                       }
+                      xmlMap."$v" = xmlListObj
+                   }else
+                     xmlMap."$v" = childElemVal
+                }
+                else if(aType=="Integer") xmlMap."$v" = childElemVal.toInteger()
+                else if(aType=="datetime")xmlMap."$v" = new Date().parse("yyyy-M-d H:m:s",childElemVal.toString())
+
+            }
+         }
+         def aObj = domainObj.createObj(xmlMap)
+        return aObj
+     }
+
 	
 }
