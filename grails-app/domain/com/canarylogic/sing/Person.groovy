@@ -4,20 +4,14 @@ import java.util.Date;
 
 import com.canarylogic.focalpoint.Client
 
-class Person {
+class Person extends AbstractCanaryDomain{
 
-    def static XML_ELEMENT_MAP = [firstName:"firstName",lastName:"lastName",
-                  count:"count",last_updated:"lastUpdated",date_created:"dateCreated",
-                  address_list:"contactAddressList"]
+    def static XML_ELEMENT_MAP = [firstName:"firstName",lastName:"lastName", suffix:"suffix",
+                  count:"count", address_list:"contactAddressList",contact_data_list:"contactDetailsList"]  //"id:id
 
 	static hasMany = [contactAddressList:ContactAddress,contactDetailsList:ContactDetails]
 
-
-	Date dateCreated, lastUpdated
-	String createdBy
-	String updatedBy
 	Client parent
-	
 	
 	String suffix
 	String firstName
@@ -41,7 +35,10 @@ class Person {
 		suffix(blank:true)
 	}
 
-    def toXml(def builder,boolean isList=false){
+
+
+    @Override
+    def toXml(def builder,boolean isList=true){
       def mkp = builder.getMkp()
       builder.person(){
           id(id)
@@ -54,31 +51,38 @@ class Person {
                   aAddress.toXml(builder)
               }
           }
-//        if(!isList){
-              contact_data_list(){
-                  contactDetailsList.each { cdetails ->
-                      cdetails.toXml(builder)
-                  }
+          contact_data_list(){
+              contactDetailsList.each { cdetails ->
+                  cdetails.toXml(builder)
               }
-//        }
-          date_created(type:'datetime',dateCreated)
-          last_updated(type:'datetime',lastUpdated)
+          }
+          date_created(type:Constants.DATETIME_TYPE,dateCreated)
+          last_updated(type:Constants.DATETIME_TYPE,lastUpdated)
           createdBy(createdBy)
 
       }
     }
 
-     def createObj(def aMap){
-         Person pBean = new Person()
-         pBean.firstName = aMap.firstName
-         pBean.lastName = aMap.lastName
-         aMap.contactAddressList.each{ aAddress->
-            aAddress.person = pBean
-         }
-         pBean.contactAddressList = aMap.contactAddressList
-       //  pBean.save()
-         return pBean
-      }
+
+
+    static void saveBean(String xmlRootName,def aMap,def pBean, def parent, boolean isUpdateCall){
+        pBean.parent = parent
+        if(aMap.contactAddressList){
+            pBean.contactAddressList.each{
+                if(!it.person) it.person = pBean
+            }
+        }
+
+        if(aMap.contactDetailsList){
+            pBean.contactDetailsList.each{
+                if(!it.person) it.person = pBean
+            }
+        }
+
+        pBean.save(failOnError:true)
+    }
+
+
 
 
     

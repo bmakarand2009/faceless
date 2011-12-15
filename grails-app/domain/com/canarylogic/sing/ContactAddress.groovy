@@ -1,9 +1,9 @@
 package com.canarylogic.sing
 
-class ContactAddress {
+class ContactAddress extends AbstractCanaryDomain{
 
 //	static searchable = true
-    def static XML_ELEMENT_MAP=[city:"city"]
+    def static XML_ELEMENT_MAP=[city:"city",state:"state",zip:"zip",country:"country"]
 
 
 	String street
@@ -24,9 +24,11 @@ class ContactAddress {
 		country(nullable:true)
     }
 
-     def toXml(builder){
+    @Override
+    def toXml(builder){
       def mkp = builder.getMkp()
       builder.address(){
+          id(id)
           street(street)
           city(city)
           state(state)
@@ -36,9 +38,19 @@ class ContactAddress {
 
     }
 
-    def createObj(def aMap){
-         ContactAddress a = new ContactAddress()
-         a.city = aMap.city
-         return a
-     }
+
+    protected  void saveBean(def pBean, def parent, boolean isUpdateCall){
+       if(isUpdateCall)
+           pBean.save(failOnError:true)
+    }
+
+
+
+    static void saveBean(String xmlRootName,def aMap,def pBean, def parent, boolean isUpdateCall){
+        if(isUpdateCall){
+            pBean.save(failOnError:true)
+        }
+    }
+
+
 }

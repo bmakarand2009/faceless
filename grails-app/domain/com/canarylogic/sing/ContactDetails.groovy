@@ -1,6 +1,7 @@
 package com.canarylogic.sing
 
-class ContactDetails {
+class ContactDetails  extends AbstractCanaryDomain{
+    def static XML_ELEMENT_MAP=[value:"contactValue",category:"category",additionalInfo:"additionalInfo"]
 
 	static searchable = {
 	     root false
@@ -20,13 +21,23 @@ class ContactDetails {
 		additionalInfo(nullable:true)
     }
 
-    def toXml(def builder){
+    @Override
+    def toXml(def builder,boolean isList=false){
         def mkp = builder.getMkp()
         builder."$contactType"(){
+            id(id)
             value(contactValue)
             category(category)
             mkp.comment("home | work| other")
             additionalInfo(additionalInfo)
         }
     }
+
+    static void saveBean(String xmlRootName,def aMap,def pBean, def parent, boolean isUpdateCall){
+       pBean.contactType=xmlRootName.toLowerCase()
+       if(isUpdateCall)
+           pBean.save(failOnError:true)
+    }
+
+
 }

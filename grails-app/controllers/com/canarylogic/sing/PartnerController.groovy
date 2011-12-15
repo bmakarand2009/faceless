@@ -40,10 +40,10 @@ class PartnerController {
                 def writer = new StringWriter()
                 def xmlbldr= new MarkupBuilder(writer)
                 xmlbldr.list(size:recList.size()) {
-                    recList.each{ data->
+                    recList.each{ aContact->
 //                          if(domainName==CONTACT_DOMAIN){
-                              Person contact = data as Person
-                              contact.toXml(xmlbldr)
+//                              Person contact = data as Person
+                              aContact.toXml(xmlbldr)
 //                          }
                     }
                     requestId(new Date().time)
@@ -55,7 +55,6 @@ class PartnerController {
 
         }
     }
-
 
     /*
       * POST Request
@@ -86,11 +85,35 @@ class PartnerController {
           </person>
      */
     def create = {
-          def createXmlBody = request.reader.getText()
-          def client = Client.findByOrgId("canary-test-123")
-          partnerService.create(client,createXmlBody)
-          def xmlResp="<hello>helloworld</hello>"
-          log.debug("xmlResp recieved is $xmlResp")
-          render(text: xmlResp as String, contentType: "text/xml", encoding: "UTF-8")
+        createOrUpdateCall(true)
+    }
+
+    def update = {
+          createOrUpdateCall(false)
+    }
+
+
+    private def createOrUpdateCall(boolean isCreate){
+         def createXmlBody = request.reader.getText()
+         def client = Client.findByOrgId("canary-test-123")
+         def domainObj = partnerService.createOrUpdate(isCreate,client,"mytestuser",createXmlBody)
+         formatResult(domainObj)
+    }
+
+    private def formatResult(def domainObj){
+        withFormat {
+            html {
+                return [modObj: domainObj]
+            }
+            xml {
+                def writer = new StringWriter()
+                def xmlbldr= new MarkupBuilder(writer)
+                domainObj.toXml(xmlbldr)
+                def xmlResp =writer.toString()
+                log.debug("xmlResp recieved is $xmlResp")
+                render(text: xmlResp as String, contentType: "text/xml", encoding: "UTF-8")
+            }
+
+        }
     }
 }
