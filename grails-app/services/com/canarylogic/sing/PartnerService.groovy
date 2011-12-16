@@ -91,8 +91,11 @@ class PartnerService {
 
             }
         }
-
-        def aObj = domainClz.createOrUpdate(rootName,domainClz,xmlMap,curObj,parentObj,user)
+        def aObj=null
+        if(xmlMap)
+           aObj = domainClz.createOrUpdate(rootName,domainClz,xmlMap,curObj,parentObj,user)
+        else
+           log.debug "No xmlMap properties found,Make sure XML_ELEMENT_MAP of $domainClz has the correct Mappings "
         return aObj
     }
 	

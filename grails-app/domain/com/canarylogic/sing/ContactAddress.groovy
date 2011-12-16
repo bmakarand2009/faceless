@@ -3,7 +3,7 @@ package com.canarylogic.sing
 class ContactAddress extends AbstractCanaryDomain{
 
 //	static searchable = true
-    def static XML_ELEMENT_MAP=[city:"city",state:"state",zip:"zip",country:"country"]
+    def static XML_ELEMENT_MAP=[street:"street",city:"city",state:"state",zip:"zip",country:"country"]
 
 
 	String street
@@ -24,11 +24,10 @@ class ContactAddress extends AbstractCanaryDomain{
 		country(nullable:true)
     }
 
-    @Override
     def toXml(builder){
-      def mkp = builder.getMkp()
+      //def mkp = builder.getMkp()
       builder.address(){
-          id(id)
+          id(id.toString())
           street(street)
           city(city)
           state(state)

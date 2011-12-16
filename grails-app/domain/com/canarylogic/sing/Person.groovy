@@ -66,7 +66,8 @@ class Person extends AbstractCanaryDomain{
 
 
     static void saveBean(String xmlRootName,def aMap,def pBean, def parent, boolean isUpdateCall){
-        pBean.parent = parent
+        if(!pBean.parent)
+             pBean.parent = parent
         if(aMap.contactAddressList){
             pBean.contactAddressList.each{
                 if(!it.person) it.person = pBean
@@ -79,7 +80,11 @@ class Person extends AbstractCanaryDomain{
             }
         }
 
-        pBean.save(failOnError:true)
+        pBean.save(failOnError:true,flush:true)
+        pBean.errors.each{
+            println it
+        }
+
     }
 
 

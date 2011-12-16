@@ -25,38 +25,42 @@ class PartnerControllerTests extends ControllerUnitTestCase {
         super.tearDown()
     }
 
-//    def testList() {
-//		mockParams.domain="Person"
-//        mockParams.max=15
-//        mockParams.applicationId=CANARY_APP_ID
-//        mockRequest.contentType = "application/xml"
-//		controller.list()
-//		def xmlResp = controller.response.getContentAsString()
-//
-//        def respParser = new XmlSlurper().parseText(xmlResp)
-//        println respParser.@size
-//        assertNotNull respParser.requestId
-//        assert respParser.person.size() > 5
-//	}
+    void testList() {
+		mockParams.domain="Person"
+        mockParams.max=15
+        mockParams.applicationId=CANARY_APP_ID
+        mockRequest.contentType = "application/xml"
+		controller.list()
+		def xmlResp = controller.response.getContentAsString()
 
-//    void testCreate(){
-//       mockRequest.method = "POST"
-//       setPostRequestContent(getSampleCreateOrUpdateXml("rites${new Date().timeString}"))
-//       controller.create()
-//       def xmlResp = controller.response.getContentAsString()
-//       assertNotNull xmlResp
-//       def respParser = new XmlSlurper().parseText(xmlResp)
-//       assertNotNull respParser.id
-//    }
+        def respParser = new XmlSlurper().parseText(xmlResp)
+        println respParser.@size
+        assertNotNull respParser.requestId
+        assert respParser.person.size() > 5
+	}
 
-    def testUpdate(){
+    void testCreate(){
+       mockRequest.method = "POST"
+       setPostRequestContent(getSampleCreateXml("ritestest${new Date().timeString}"))
+       controller.create()
+       def xmlResp = controller.response.getContentAsString()
+       assertNotNull xmlResp
+       def respParser = new XmlSlurper().parseText(xmlResp)
+       assertNotNull respParser.id
+    }
+
+    void testUpdate(){
         mockRequest.method = "PUT"
-        String personId ="13" //lookup in the db
-        String addressId="2" //loookup in the db
+        String personId ="15" //lookup in the db
+        String addressId="4" //loookup in the db
         setPostRequestContent(getSampleUpdateXml("updateLastName${new Date().timeString}",personId,addressId))
         controller.update()
         def xmlResp = controller.response.getContentAsString()
         assertNotNull xmlResp
+        def respParser = new XmlSlurper().parseText(xmlResp)
+        String s = respParser.id
+        assertEquals(personId,s)
+
 
     }
 
@@ -87,7 +91,7 @@ class PartnerControllerTests extends ControllerUnitTestCase {
 
     }
 
-    def getSampleCreateXml(String myLastName,String myId=""){
+    def getSampleCreateXml(String myLastName){
         def writer = new StringWriter()
         def xml = new MarkupBuilder(writer)
         xml.person() {

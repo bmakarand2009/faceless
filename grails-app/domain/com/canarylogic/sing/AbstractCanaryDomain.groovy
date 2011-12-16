@@ -26,7 +26,7 @@ abstract class AbstractCanaryDomain {
 
   def static createOrUpdate(String xmlRootName,def clazz,def aMap,def curObj,def parent, def user){
      boolean isUpdateCall = curObj ? true : false
-     def pBean = curObj ? curObj : clazz.newInstance()
+     def pBean = isUpdateCall ? curObj : clazz.newInstance()
      if(!pBean)
         throw new Exception("No Person found for")
 
