@@ -8,8 +8,10 @@ class Notes extends AbstractCanaryDomain implements Serializable{
     Opportunity opportunity
     Company company
     Person person
+    Cases cases
     String createdBy
     String updatedBy
+
 
     String note
 

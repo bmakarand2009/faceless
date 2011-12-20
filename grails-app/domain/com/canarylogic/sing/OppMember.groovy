@@ -7,14 +7,17 @@ import org.apache.commons.lang.builder.HashCodeBuilder
 class OppMember  extends AbstractCanaryDomain implements  Serializable{
 
     Opportunity opportunity
+    Cases cases
+
     Person person
     Company company
     OppMemberCategory memberCategory
 
     static constraints = {
-        opportunity(nullable: false)
+        opportunity(nullable: true)
         person(nullable: true)
         company(nullable: true)
+        cases(nullable:true)
         memberCategory(nullable: false)
     }
 
@@ -29,7 +32,9 @@ class OppMember  extends AbstractCanaryDomain implements  Serializable{
     @Override
     public int hashCode() {
         def builder = new HashCodeBuilder()
-        builder.append(opportunity).append(memberCategory)
+        if(opportunity)builder.append(opportunity)
+        else if(cases) builder.append(cases)
+        builder.append(memberCategory)
         builder.toHashCode()
     }
 
