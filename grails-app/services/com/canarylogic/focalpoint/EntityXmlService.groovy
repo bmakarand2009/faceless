@@ -1,13 +1,12 @@
 package com.canarylogic.focalpoint
 
-import com.canarylogic.focalpoint.utils.*;
 import com.canarylogic.base.RestException
 import com.canarylogic.base.ExMessages
 
 import groovy.xml.MarkupBuilder
 import com.canarylogic.focalpoint.contacts.*
 
-import com.canarylogic.focalpoint.*
+import com.canarylogic.sing.Client
 
 class EntityXmlService {
 

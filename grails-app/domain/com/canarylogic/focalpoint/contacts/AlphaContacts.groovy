@@ -1,8 +1,7 @@
 package com.canarylogic.focalpoint.contacts
 
-import java.util.Date;
 import com.canarylogic.focalpoint.Groups;
-import com.canarylogic.focalpoint.Client;
+import com.canarylogic.sing.Client;
 class AlphaContacts{
 	//BaseFieldd
 	Date dateCreated, lastUpdated

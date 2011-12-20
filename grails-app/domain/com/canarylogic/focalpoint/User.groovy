@@ -1,7 +1,6 @@
 package com.canarylogic.focalpoint
-import com.canarylogic.focalpoint.utils.EncryptionUtils;
 
-import com.canarylogic.base.*;
+import com.canarylogic.sing.Client;
 class User {
 
     String username

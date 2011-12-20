@@ -3,10 +3,12 @@ package com.canarylogic.focalpoint.base
 
 
 import grails.test.ControllerUnitTestCase;
-import com.canarylogic.focalpoint.utils.EncryptionUtils;
+
+
 import com.canarylogic.focalpoint.utils.EntityConvertor;
 import com.canarylogic.focalpoint.*
-import com.canarylogic.base.TestConfig;
+import com.canarylogic.base.TestConfig
+import com.canarylogic.sing.Client;
 //grails test-app UserController
 class UserControllerTests extends ControllerUnitTestCase {
 	def authService

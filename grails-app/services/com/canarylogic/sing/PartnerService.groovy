@@ -1,15 +1,15 @@
 package com.canarylogic.sing
-import com.canarylogic.focalpoint.Client
+
 class PartnerService {
 
-    def listRecords(Client parent, Object domainName, def params){
-		def tableClass = domainName.class
+    def listRecords(Client parent, Class domainClz, def params){
+//		def tableClass = domainName.class
 		String orderType=params.order?params.String(order):'asc'
-		def max = params.max?params.max:10
+		def max = params.max?params.max.toInteger():10
 		def offset = params.offset?params.offset:0
 		String orderField = params.orderField?params.String(orderField):'id'
 		
-		def resultList = tableClass.withCriteria {
+		def resultList = domainClz.withCriteria {
 			maxResults(max)
 			firstResult(offset)
 			order(orderField,orderType)
@@ -98,5 +98,19 @@ class PartnerService {
            log.debug "No xmlMap properties found,Make sure XML_ELEMENT_MAP of $domainClz has the correct Mappings "
         return aObj
     }
+
+    //status = "403"
+    private def sendValidationFailedResponse(customer, status) {
+        response.status = status
+        render contentType: "application/xml", {
+            errors {
+                customer?.errors?.fieldErrors?.each {err ->
+                    field(err.field)
+                    message(g.message(error: err))
+                }
+            }
+        }
+    }
+
 	
 }

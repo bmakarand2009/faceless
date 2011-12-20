@@ -5,14 +5,11 @@ abstract class AbstractCanaryDomain {
   Date dateCreated  // grails will auto timestamp
   Date lastUpdated  // grails will auto timestamp
 
-  String createdBy
-  String updatedBy
 
   static constraints = {
      dateCreated(editable:false)
      lastUpdated(editable:false)
-     createdBy(editable:false)
-     updatedBy(editable:false)
+
   }
 
   def toXml(def builder,boolean isList=true){
@@ -36,6 +33,7 @@ abstract class AbstractCanaryDomain {
      if(!curObj)
          aMap.createdBy = user
 
+     //this might throw some error as updatedby is nolonger in the base class
      aMap.each{ colName,colVal->
            pBean."$colName" = colVal
      }
@@ -43,9 +41,5 @@ abstract class AbstractCanaryDomain {
      return pBean
   }
 
-   static void saveBean(String xmlRootName,def aMap,def pBean, def parent,boolean isUpdateCall){
-       println "this line should not get exiecuted"
-       return
-   }
 
 }

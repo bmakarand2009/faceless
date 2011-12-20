@@ -1,6 +1,6 @@
 package com.canarylogic.focalpoint
 
-import java.util.Date;
+import com.canarylogic.sing.Client;
 
 class Alpha {
 	Date dateCreated, lastUpdated

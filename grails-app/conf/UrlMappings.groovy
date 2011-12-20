@@ -7,6 +7,10 @@ class UrlMappings {
 			}
 		}
 
+        "/person/$id?"(resource:"partner")
+        "/company/$id?"(resource:"partner")
+
+
 		"/"(view:"/index")
 		"500"(view:'/error')
 	}
