@@ -25,12 +25,12 @@ class PartnerControllerTests extends ControllerUnitTestCase {
         super.tearDown()
     }
 
-    void testList() {
-		mockParams.domain="Person"
-        mockParams.max=15
+    void estShow() {
+		mockParams.test="true"
+        mockParams.max="15"
         mockParams.applicationId=CANARY_APP_ID
         mockRequest.contentType = "application/xml"
-		controller.list()
+		controller.show()
 		def xmlResp = controller.response.getContentAsString()
 
         def respParser = new XmlSlurper().parseText(xmlResp)
@@ -39,10 +39,10 @@ class PartnerControllerTests extends ControllerUnitTestCase {
         assert respParser.person.size() > 5
 	}
 
-    void testCreate(){
+    void estCreate(){
        mockRequest.method = "POST"
        setPostRequestContent(getSampleCreateXml("ritestest${new Date().timeString}"))
-       controller.create()
+       controller.save()
        def xmlResp = controller.response.getContentAsString()
        assertNotNull xmlResp
        def respParser = new XmlSlurper().parseText(xmlResp)

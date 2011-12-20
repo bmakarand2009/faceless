@@ -2,6 +2,7 @@ package com.canarylogic.focalpoint
 
 import grails.test.*
 import com.canarylogic.focalpoint.utils.EntityConvertor
+import com.canarylogic.sing.Client
 
 class ClientTests extends GrailsUnitTestCase {
 	

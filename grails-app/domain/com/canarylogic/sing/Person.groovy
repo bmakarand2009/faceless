@@ -1,38 +1,55 @@
 package com.canarylogic.sing
 
-import java.util.Date;
+import org.apache.commons.lang.builder.HashCodeBuilder
 
-import com.canarylogic.focalpoint.Client
+//TBD : Can be optimized by using osome one to Many Techniques for https://github.com/bjornerik/sandbox/
+//https://mrpaulwoods.wordpress.com/2011/02/07/implementing-burt-beckwiths-gorm-performance-no-collections/
 
-class Person extends AbstractCanaryDomain{
+//hashcode and equals method need to be implemented to take the advantage of Hibernate Second level cache
+class Person extends AbstractCanaryDomain implements Serializable{
 
     def static XML_ELEMENT_MAP = [firstName:"firstName",lastName:"lastName", suffix:"suffix",
-                  count:"count", address_list:"contactAddressList",contact_data_list:"contactDetailsList"]  //"id:id
+                  count:"count", address_list:"contactAddressList",contact_data_list:"contactDetailsList"
+                  ]  //"id:id
 
-	static hasMany = [contactAddressList:ContactAddress,contactDetailsList:ContactDetails]
+	static hasMany = [contactAddressList:ContactAddress,contactDetailsList:ContactDetails,
+            taskList:Tasks,tagList:Tags, customFieldList:CustomFields]
 
-	Client parent
+	Client client
+    Company company
 	
-	String suffix
 	String firstName
 	String lastName
 
-	String toString(){
-		"$firstName $lastName ${(suffix) ? (suffix) :''}"
-	}
-	
-	//static searchable = {
-	//	contactDetailsList component: true
-	//}
+    String createdBy
+    String updatedBy
 
-//	static mapping = {
-//		contactAddresses cascade: "all-delete-orphan"
-//	}
+
+
+    def getOppMemberList(){
+       OppMember.findAllByPerson(this)
+    }
+
+    def getNotesList(){
+        Notes.findAllByOpportunity(this)
+    }
+
+    def beforeDelete() {
+        OppMember.withNewSession(){
+            oppMemberList*.delete()
+        }
+        Notes.withNewSession {
+            notesList*.delete()
+        }
+
+    }
+
 	static constraints = {
-		parent(nullable:false)
-		firstName(unique:['lastName', 'suffix','parent'])
+        firstName(nullable:false,blank:false, unique:['lastName','client'])
 		lastName(blank:false)
-		suffix(blank:true)
+        company(nullable:true)
+        createdBy(editable:false)
+        updatedBy(nullable:true)
 	}
 
 
@@ -63,8 +80,6 @@ class Person extends AbstractCanaryDomain{
       }
     }
 
-
-
     static void saveBean(String xmlRootName,def aMap,def pBean, def parent, boolean isUpdateCall){
         if(!pBean.parent)
              pBean.parent = parent
@@ -86,6 +101,31 @@ class Person extends AbstractCanaryDomain{
         }
 
     }
+
+
+    @Override
+    boolean equals(other){
+         if(! (other instanceof Person )){
+             return false
+         }
+         other?.firstName == this.firstName &&
+                 other?.lastName == this.lastName  &&
+                    other?.client == this.client
+    }
+
+    @Override
+    int hashCode(){
+        def builder = new HashCodeBuilder()
+        builder.append(firstName).append(lastName).append(client)
+        builder.toHashCode()
+    }
+
+    @Override
+    String toString(){
+        "$firstName $lastName for client $client"
+    }
+
+
 
 
 

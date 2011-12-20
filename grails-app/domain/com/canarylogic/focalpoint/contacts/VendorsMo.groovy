@@ -1,8 +1,6 @@
 package com.canarylogic.focalpoint.contacts
 
-import java.util.Date;
-
-import com.canarylogic.focalpoint.Client;
+import com.canarylogic.sing.Client;
 
 class VendorsMo {
 

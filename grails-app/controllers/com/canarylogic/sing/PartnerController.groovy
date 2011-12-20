@@ -1,12 +1,13 @@
 package com.canarylogic.sing
 
-import com.canarylogic.focalpoint.Client
 import groovy.xml.MarkupBuilder
 
 class PartnerController {
 
 
     static String PERSON_DOMAIN="Person"
+
+    static def URL_DOMAIN_MAP=["/person":Person]
 
     def partnerService
 
@@ -15,8 +16,7 @@ class PartnerController {
     /*
     (authkey,appId,domain('Contact,Company,,max,offset,order,orderField,
      */
-    def list = {
-        def abc = request
+
 //        def auth = request.getHeader('Authorization')
 //
 //        if (!auth) {
@@ -25,35 +25,53 @@ class PartnerController {
 //             return false
 //        }
 
-        def domainName
+    def show = {
+        def dummy = request
+        def isTest = params.test
+        String requestPath
+        if(isTest){
+            requestPath="/person"
+        }else{
+            requestPath = request.getRequest().request.requestDispatcherPath
+        }
+        def domainClz = URL_DOMAIN_MAP.get(requestPath)
         log.debug(params)
-        if (params.domain == PERSON_DOMAIN) domainName = new Person()
+//        if (params.domain == PERSON_DOMAIN) domainName = new Person()
         def client = Client.findByOrgId(params.applicationId)
 
 
-        def recList = partnerService.listRecords(client, domainName, params)
-        withFormat {
-            html {
-                return [recList: recList]
-            }
-            xml {
-                def writer = new StringWriter()
-                def xmlbldr= new MarkupBuilder(writer)
-                xmlbldr.list(size:recList.size()) {
-                    recList.each{ aContact->
-//                          if(domainName==CONTACT_DOMAIN){
-//                              Person contact = data as Person
-                              aContact.toXml(xmlbldr)
-//                          }
-                    }
-                    requestId(new Date().time)
-                }
-                def xmlResp =writer.toString()
-                log.debug("xmlResp recieved is $xmlResp")
-                render(text: xmlResp as String, contentType: "text/xml", encoding: "UTF-8")
-            }
+        def recList = partnerService.listRecords(client, domainClz, params)
 
+        def writer = new StringWriter()
+        def xmlbldr= new MarkupBuilder(writer)
+        xmlbldr.list(size:recList.size()) {
+            recList.each{ aContact->
+                      aContact.toXml(xmlbldr)
+            }
+            requestId(new Date().time)
         }
+        def xmlResp =writer.toString()
+        log.debug("xmlResp recieved is $xmlResp")
+        render(text: xmlResp as String, contentType: "text/xml", encoding: "UTF-8")
+
+//        withFormat {
+//            html {
+//                return [recList: recList]
+//            }
+//            xml {
+//                def writer = new StringWriter()
+//                def xmlbldr= new MarkupBuilder(writer)
+//                xmlbldr.list(size:recList.size()) {
+//                    recList.each{ aContact->
+//                              aContact.toXml(xmlbldr)
+//                    }
+//                    requestId(new Date().time)
+//                }
+//                def xmlResp =writer.toString()
+//                log.debug("xmlResp recieved is $xmlResp")
+//                render(text: xmlResp as String, contentType: "text/xml", encoding: "UTF-8")
+//            }
+//        }
     }
 
     /*
@@ -84,12 +102,16 @@ class PartnerController {
             <createdBy>testUser</createdBy>
           </person>
      */
-    def create = {
+    def save = {
         createOrUpdateCall(true)
     }
 
     def update = {
           createOrUpdateCall(false)
+    }
+
+    def delete = {
+
     }
 
 

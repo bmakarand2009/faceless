@@ -1,7 +1,5 @@
 package com.canarylogic.sing
 
-import com.canarylogic.focalpoint.Client
-import org.junit.*
 import grails.test.*
 
 /**

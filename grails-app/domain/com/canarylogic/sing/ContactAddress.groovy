@@ -1,6 +1,8 @@
 package com.canarylogic.sing
 
-class ContactAddress extends AbstractCanaryDomain{
+import org.apache.commons.lang.builder.HashCodeBuilder
+
+class ContactAddress extends AbstractCanaryDomain implements  Serializable{
 
 //	static searchable = true
     def static XML_ELEMENT_MAP=[street:"street",city:"city",state:"state",zip:"zip",country:"country"]
@@ -12,7 +14,7 @@ class ContactAddress extends AbstractCanaryDomain{
 	String zip
 	String country
 	
-	static belongsTo = [person:Person]
+	static belongsTo = [person:Person,company:Company]
 	
 	
 	
@@ -22,6 +24,8 @@ class ContactAddress extends AbstractCanaryDomain{
 		state(nullable:true)
 		zip(nullable:true)
 		country(nullable:true)
+        person(nullable:true)
+        company(nullable:true)
     }
 
     def toXml(builder){
@@ -50,6 +54,41 @@ class ContactAddress extends AbstractCanaryDomain{
             pBean.save(failOnError:true)
         }
     }
+
+
+
+    @Override
+    boolean equals(other){
+         if(! (other instanceof ContactAddress )){
+             return false
+         }
+         boolean isTempBool =false
+         if(this.person){
+             isTempBool = other?.person == this.person
+         }else if(this.company){
+             isTempBool = other?.companry == this.company
+         }
+
+         isTempBool && other.id == this.id
+    }
+
+    @Override
+    public int hashCode() {
+        def builder = new HashCodeBuilder()
+        if(this.company) builder.append(company)
+        else if(this.person) builder.append(person)
+        builder.append(id)
+        builder.toHashCode()
+    }
+
+    @Override
+    String toString(){
+        return "$street - $city:$state for $person or $company"
+    }
+
+
+
+
 
 
 }

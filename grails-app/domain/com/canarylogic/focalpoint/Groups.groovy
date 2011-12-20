@@ -1,6 +1,6 @@
 package com.canarylogic.focalpoint
 
-import java.io.Serializable;
+import com.canarylogic.sing.Client;
 
 class Groups implements Serializable {
 	
