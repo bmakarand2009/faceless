@@ -15,12 +15,19 @@ class Opportunity extends AbstractCanaryDomain implements Serializable{
     Person person
     Company company
     String oppDesc
+
+
+    String probability
     Integer dealValue
+    String dealType  //hourly,monthly,yearly
+    Integer duration  //12
 
-    String dealType
-    Integer dealPeriod
-    OppCategory oppCategory
+    Date expectedCloseDate
+    Date actualCloseDate
 
+    String status
+
+    OppCategory oppCategory //Consulting,Training,Developemnt
 
     def getNotesList(){
         Notes.findAllByOpportunity(this)
@@ -64,6 +71,7 @@ class Opportunity extends AbstractCanaryDomain implements Serializable{
         person(nullable: true)
         company(nullable: true)
         dealType(inList:['hourly','monthly','yearly','fixedbid'])
+        status(inList: ['won','lost','pending','abadoned'])
 
     }
 

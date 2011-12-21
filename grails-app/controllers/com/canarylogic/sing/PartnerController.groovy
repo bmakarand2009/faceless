@@ -46,7 +46,7 @@ class PartnerController {
         def xmlbldr= new MarkupBuilder(writer)
         xmlbldr.list(size:recList.size()) {
             recList.each{ aContact->
-                      aContact.toXml(xmlbldr)
+                      aContact.toXml(xmlbldr,false)
             }
             requestId(new Date().time)
         }

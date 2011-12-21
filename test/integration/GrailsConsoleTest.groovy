@@ -32,15 +32,24 @@ if(!t1List){
 t1List = c1.taskTypeList
 TaskType t1
 t1List.each{
-  if(it)
+  if(!t1)
       t1 = it
 }
 
 assert t1!=null
 
-def tagsList = c1.getTagsList()
+def tagsList = c1.getTagList()
 if(!tagsList){
-Tag tg1 = new Tag(client:c1,
+     new Tag(client:c1,tagName:'testTag').save(flush:true,failOnError:true)
+     new Tag(client:c1,tagName:'testTag2').save(flush:true,failOnError:true)
+}
+
+tagsList = c1.getTagList()
+Tag tg1
+tagsList.each{
+    if(!tg1) tg1 = it
+}
+assert tg1 !=null
 
 def pList = c1.getPersonList()
 if(!pList){
@@ -79,5 +88,6 @@ pp1.addToTaskList(subject:'this is a task wcih needs ot be done as a par ot foll
 cc1.addToTaskList(subject:'this string can really get long and does not have any restrictions',taskType:t1,dueDate: dDate)
 
 
-
+PersonTag pt = new PersonTag(person:pp1,tag:tg1).save(flush:true,failOnError:true)
+*/
 }

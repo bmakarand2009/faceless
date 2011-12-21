@@ -14,7 +14,7 @@ class PartnerService {
 			firstResult(offset)
 			order(orderField,orderType)
 			and{
-				eq('parent', parent)
+				eq('client', parent)
 			}
 //			or {
 //				params.each{k,v->

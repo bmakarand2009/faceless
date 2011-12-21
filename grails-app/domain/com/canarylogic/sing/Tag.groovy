@@ -24,6 +24,12 @@ class Tag extends AbstractCanaryDomain implements Serializable{
 
     }
 
+
+    @Override
+    def toXml(def builder){
+        builder.tag(tagName)
+    }
+
     @Override
     boolean equals(other){
          if(! (other instanceof Tag )){

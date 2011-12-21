@@ -9,7 +9,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder
  * Time: 10:42 PM
  * To change this template use File | Settings | File Templates.
  */
-class CasesTag {
+class CasesTag  extends AbstractCanaryDomain implements Serializable{
     Cases cases
     Tag   tag
 

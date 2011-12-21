@@ -9,7 +9,8 @@ import org.apache.commons.lang.builder.HashCodeBuilder
 class Person extends AbstractCanaryDomain implements Serializable{
 
     def static XML_ELEMENT_MAP = [firstName:"firstName",lastName:"lastName", suffix:"suffix",
-                  count:"count", address_list:"contactAddressList",contact_data_list:"contactDetailsList"
+                  count:"count", address_list:"contactAddressList",contact_data_list:"contactDetailsList",
+                  tag_list:"tagList",notes_list:"notesList"
                   ]  //"id:id
 
 	static hasMany = [contactAddressList:ContactAddress,contactDetailsList:ContactDetails,
@@ -66,14 +67,14 @@ class Person extends AbstractCanaryDomain implements Serializable{
 
 
     @Override
-    def toXml(def builder,boolean isList=true){
+    def toXml(def builder,boolean isListView=true){
       def mkp = builder.getMkp()
       builder.person(){
           id(id)
+          mkp.comment("required")
           firstName(firstName)
           mkp.comment("required")
           lastName(lastName)
-          mkp.comment("required")
           address_list(){
               contactAddressList.each { aAddress ->
                   aAddress.toXml(builder)
@@ -84,16 +85,28 @@ class Person extends AbstractCanaryDomain implements Serializable{
                   cdetails.toXml(builder)
               }
           }
+          if(!isListView){
+              tag_list(){
+                  tagList.each{ aTag ->
+                      aTag.toXml(builder)
+                  }
+              }
+              notes_list(){
+                  notesList.each{ aNote ->
+                     aNote.toXml(builder)
+                  }
+              }
+          }
           date_created(type:Constants.DATETIME_TYPE,dateCreated)
           last_updated(type:Constants.DATETIME_TYPE,lastUpdated)
           createdBy(createdBy)
-
+          updatedBy(updatedBy)
       }
     }
 
-    static void saveBean(String xmlRootName,def aMap,def pBean, def parent, boolean isUpdateCall){
-        if(!pBean.parent)
-             pBean.parent = parent
+    static void saveBean(String xmlRootName,def aMap,def pBean, def client, boolean isUpdateCall){
+        if(!pBean.client)
+             pBean.client = client
         if(aMap.contactAddressList){
             pBean.contactAddressList.each{
                 if(!it.person) it.person = pBean

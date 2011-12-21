@@ -2,8 +2,15 @@ package com.canarylogic.sing
 
 import org.apache.commons.lang.builder.HashCodeBuilder
 
+/*
+We can have some internal categories to show
+Resources : people working on the case or opp, internal team
+Other categories might include
+--shortlisted,applied,interested
+ */
 class OppMemberCategory extends AbstractCanaryDomain implements  Serializable{
     static belongsTo = [client:Client]
+
 
     String mCategory
     static constraints = {

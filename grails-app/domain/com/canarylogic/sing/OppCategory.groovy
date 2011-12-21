@@ -2,6 +2,9 @@ package com.canarylogic.sing
 
 import org.apache.commons.lang.builder.HashCodeBuilder
 
+/*
+OppCategory e.g Consulting,Training,SoftwareDev etc.
+ */
 class OppCategory  extends AbstractCanaryDomain implements  Serializable{
     static belongsTo = [client:Client]
     String oCategory

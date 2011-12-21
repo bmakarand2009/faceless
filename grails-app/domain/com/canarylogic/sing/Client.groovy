@@ -35,7 +35,11 @@ class Client  extends  AbstractCanaryDomain implements Serializable {
         Opportunity.findAllByClient(this,[sort:'dateCreated'])
     }
 
-    def getTagsList(){
+    def getCasesList(){
+        Cases.findAllByClient(this)
+    }
+
+    def getTagList(){
         Tag.findAllByClient(this,[sort:'dateCreated'])
     }
 
@@ -49,6 +53,12 @@ class Client  extends  AbstractCanaryDomain implements Serializable {
 
         Opportunity.withNewSession {
             opportunityList*.delete()
+        }
+        Cases.withNewSession {
+            casesList*.delete()
+        }
+        Tag.withNewSession {
+            tagList*.delete()
         }
     }
 
