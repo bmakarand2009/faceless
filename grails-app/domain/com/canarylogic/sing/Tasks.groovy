@@ -4,7 +4,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder
 
 class Tasks extends AbstractCanaryDomain implements Serializable{
 
-    static belongsTo = [person:Person,company:Company,opportunity:Opportunity]
+    static belongsTo = [person:Person,company:Company,opportunity:Opportunity,cases:Cases]
 
     String subject
     Date dueDate
@@ -15,10 +15,14 @@ class Tasks extends AbstractCanaryDomain implements Serializable{
         subject type: 'text'
     }
     static constraints = {
-        subject(blank:false)
+        subject(blank:false,validator: { val, obj ->
+               obj?.person !=null || obj?.company!=null || obj?.opportunity !=null || obj?.cases !=null
+            })
         person(nullable: true)
         company(nullable: true)
         opportunity(nullable:true)
+        cases(nullable:true)
+
     }
 
 

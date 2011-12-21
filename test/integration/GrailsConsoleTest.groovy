@@ -7,8 +7,6 @@
  * To change this template use File | Settings | File Templates.
  */
 
-import com.canarylogic.sing.*
-import com.canarylogic.focalpoint.*
 class GrailsConsoleTest {
 
 /*
@@ -25,19 +23,45 @@ c1.errors.each{
 
 println "$c1 created"
 
-Person p1 = new Person(client:c1, firstName:"john", lastName:"travlota",createdBy:"testUser").save(flush:true,failOnError:true)
-p1.errors.each{
-  println it
+def t1List = c1.taskTypeList
+if(!t1List){
+   c1.addToTaskTypeList(typeName:'phone',typeDesc:'phone followup')
+   c1.addToTaskTypeList(typeName:'email',typeDesc:'email followup')
+}
+
+t1List = c1.taskTypeList
+TaskType t1
+t1List.each{
+  if(it)
+      t1 = it
+}
+
+assert t1!=null
+
+def tagsList = c1.getTagsList()
+if(!tagsList){
+Tag tg1 = new Tag(client:c1,
+
+def pList = c1.getPersonList()
+if(!pList){
+    Person p1 = new Person(client:c1, firstName:"john", lastName:"travlota",createdBy:"testUser").save(flush:true,failOnError:true)
+    p1.errors.each{
+      println it
+    }
+
+
+    Person p2 = new Person(client:c1, firstName:"john", lastName:"decosta",createdBy:"testUser").save(flush:true,failOnError:true)
+    p2.errors.each{
+      println it
+    }
+
+}
+def cList = c1.getCompanyList()
+if(!cList){
+    Company aComp = new Company(client:c1, companyName:"CanarySytems",createdBy:"testUser").save(flush:true,failOnError:true)
 }
 
 
-Person p2 = new Person(client:c1, firstName:"john", lastName:"decosta",createdBy:"testUser").save(flush:true,failOnError:true)
-p2.errors.each{
-  println it
-}
-
-
-Company aComp = new Company(client:c1, companyName:"CanarySytems",createdBy:"testUser").save(flush:true,failOnError:true)
 
 
 Person pp1 = c1.getPersonList()[0]
@@ -50,9 +74,10 @@ cc1.addToContactAddressList(street:"desire street",city:"destination",state:"dre
 pp1.addToContactAddressList(street:"desire street",city:"destination",state:"dream",country:"solace")
 cc1.addToContactAddressList(street:"desire street",city:"destination",state:"dream",country:"solace")
 
+Date dDate = new Date()
+pp1.addToTaskList(subject:'this is a task wcih needs ot be done as a par ot followup',taskType:t1,dueDate: dDate)
+cc1.addToTaskList(subject:'this string can really get long and does not have any restrictions',taskType:t1,dueDate: dDate)
 
-
-*/
 
 
 }

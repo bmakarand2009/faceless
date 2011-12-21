@@ -2,30 +2,31 @@ package com.canarylogic.sing
 
 import org.apache.commons.lang.builder.HashCodeBuilder
 
-class Tags extends AbstractCanaryDomain implements Serializable{
+class Tag extends AbstractCanaryDomain implements Serializable{
 
     String tagName
     Client client
 
-    static belongsTo = [person:Person,company:Company,opportunity:Opportunity]
-
-
-
-
     static constraints = {
         tagName(unique: 'client')
-        person(nullable: true)
-        company(nullable: true)
-        opportunity(nullable:true)
+    }
+
+    def beforeDelete() {
+        CompanyTag.withNewSession {
+            CompanyTag.remoteAllWithTag(this)
+        }
+        PersonTag.withNewSession {
+            PersonTag.remoteAllWithTag(this)
+        }
+        CasesTag.withNewSession {
+            CasesTag.remoteAllWithTag(this)
+        }
 
     }
 
-
-
-
     @Override
     boolean equals(other){
-         if(! (other instanceof Tags )){
+         if(! (other instanceof Tag )){
              return false
          }
         other?.client = client && other?.tagName == this.tagName

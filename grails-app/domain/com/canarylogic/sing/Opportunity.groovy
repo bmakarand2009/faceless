@@ -4,7 +4,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder
 
 class Opportunity extends AbstractCanaryDomain implements Serializable{
 
-    static hasMany = [tagList:Tags,taskList:Tasks, customFieldList:CustomFields]
+    static hasMany = [taskList:Tasks, customFieldList:CustomFields]
 
 
     Client client
@@ -31,6 +31,15 @@ class Opportunity extends AbstractCanaryDomain implements Serializable{
     }
 
 
+    Set<Tag> getTagList(){
+        OpportunityTag.findAllByOpportunity(this).collect { it.tag } as Set
+    }
+
+    boolean hasTag(Tag tag) {
+        OpportunityTag.countByOpportunityAndTag(this, tag) > 0
+    }
+
+
     def beforeDelete() {
         Notes.withNewSession {
             notesList*.delete()
@@ -38,6 +47,10 @@ class Opportunity extends AbstractCanaryDomain implements Serializable{
         OppMember.withNewSession {
             oppMemberList*.delete()
         }
+        OpportunityTag.withNewSession {
+            OpportunityTag.removeAllWithOpportunity(this)
+        }
+
     }
 
 
@@ -51,7 +64,6 @@ class Opportunity extends AbstractCanaryDomain implements Serializable{
         person(nullable: true)
         company(nullable: true)
         dealType(inList:['hourly','monthly','yearly','fixedbid'])
-        oppCategory(nullable: true)
 
     }
 

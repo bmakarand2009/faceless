@@ -35,8 +35,8 @@ class Client  extends  AbstractCanaryDomain implements Serializable {
         Opportunity.findAllByClient(this,[sort:'dateCreated'])
     }
 
-    def getTagList(){
-        Tags.findAllByClient(this,[sort:'dateCreated'])
+    def getTagsList(){
+        Tag.findAllByClient(this,[sort:'dateCreated'])
     }
 
     def beforeDelete() {

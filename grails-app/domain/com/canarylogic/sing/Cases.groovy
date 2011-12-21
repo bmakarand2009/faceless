@@ -12,13 +12,22 @@ class Cases extends AbstractCanaryDomain implements Serializable{
     String updatedBy
 
     def getOppMemberList(){
-           OppMember.findAllByOpportunity(this)
+           OppMember.findAllByCases(this)
     }
 
 
     def getNotesList(){
             Notes.findAllByCases(this)
     }
+
+    Set<Tag> getTagList(){
+        OpportunityTag.findAllByOpportunity(this).collect { it.tag } as Set
+    }
+
+    boolean hasTag(Tag tag) {
+        OpportunityTag.countByOpportunityAndTag(this, tag) > 0
+    }
+
 
     def beforeDelete() {
         Notes.withNewSession {
@@ -27,6 +36,10 @@ class Cases extends AbstractCanaryDomain implements Serializable{
         OppMember.withNewSession {
             oppMemberList*.delete()
         }
+        CasesTag.withNewSession {
+            CasesTag.removeAllWithCases(this)
+        }
+
     }
 
     static constraints = {

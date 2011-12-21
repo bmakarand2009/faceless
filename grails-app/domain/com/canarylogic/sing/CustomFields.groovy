@@ -21,7 +21,9 @@ class CustomFields extends  AbstractCanaryDomain implements Serializable{
 
 
     static constraints = {
-        cLabel(blank: false,)
+        cLabel(blank: false,  validator: { val, obj ->
+               obj?.person !=null || obj?.company!=null || obj?.opportunity !=null
+            })
         cDesc(nullable: true)
         person(nullable: true)
         company(nullable: true)

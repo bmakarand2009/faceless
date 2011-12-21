@@ -19,7 +19,11 @@ class ContactDetails  extends AbstractCanaryDomain implements Serializable{
 
     static constraints = {
 		contactType(inList:['email','phone','website'])
-        contactValue(nullable:false)
+        contactValue(validator: { val, obj ->
+               boolean  isValid = false
+               if(!isValid)
+                   return 'duplicate ContactValue'
+            })
         contactCategory(inList:['home','work','other'])
 		additionalInfo(nullable:true)
         company(nullable: true)
@@ -38,6 +42,18 @@ class ContactDetails  extends AbstractCanaryDomain implements Serializable{
         }
     }
 
+
+    /*
+      boolean isValid = obj?.person !=null || obj?.company!=null
+               if(isValid){
+                   def cList=null
+                   if(obj?.person) cList = ContactDetails.findByPerson(obj.person)
+                   else if(obj?.company) cList = ContactDetails.findByCompany(obj.company)
+                   cList.each{
+                       if(it.contactValue == val) isValid = false
+                   }
+               }
+    */
 
 
     static void saveBean(String xmlRootName,def aMap,def pBean, def parent, boolean isUpdateCall){

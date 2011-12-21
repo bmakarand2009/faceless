@@ -16,7 +16,9 @@ class Notes extends AbstractCanaryDomain implements Serializable{
     String note
 
     static constraints = {
-        note(nullable: false)
+        note(nullable: false,validator: { val, obj ->
+               obj?.person !=null || obj?.company!=null || obj?.opportunity !=null || obj?.cases !=null
+            })
         opportunity(nullable: true)
         company(nullable:true)
         person(nullable: true)
@@ -33,7 +35,7 @@ class Notes extends AbstractCanaryDomain implements Serializable{
         //////     Standard methods
     @Override
     String toString(){
-        "Note with noteId $this.id"
+        "Note ${this.note.substring(0,100)}"
     }
 
     @Override

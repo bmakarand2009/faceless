@@ -18,7 +18,9 @@ class OppMember  extends AbstractCanaryDomain implements  Serializable{
         person(nullable: true)
         company(nullable: true)
         cases(nullable:true)
-        memberCategory(nullable: false)
+        memberCategory(nullable:false,validator: { val, obj ->
+                obj?.opportunity !=null || obj?.cases !=null
+            })
     }
 
     @Override

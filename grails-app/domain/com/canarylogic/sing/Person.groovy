@@ -13,7 +13,7 @@ class Person extends AbstractCanaryDomain implements Serializable{
                   ]  //"id:id
 
 	static hasMany = [contactAddressList:ContactAddress,contactDetailsList:ContactDetails,
-            taskList:Tasks,tagList:Tags, customFieldList:CustomFields]
+            taskList:Tasks,customFieldList:CustomFields]
 
 	Client client
     Company company
@@ -31,7 +31,15 @@ class Person extends AbstractCanaryDomain implements Serializable{
     }
 
     def getNotesList(){
-        Notes.findAllByOpportunity(this)
+        Notes.findAllByPerson(this)
+    }
+
+    Set<Tag> getTagList(){
+        PersonTag.findAllByPerson(this).collect { it.tag } as Set
+    }
+
+    boolean hasTag(Tag tag) {
+        PersonTag.countByPersonAndTag(this, tag) > 0
     }
 
     def beforeDelete() {
@@ -40,6 +48,9 @@ class Person extends AbstractCanaryDomain implements Serializable{
         }
         Notes.withNewSession {
             notesList*.delete()
+        }
+        PersonTag.withNewSession {
+            PersonTag.removeAllWithPerson(this)
         }
 
     }
