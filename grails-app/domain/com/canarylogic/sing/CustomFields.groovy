@@ -2,38 +2,48 @@ package com.canarylogic.sing
 
 import org.apache.commons.lang.builder.HashCodeBuilder
 
-class CustomFields extends  AbstractCanaryDomain implements Serializable{
+//TBD if customFields should not have duplicate cLabel, a validator like which can check the count can be written for it
+class CustomFields extends AbstractCanaryDomain implements Serializable {
 
+    static XML_ELEMENT_MAP = [value:"value",custom_fields_definition_id:"customFieldsDefinitionId"]
 
-    static XML_ELEMENT_MAP = [customlabel:"clabel",customType:"cType", customValue:"cValue",
-                 customDesc:"cDesc",sequence:"cSequence"]
-
-    static belongsTo = [person:Person,company:Company,opportunity:Opportunity]
-
-    String cLabel
-    String cType //text,boolean,datetime,multichoice,generatedLink
-    String cValue
-    String cDesc
-    Integer cSequence
-
-    String createdBy
-    String updatedBy
-
+    static belongsTo = [customFieldsDefinition:CustomFieldsDefinition,
+            person:Person,company:Company,opportunity:Opportunity,kase:Kase]
 
     static constraints = {
-        cLabel(blank: false,  validator: { val, obj ->
-               obj?.person !=null || obj?.company!=null || obj?.opportunity !=null
-            })
-        cDesc(nullable: true)
+        value(blank: false)
         person(nullable: true)
         company(nullable: true)
-        opportunity(nullable:true)
-
+        opportunity(nullable: true)
+        kase(nullable: true)
     }
 
+    static minCriteria = [
+          [ 'person' ],
+          [ 'company' ],
+          ['opportunity'] ,
+          [ 'kase' ]
+    ]
 
+    String value
 
+    @Override
+    def toXml(def builder,boolean isListView){
+        builder."$SingUtils.CUSTOM_FIELD_ROOT"(){
+           id(type:SingUtils.INTEGER_TYPE, id)
+           name(customFieldsDefinition.name)
+           value(value)
+       }
+    }
 
+    static void saveBean(String xmlRootName,def aMap,def pBean, def parent, boolean isUpdateCall){
+       if(isUpdateCall){
+           pBean.save(failOnError:true)
+       }else{
+           def customFieldsDefinition = CustomFieldsDefinition.get(aMap.customFieldsDefinitionId)
+           pBean.customFieldsDefinition = customFieldsDefinition
+       }
+    }
 
     @Override
     boolean equals(other){
@@ -41,14 +51,15 @@ class CustomFields extends  AbstractCanaryDomain implements Serializable{
              return false
          }
          boolean isTempBool =false
-         if(this.person){
+         if(this.person)
              isTempBool = other?.person == this.person
-         }else if(this.company){
+         else if(this.company)
              isTempBool = other?.company == this.company
-         }else if(this.opportunity)
+         else if(this.opportunity)
              isTempBool = other?.opportunity == this.opportunity
-         isTempBool && other.id == this.id
-
+         else if(this.kase)
+             isTempBool = other?.kase == this.kase
+         isTempBool && other.value == this.value
     }
 
     @Override
@@ -62,8 +73,7 @@ class CustomFields extends  AbstractCanaryDomain implements Serializable{
 
     @Override
     String toString(){
-        return "$cLabel - $cValue"
+        return "customfield VALUE$value"
     }
-
 
 }

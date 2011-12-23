@@ -28,10 +28,15 @@ class ContactAddress extends AbstractCanaryDomain implements  Serializable{
         company(nullable:true)
     }
 
+    static minCriteria = [
+          [ 'person' ],
+          [ 'company' ],
+    ]
+
     def toXml(builder){
       //def mkp = builder.getMkp()
       builder.address(){
-          id(id.toString())
+          id(type:SingUtils.INTEGER_TYPE, id)
           street(street)
           city(city)
           state(state)

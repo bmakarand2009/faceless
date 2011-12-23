@@ -3,39 +3,74 @@ package com.canarylogic.sing
 import org.apache.commons.lang.builder.HashCodeBuilder
 
 class Notes extends AbstractCanaryDomain implements Serializable{
+    def static XML_ELEMENT_MAP = [body:"body",entity_id:"entityId",entity_type:"entityType"]
+    static constraints = {
+        body(nullable: false)
+        opportunity(nullable: true)
+        company(nullable:true)
+        person(nullable: true)
+        kase(nullable:true)
+        createdBy(editable:false)
+        updatedBy(nullable:true)
 
+    }
+    static minCriteria = [
+          [ 'person' ],
+          [ 'company' ],
+          ['opportunity'] ,
+          [ 'kase' ]
+    ]
+
+    static mapping = {
+        body type: 'text'
+    }
+
+    String body
 
     Opportunity opportunity
     Company company
     Person person
-    Cases cases
+    Kase kase
+
     String createdBy
     String updatedBy
 
 
-    String note
-
-    static constraints = {
-        note(nullable: false,validator: { val, obj ->
-               obj?.person !=null || obj?.company!=null || obj?.opportunity !=null || obj?.cases !=null
-            })
-        opportunity(nullable: true)
-        company(nullable:true)
-        person(nullable: true)
-        createdBy(editable:false)
-        updatedBy(nullable:true)
-
-
+    @Override
+    def toXml(def builder){
+       builder.note(){
+           id(type:SingUtils.INTEGER_TYPE, id)
+           body(body)
+           entity_id(findEntityId())
+           entity_type(findEntityType())
+           updated_by(updatedBy)
+           date_created(type:SingUtils.DATETIME_TYPE,dateCreated)
+           last_updated(type:SingUtils.DATETIME_TYPE,lastUpdated)
+       }
     }
 
-    static mapping = {
-        note type: 'text'
+    static void saveBean(String xmlRootName,def aMap,def pBean, def parent, boolean isUpdateCall){
+        String entityId = aMap.entityId
+        String entityType = aMap.entityType
+
+        def entityObj = SingUtils.findEntityObj(entityId,entityType)
+        def entityVar = SingUtils.findEntityVariable(entityType)
+        if(entityObj && entityVar)
+            pBean."$entityVar" = entityObj
+        pBean.save(failOnError:true)
     }
+
+
 
         //////     Standard methods
     @Override
     String toString(){
-        "Note ${this.note.substring(0,100)}"
+        if(body){
+            int len = body.length()>100?100:body.length()
+            "Note ${this.body.substring(0,len)}"
+        }else{
+            "Note uninitialized yet"
+        }
     }
 
     @Override
@@ -57,7 +92,7 @@ class Notes extends AbstractCanaryDomain implements Serializable{
         if(person) builder.append(person)
         else if(company) builder.append(company)
         else if(opportunity) builder.append(opportunity)
-        builder.append(note)
+        builder.append(body)
         builder.toHashCode()
     }
 

@@ -3,7 +3,15 @@ package com.canarylogic.sing
 import org.apache.commons.lang.builder.HashCodeBuilder
 
 class Company extends AbstractCanaryDomain implements Serializable{
+    static XML_ELEMENT_MAP = [name:"companyName",
+                      address_list:"contactAddressList",contact_data_list:"contactDetailsList",
+                      custom_fields_list:"customFieldsList"]
 
+    static constraints = {
+       companyName(nullable:false,unique:'client')
+       createdBy(editable:false)
+       updatedBy(nullable:true)
+    }
 
     Client client
     String companyName
@@ -19,8 +27,8 @@ class Company extends AbstractCanaryDomain implements Serializable{
        Person.findAllByCompany(this,[sort:'firstName'])
     }
 
-    def getOppMemberList(){
-        OppMember.findAllByCompany(this)
+    def getMemberList(){
+        Member.findAllByCompany(this)
     }
 
     def getNotesList(){
@@ -35,9 +43,10 @@ class Company extends AbstractCanaryDomain implements Serializable{
         CompanyTag.countByCompanyAndTag(this, tag) > 0
     }
 
+
     def beforeDelete() {
-        OppMember.withNewSession(){
-            oppMemberList*.delete()
+        Member.withNewSession(){
+            memberList*.delete()
         }
         Notes.withNewSession {
             notesList*.delete()
@@ -48,13 +57,60 @@ class Company extends AbstractCanaryDomain implements Serializable{
 
     }
 
+     @Override
+    def toXml(def builder,boolean isListView=true){
+      def mkp = builder.getMkp()
+      builder.company(){
+          id(type:SingUtils.INTEGER_TYPE, id)
+          mkp.comment("required")
+          name(companyName)
+          address_list(){
+              contactAddressList.each {it.toXml(builder,isListView)}
+          }
+          contact_data_list(){
+              contactDetailsList.each{it.toXml(builder,isListView)}
+          }
+          if(!isListView){
+              tag_list(){
+                  tagList.each{it.toXml(builder,isListView)}
+              }
+              notes_list(){
+                  notesList.each{it.toXml(builder,isListView)}
+              }
+              task_list(){
+                  taskList.each{ it.toXml(builder,isListView)}
+              }
+              member_list(){
+                  memberList.each{ it.toXml(builder,isListView)}
+              }
 
+          }
+          date_created(type:SingUtils.DATETIME_TYPE,dateCreated)
+          last_updated(type:SingUtils.DATETIME_TYPE,lastUpdated)
+          created_by(createdBy)
+          updated_by(updatedBy)
+      }
+    }
 
-
-    static constraints = {
-       companyName(nullable:false,unique:'client')
-       createdBy(editable:false)
-       updatedBy(nullable:true)
+    static void saveBean(String xmlRootName,def aMap,def pBean, def client, boolean isUpdateCall){
+        if(!pBean.client)
+             pBean.client = client
+        if(aMap.contactAddressList){
+            pBean.contactAddressList.each{
+                if(!it.person) it.person = pBean
+            }
+        }
+        if(aMap.contactDetailsList){
+            pBean.contactDetailsList.each{
+                if(!it.person) it.person = pBean
+            }
+        }
+        if(aMap.customFieldsList){
+            pBean.customFieldsList.each{
+                if(!it.person) it.person = pBean
+            }
+        }
+        pBean.save(failOnError:true,flush:true)
     }
 
 
@@ -62,7 +118,7 @@ class Company extends AbstractCanaryDomain implements Serializable{
     //////     Standard methods
     @Override
     String toString(){
-        "$companyName for client $client"
+        "company:$companyName,client:$client"
     }
 
     @Override

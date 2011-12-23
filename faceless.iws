@@ -3,24 +3,42 @@
   <component name="ChangeListManager">
     <list id="12df8580-bcb6-4c0a-b1b7-e72ab79f0ef4" name="Default" comment="REST CRUD is working now and test cases are succesful updating the data" />
     <list default="true" id="b5d93082-52d6-4c64-8fbe-8921161614f9" name="New changelist" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/CasesTag.groovy" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/CompanyTag.groovy" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Tags.groovy" afterPath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Tag.groovy" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/test/unit/com/canarylogic/sing/TagsTests.groovy" afterPath="$PROJECT_DIR$/test/unit/com/canarylogic/sing/TagTests.groovy" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Kase.groovy" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/KaseTag.groovy" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Member.groovy" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/MemberCategory.groovy" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/groovy/com/canarylogic/sing/SingUtils.groovy" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Cases.groovy" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/CasesTag.groovy" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/OppMember.groovy" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/OppMemberCategory.groovy" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/groovy/com/canarylogic/sing/Constants.groovy" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/test/unit/com/canarylogic/sing/CasesTests.groovy" afterPath="$PROJECT_DIR$/test/unit/com/canarylogic/sing/KaseTests.groovy" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/test/unit/com/canarylogic/sing/OppMemberCategoryTests.groovy" afterPath="$PROJECT_DIR$/test/unit/com/canarylogic/sing/MemberCategoryTests.groovy" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/test/unit/com/canarylogic/sing/OppMemberTests.groovy" afterPath="$PROJECT_DIR$/test/unit/com/canarylogic/sing/MemberTests.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application.properties" afterPath="$PROJECT_DIR$/application.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/faceless-grailsPlugins.iml" afterPath="$PROJECT_DIR$/faceless-grailsPlugins.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/faceless.iws" afterPath="$PROJECT_DIR$/faceless.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/conf/DataSource.groovy" afterPath="$PROJECT_DIR$/grails-app/conf/DataSource.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Cases.groovy" afterPath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Cases.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/AbstractCanaryDomain.groovy" afterPath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/AbstractCanaryDomain.groovy" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Client.groovy" afterPath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Client.groovy" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Company.groovy" afterPath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Company.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/CompanyTag.groovy" afterPath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/CompanyTag.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/ContactAddress.groovy" afterPath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/ContactAddress.groovy" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/ContactDetails.groovy" afterPath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/ContactDetails.groovy" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/CustomFields.groovy" afterPath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/CustomFields.groovy" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Notes.groovy" afterPath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Notes.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/OppMember.groovy" afterPath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/OppMember.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/OppCategory.groovy" afterPath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/OppCategory.groovy" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Opportunity.groovy" afterPath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Opportunity.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/OpportunityTag.groovy" afterPath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/OpportunityTag.groovy" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Person.groovy" afterPath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Person.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/PersonTag.groovy" afterPath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/PersonTag.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Tag.groovy" afterPath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Tag.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/TaskType.groovy" afterPath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/TaskType.groovy" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Tasks.groovy" afterPath="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Tasks.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/services/com/canarylogic/sing/PartnerService.groovy" afterPath="$PROJECT_DIR$/grails-app/services/com/canarylogic/sing/PartnerService.groovy" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stacktrace.log" afterPath="$PROJECT_DIR$/stacktrace.log" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/integration/GrailsConsoleTest.groovy" afterPath="$PROJECT_DIR$/test/integration/GrailsConsoleTest.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/integration/com/canarylogic/sing/PartnerControllerTests.groovy" afterPath="$PROJECT_DIR$/test/integration/com/canarylogic/sing/PartnerControllerTests.groovy" />
     </list>
     <ignored path="faceless.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -46,59 +64,7 @@
   </component>
   <component name="DebuggerManager">
     <line_breakpoints>
-      <breakpoint url="file://$PROJECT_DIR$/test/integration/com/canarylogic/sing/PartnerControllerTests.groovy" line="118" class="com.canarylogic.sing.PartnerControllerTests" package="">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="false" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/test/integration/com/canarylogic/sing/PartnerControllerTests.groovy" line="119" class="com.canarylogic.sing.PartnerControllerTests" package="">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="false" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/test/integration/com/canarylogic/sing/PartnerControllerTests.groovy" line="59" class="com.canarylogic.sing.PartnerControllerTests" package="">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="false" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/grails-app/controllers/com/canarylogic/sing/PartnerController.groovy" line="38" class="com.canarylogic.sing.PartnerController" package="">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="false" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/grails-app/controllers/com/canarylogic/sing/PartnerController.groovy" line="37" class="com.canarylogic.sing.PartnerController" package="">
+      <breakpoint url="file://$PROJECT_DIR$/test/integration/com/canarylogic/sing/PartnerControllerTests.groovy" line="82" class="com.canarylogic.sing.PartnerControllerTests" package="">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -112,6 +78,136 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
       <breakpoint url="file://$PROJECT_DIR$/grails-app/controllers/com/canarylogic/sing/PartnerController.groovy" line="34" class="com.canarylogic.sing.PartnerController" package="">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Person.groovy" line="75" class="com.canarylogic.sing.Person" package="">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/grails-app/controllers/com/canarylogic/sing/PartnerController.groovy" line="52" class="com.canarylogic.sing.PartnerController" package="">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/AbstractCanaryDomain.groovy" line="24" class="com.canarylogic.sing.AbstractCanaryDomain" package="">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/grails-app/services/com/canarylogic/sing/PartnerService.groovy" line="39" class="com.canarylogic.sing.PartnerService" package="">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/grails-app/services/com/canarylogic/sing/PartnerService.groovy" line="31" class="com.canarylogic.sing.PartnerService" package="">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/grails-app/services/com/canarylogic/sing/PartnerService.groovy" line="75" class="com.canarylogic.sing.PartnerService" package="">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/grails-app/services/com/canarylogic/sing/PartnerService.groovy" line="69" class="com.canarylogic.sing.PartnerService" package="">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/AbstractCanaryDomain.groovy" line="43" class="com.canarylogic.sing.AbstractCanaryDomain" package="">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/AbstractCanaryDomain.groovy" line="32" class="com.canarylogic.sing.AbstractCanaryDomain" package="">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/AbstractCanaryDomain.groovy" line="39" class="com.canarylogic.sing.AbstractCanaryDomain" package="">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -164,7 +260,98 @@
     <favorites_list name="faceless" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="GrailsConsoleTest.groovy" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/integration/GrailsConsoleTest.groovy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="74" column="53" selection-start="2080" selection-end="2080" vertical-scroll-proportion="-8.346154">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ContactDetails.groovy" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/ContactDetails.groovy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="25" column="42" selection-start="917" selection-end="917" vertical-scroll-proportion="-4.2222223">
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="org.jetbrains.plugins.grails.perspectives.DomainClassesRelationsEditorProvider">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AlphaController.groovy" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/grails-app/controllers/com/canarylogic/focalpoint/AlphaController.groovy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="68" column="42" selection-start="2409" selection-end="2439" vertical-scroll-proportion="-26.367348">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Person.groovy" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Person.groovy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="56" column="40" selection-start="1691" selection-end="1744" vertical-scroll-proportion="-8.0222225">
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="org.jetbrains.plugins.grails.perspectives.DomainClassesRelationsEditorProvider">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Client.groovy" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Client.groovy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="48" column="30" selection-start="1190" selection-end="1212" vertical-scroll-proportion="-6.7555556">
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="org.jetbrains.plugins.grails.perspectives.DomainClassesRelationsEditorProvider">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CustomFields.groovy" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/CustomFields.groovy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="14" column="4" selection-start="591" selection-end="591" vertical-scroll-proportion="-5.911111">
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="org.jetbrains.plugins.grails.perspectives.DomainClassesRelationsEditorProvider">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PersonTag.groovy" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/PersonTag.groovy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="10" column="27" selection-start="298" selection-end="336" vertical-scroll-proportion="0.13701923">
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="org.jetbrains.plugins.grails.perspectives.DomainClassesRelationsEditorProvider">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CustomFieldsDefinition.groovy" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/CustomFieldsDefinition.groovy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="16" column="28" selection-start="657" selection-end="657" vertical-scroll-proportion="-3.2112677">
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="org.jetbrains.plugins.grails.perspectives.DomainClassesRelationsEditorProvider">
+            <state />
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -184,22 +371,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Tasks.groovy" />
-        <option value="$PROJECT_DIR$/grails-app/conf/DataSource.groovy" />
-        <option value="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/ContactDetails.groovy" />
-        <option value="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Client.groovy" />
-        <option value="$PROJECT_DIR$/test/integration/GrailsConsoleTest.groovy" />
-        <option value="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Tags.groovy" />
-        <option value="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/PersonTags.groovy" />
+        <option value="$PROJECT_DIR$/src/groovy/com/canarylogic/sing/SingUtils.groovy" />
+        <option value="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/OppStatus.groovy" />
+        <option value="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/OppCategory.groovy" />
         <option value="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/PersonTag.groovy" />
-        <option value="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Person.groovy" />
-        <option value="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Company.groovy" />
         <option value="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/OpportunityTag.groovy" />
-        <option value="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Opportunity.groovy" />
-        <option value="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/CompanyTag.groovy" />
-        <option value="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/CasesTag.groovy" />
-        <option value="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Cases.groovy" />
+        <option value="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Person.groovy" />
+        <option value="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/KaseTag.groovy" />
+        <option value="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/TaskType.groovy" />
         <option value="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Tag.groovy" />
+        <option value="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Company.groovy" />
+        <option value="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/CompanyTag.groovy" />
+        <option value="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Client.groovy" />
+        <option value="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/CustomFields.groovy" />
+        <option value="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/CustomFieldsDefinition.groovy" />
+        <option value="$PROJECT_DIR$/test/integration/GrailsConsoleTest.groovy" />
+        <option value="$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/ContactDetails.groovy" />
       </list>
     </option>
   </component>
@@ -221,7 +408,7 @@
     <option name="STATE" value="0" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="PackagesPane" proportions="" version="1" splitterProportion="0.5">
+    <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -233,58 +420,9 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="faceless" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="faceless" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="faceless" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="faceless" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="faceless" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="com.canarylogic" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="faceless" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="faceless" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="com.canarylogic" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sing" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="Favorites" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -295,8 +433,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Favorites" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -337,7 +473,7 @@
       <recent name="com.canarylogic.sing" />
     </key>
   </component>
-  <component name="RunManager" selected="Grails.Grails:faceless">
+  <component name="RunManager" selected="Grails.Grails:faceslessTest">
     <configuration default="false" name="PartnerServiceTests" type="JUnit" factoryName="JUnit" temporary="true">
       <module name="faceless" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -603,28 +739,28 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="94" y="22" width="1532" height="1004" extended-state="0" />
-    <editor active="false" />
+    <frame x="0" y="22" width="1680" height="1024" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32844242" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.16139954" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1611479" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.16365689" sideWeight="0.99864775" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.66887414" sideWeight="0.99864775" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26523703" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2593819" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Grails View" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28879893" sideWeight="0.5880361" order="2" side_tool="false" content_ui="tabs" x="40" y="96" width="428" height="886" />
+      <window_info id="Grails View" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29018405" sideWeight="0.7406181" order="2" side_tool="false" content_ui="tabs" x="40" y="96" width="428" height="886" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32844242" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5331126" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32731378" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.28879893" sideWeight="0.32505643" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.53273135" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32671082" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29018405" sideWeight="0.22295806" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29018405" sideWeight="0.22958058" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3994602" sideWeight="0.5880361" order="0" side_tool="false" content_ui="tabs" x="643" y="263" width="592" height="521" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21862349" sideWeight="0.5880361" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41196388" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2184049" sideWeight="0.5883002" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41169977" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -681,60 +817,9 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Tasks.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="38" selection-start="85" selection-end="85" vertical-scroll-proportion="-1.2666667">
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="org.jetbrains.plugins.grails.perspectives.DomainClassesRelationsEditorProvider">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/unit/com/canarylogic/sing/NotesTests.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="6" selection-start="58" selection-end="58" vertical-scroll-proportion="-3.3043478">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/conf/DataSource.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="22" selection-start="133" selection-end="133" vertical-scroll-proportion="0.11085181">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/ContactDetails.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="0" selection-start="647" selection-end="647" vertical-scroll-proportion="-7.6">
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="org.jetbrains.plugins.grails.perspectives.DomainClassesRelationsEditorProvider">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/integration/GrailsConsoleTest.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="29" selection-start="856" selection-end="856" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Client.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="15" selection-start="916" selection-end="916" vertical-scroll-proportion="-14.355556">
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="org.jetbrains.plugins.grails.perspectives.DomainClassesRelationsEditorProvider">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Notes.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="14" selection-start="725" selection-end="725" vertical-scroll-proportion="-11.822222">
+        <state line="4" column="6" selection-start="92" selection-end="92" vertical-scroll-proportion="24.6">
           <folding />
         </state>
       </provider>
@@ -742,59 +827,9 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Company.groovy">
+    <entry file="file://$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/OppCategory.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="11" selection-start="1017" selection-end="1106" vertical-scroll-proportion="-13.822222">
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="org.jetbrains.plugins.grails.perspectives.DomainClassesRelationsEditorProvider">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/PersonTag.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="58" selection-start="144" selection-end="144" vertical-scroll-proportion="-1.6888889">
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="org.jetbrains.plugins.grails.perspectives.DomainClassesRelationsEditorProvider">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Person.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="38" selection-start="1175" selection-end="1175" vertical-scroll-proportion="0.1773399">
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="org.jetbrains.plugins.grails.perspectives.DomainClassesRelationsEditorProvider">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/OpportunityTag.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="79" selection-start="107" selection-end="160" vertical-scroll-proportion="-1.6888889">
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="org.jetbrains.plugins.grails.perspectives.DomainClassesRelationsEditorProvider">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/CompanyTag.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="59" column="0" selection-start="158" selection-end="1443" vertical-scroll-proportion="-16.777779">
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="org.jetbrains.plugins.grails.perspectives.DomainClassesRelationsEditorProvider">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/CasesTag.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="14" selection-start="249" selection-end="257" vertical-scroll-proportion="-1.71">
+        <state line="7" column="6" selection-start="152" selection-end="152" vertical-scroll-proportion="6.4444447">
           <folding />
         </state>
       </provider>
@@ -804,7 +839,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Opportunity.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="52" column="11" selection-start="1011" selection-end="1111" vertical-scroll-proportion="0.8596059">
+        <state line="4" column="6" selection-start="92" selection-end="92" vertical-scroll-proportion="68.8">
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="org.jetbrains.plugins.grails.perspectives.DomainClassesRelationsEditorProvider">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/OpportunityTag.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="6" selection-start="92" selection-end="92" vertical-scroll-proportion="10.955556">
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="org.jetbrains.plugins.grails.perspectives.DomainClassesRelationsEditorProvider">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/OppStatus.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="6" selection-start="92" selection-end="92" vertical-scroll-proportion="-1.6888889">
           <folding />
         </state>
       </provider>
@@ -814,7 +869,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Tag.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="24" selection-start="522" selection-end="522" vertical-scroll-proportion="0.49137932">
+        <state line="4" column="6" selection-start="92" selection-end="92" vertical-scroll-proportion="8.555555">
           <folding />
         </state>
       </provider>
@@ -822,9 +877,93 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Cases.groovy">
+    <entry file="file://$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Tasks.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="14" selection-start="393" selection-end="393" vertical-scroll-proportion="0.42118227">
+        <state line="4" column="6" selection-start="92" selection-end="92" vertical-scroll-proportion="29.955555">
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="org.jetbrains.plugins.grails.perspectives.DomainClassesRelationsEditorProvider">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/TaskType.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="6" selection-start="218" selection-end="218" vertical-scroll-proportion="-0.484375">
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="org.jetbrains.plugins.grails.perspectives.DomainClassesRelationsEditorProvider">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Client.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="48" column="30" selection-start="1190" selection-end="1212" vertical-scroll-proportion="-6.7555556">
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="org.jetbrains.plugins.grails.perspectives.DomainClassesRelationsEditorProvider">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/controllers/com/canarylogic/focalpoint/AlphaController.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="68" column="42" selection-start="2409" selection-end="2439" vertical-scroll-proportion="-26.367348">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/CustomFieldsDefinition.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="28" selection-start="657" selection-end="657" vertical-scroll-proportion="-3.2112677">
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="org.jetbrains.plugins.grails.perspectives.DomainClassesRelationsEditorProvider">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/Person.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="56" column="40" selection-start="1691" selection-end="1744" vertical-scroll-proportion="-8.0222225">
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="org.jetbrains.plugins.grails.perspectives.DomainClassesRelationsEditorProvider">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/ContactDetails.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="42" selection-start="917" selection-end="917" vertical-scroll-proportion="-4.2222223">
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="org.jetbrains.plugins.grails.perspectives.DomainClassesRelationsEditorProvider">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/integration/GrailsConsoleTest.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="74" column="53" selection-start="2080" selection-end="2080" vertical-scroll-proportion="-8.346154">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/CustomFields.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="4" selection-start="591" selection-end="591" vertical-scroll-proportion="-5.911111">
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="org.jetbrains.plugins.grails.perspectives.DomainClassesRelationsEditorProvider">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/domain/com/canarylogic/sing/PersonTag.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="27" selection-start="298" selection-end="336" vertical-scroll-proportion="0.13701923">
           <folding />
         </state>
       </provider>

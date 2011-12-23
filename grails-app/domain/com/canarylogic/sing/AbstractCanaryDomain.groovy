@@ -35,10 +35,32 @@ abstract class AbstractCanaryDomain {
 
      //this might throw some error as updatedby is nolonger in the base class
      aMap.each{ colName,colVal->
-           pBean."$colName" = colVal
+         if(pBean.metaClass.hasProperty(pBean, colName)) {
+                println("setting the property $colName")
+                pBean."$colName" = colVal
+         }
+
      }
      clazz.saveBean(xmlRootName,aMap,pBean,parent,isUpdateCall)
      return pBean
+  }
+
+
+  //true for Notes and Tasks
+
+  protected def findEntityType(){
+        if(this.company) SingUtils.COMPANY_TYPE
+        else if(this.person) SingUtils.PERSON_TYPE
+        else if(this.opportunity) SingUtils.OPPORTUNITY_TYPE
+        else if(this.kase)  SingUtils.KASE_TYPE
+  }
+
+  protected def findEntityId(){
+        if(this.company) company.id
+        else if(this.person) person.id
+        else if(this.opportunity) opportunity.id
+        else if(this.kase) kase.id
+
   }
 
 

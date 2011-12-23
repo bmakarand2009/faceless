@@ -3,9 +3,7 @@ package com.canarylogic.sing
 import org.apache.commons.lang.builder.HashCodeBuilder
 
 class CompanyTag extends AbstractCanaryDomain implements Serializable{
-
-    Company company
-    Tag   tag
+    static XML_ELEMENT_MAP = [entity_id:"entityId",tag_id:"tagId"]
 
     static mapping = {
         table('company_tag')
@@ -13,7 +11,11 @@ class CompanyTag extends AbstractCanaryDomain implements Serializable{
         id composite:['company','tag']
     }
 
+    static constraints = {
+    }
 
+    Company company
+    Tag   tag
 
     static CompanyTag create(Company company, Tag tag, boolean flush = false) {
         CompanyTag companyTag = new CompanyTag(company:company, tag:tag)
@@ -30,19 +32,20 @@ class CompanyTag extends AbstractCanaryDomain implements Serializable{
         executeUpdate("DELETE FROM CompanyTag WHERE company=:company", [company: company])
     }
 
-    static void remoteAllWithTag(Tag tag){
+    static void removeAllWithTag(Tag tag){
         executeUpdate("DELETE FROM CompanyTag WHERE tag=:tag", [tag: tag])
     }
 
-
-
-
-    static constraints = {
+    //!@toXml method is not available since we are not going to come here but go to Tags direcltly
+    static void saveBean(String xmlRootName,def aMap,def pBean, def client, boolean isUpdateCall){
+        pBean.person = Kase.get(aMap.entityId)
+        pBean.tag    = Tag.get(aMap.tagId)
+        pBean.save(failOnError:true)
     }
 
     @Override
     String toString(){
-        return "$company $tag"
+        "[company:$company,tag:$tag]"
     }
 
     @Override
@@ -55,6 +58,5 @@ class CompanyTag extends AbstractCanaryDomain implements Serializable{
         def builder = new HashCodeBuilder()
         builder.append(company).append(tag)
         builder.toHashCode()
-
     }
 }

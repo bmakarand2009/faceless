@@ -2,7 +2,7 @@ package com.canarylogic.sing
 
 import grails.test.*
 
-class OppMemberTests extends GrailsUnitTestCase {
+class MemberTests extends GrailsUnitTestCase {
     protected void setUp() {
         super.setUp()
     }

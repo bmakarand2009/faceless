@@ -1,5 +1,6 @@
 package com.canarylogic.sing
 
+
 class PartnerService {
 
     def listRecords(Client parent, Class domainClz, def params){
@@ -44,20 +45,33 @@ class PartnerService {
     }
 
 
+    def domainObjectsMap =
+      ["$SingUtils.PERSON_ROOT":Person, "$SingUtils.COMPANY_ROOT":Company,
+              "$SingUtils.OPPORTUNITY_ROOT":Opportunity,"$SingUtils.KASE_ROOT":Kase,
+              "$SingUtils.CUSTOM_FIELD_DEFINITION_ROOT":CustomFieldsDefinition,
+              "$SingUtils.CUSTOM_FIELD_ROOT":CustomFields,
+              "$SingUtils.TAG_ROOT":Tag, "$SingUtils.MEMBER_ROOT":Member,
+              "$SingUtils.MEMBER_CATEGORY_ROOT":MemberCategory,
+              "$SingUtils.TASK_TYPE_ROOT":TaskType,
+              "$SingUtils.PERSON_TAG_ROOT":PersonTag,
+              "$SingUtils.COMPANY_TAG_ROOT":CompanyTag,
+              "$SingUtils.OPPORTUNITY_TAG_ROOT":OpportunityTag,
+              "$SingUtils.KASE_TAG_ROOT":KaseTag,
+                address:ContactAddress,email: ContactDetails,
+                note:Notes,task:Tasks]
 
 
 
-    def domainObjectsMap=[person:"com.canarylogic.sing.Person",
-            address:"com.canarylogic.sing.ContactAddress",
-            email: "com.canarylogic.sing.ContactDetails"]
+
 
     def pxmlClosure = { pRoot,parentObj,user,curId ->
         def xmlMap=[:]
-        def clzLoader = this.class.classLoader
+      //  def clzLoader = this.class.classLoader
         def rootName = pRoot.name()
-        def domainClzName = domainObjectsMap."${rootName}"
-        def domainClz = clzLoader.loadClass(domainClzName)
-        log.debug "domainc lass loaded as ${domainClzName}"
+       // def domainClzName = domainObjectsMap."${rootName}"
+       // def domainClz = clzLoader.loadClass(domainClzName)
+        def domainClz = domainObjectsMap."${rootName}"
+        log.debug "domainc lass loaded as ${domainClz}"
 
         def curObj=null
         if(curId) {
@@ -86,8 +100,8 @@ class PartnerService {
                    }else
                      xmlMap."$v" = childElemVal
                 }
-                else if(aType==Constants.INTEGER_TYPE) xmlMap."$v" = childElemVal.toInteger()
-                else if(aType==Constants.DATETIME_TYPE)xmlMap."$v" = new Date().parse("yyyy-M-d H:m:s",childElemVal.toString())
+                else if(aType==SingUtils.INTEGER_TYPE) xmlMap."$v" = childElemVal.toInteger()
+                else if(aType==SingUtils.DATETIME_TYPE)xmlMap."$v" = new Date().parse("yyyy-M-d H:m:s",childElemVal.toString())
 
             }
         }

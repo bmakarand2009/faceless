@@ -14,13 +14,15 @@ class Client  extends  AbstractCanaryDomain implements Serializable {
 
 	
 	static hasMany=[roles:Role,groups:Groups,taskTypeList:TaskType,oppCategoryList:OppCategory,
-    oppMemberCategoryList:OppMemberCategory]
+    memberCategoryList:MemberCategory,oppStatus:OppStatus]
 	
     static constraints = {
 		orgId(blank:false,unique:true)
 		orgName(blank:false,length:5)
         createdBy(editable:false)
         updatedBy(nullable:true)
+        memberCategoryList(nullable: true)
+        oppStatus(nullable: true)
     }
 
     def getPersonList(){
@@ -35,12 +37,16 @@ class Client  extends  AbstractCanaryDomain implements Serializable {
         Opportunity.findAllByClient(this,[sort:'dateCreated'])
     }
 
-    def getCasesList(){
-        Cases.findAllByClient(this)
+    def getKaseList(){
+        Kase.findAllByClient(this)
     }
 
     def getTagList(){
         Tag.findAllByClient(this,[sort:'dateCreated'])
+    }
+
+    def getCustomFieldsDefinitionList(){
+        CustomFieldsDefinition.findAllByClient(this)
     }
 
     def beforeDelete() {
@@ -54,17 +60,20 @@ class Client  extends  AbstractCanaryDomain implements Serializable {
         Opportunity.withNewSession {
             opportunityList*.delete()
         }
-        Cases.withNewSession {
-            casesList*.delete()
+        Kase.withNewSession {
+            kaseList*.delete()
         }
         Tag.withNewSession {
             tagList*.delete()
+        }
+        CustomFieldsDefinition.withNewSession {
+            customFieldsDefinitionList*.delete()
         }
     }
 
     @Override
     String toString() {
-        return "OrgName:$orgName and OrgId: $orgId"
+        return "[OrgName:$orgName,OrgId: $orgId]"
     }
 
 

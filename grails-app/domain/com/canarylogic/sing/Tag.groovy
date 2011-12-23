@@ -3,31 +3,38 @@ package com.canarylogic.sing
 import org.apache.commons.lang.builder.HashCodeBuilder
 
 class Tag extends AbstractCanaryDomain implements Serializable{
+    static XML_ELEMENT_MAP = [name:"name"]
 
-    String tagName
+    String name
     Client client
 
     static constraints = {
-        tagName(unique: 'client')
+        name(unique: 'client')
     }
 
     def beforeDelete() {
         CompanyTag.withNewSession {
-            CompanyTag.remoteAllWithTag(this)
+            CompanyTag.removeAllWithTag(this)
         }
         PersonTag.withNewSession {
-            PersonTag.remoteAllWithTag(this)
+            PersonTag.removeAllWithTag(this)
         }
-        CasesTag.withNewSession {
-            CasesTag.remoteAllWithTag(this)
+        KaseTag.withNewSession {
+            KaseTag.removeAllWithTag(this)
         }
-
     }
-
 
     @Override
     def toXml(def builder){
-        builder.tag(tagName)
+        builder."$SingUtils.TAG_ROOT"(){
+            id(type:SingUtils.INTEGER_TYPE, id)
+            name(name)
+        }
+    }
+
+    static void saveBean(String xmlRootName,def aMap,def pBean, def client, boolean isUpdateCall){
+        if(!isUpdateCall && !pBean.client) pBean.client = client
+        pBean.save(failOnError:true)
     }
 
     @Override
@@ -35,20 +42,20 @@ class Tag extends AbstractCanaryDomain implements Serializable{
          if(! (other instanceof Tag )){
              return false
          }
-        other?.client = client && other?.tagName == this.tagName
+        other?.client = client && other?.name == this.name
 
     }
 
     @Override
     public int hashCode() {
         def builder = new HashCodeBuilder()
-        builder.append(tagName).append(client)
+        builder.append(name).append(client)
         builder.toHashCode()
     }
 
     @Override
     String toString(){
-        return "$tagName - $client"
+        return "$name - $client"
     }
 
 }

@@ -18,23 +18,24 @@ class ContactDetails  extends AbstractCanaryDomain implements Serializable{
 	static belongsTo = [person:Person,company:Company]
 
     static constraints = {
-		contactType(inList:['email','phone','website'])
-        contactValue(validator: { val, obj ->
-               boolean  isValid = false
-               if(!isValid)
-                   return 'duplicate ContactValue'
-            })
+		contactType(inList:['email','phone','website','other'])
+        contactValue(blank:false)
         contactCategory(inList:['home','work','other'])
 		additionalInfo(nullable:true)
         company(nullable: true)
         person(nullable: true)
     }
 
+    static minCriteria = [
+          [ 'person' ],
+          [ 'company' ]
+     ]
+
     @Override
     def toXml(def builder,boolean isList=false){
         def mkp = builder.getMkp()
         builder."$contactType"(){
-            id(id)
+            id(type:SingUtils.INTEGER_TYPE, id)
             value(contactValue)
             category(contactCategory)
             mkp.comment("home | work| other")
