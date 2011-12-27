@@ -49,10 +49,10 @@ abstract class AbstractCanaryDomain {
   //true for Notes and Tasks
 
   protected def findEntityType(){
-        if(this.company) SingUtils.COMPANY_TYPE
-        else if(this.person) SingUtils.PERSON_TYPE
-        else if(this.opportunity) SingUtils.OPPORTUNITY_TYPE
-        else if(this.kase)  SingUtils.KASE_TYPE
+        if(this.company) SingUtils.COMPANY_ROOT
+        else if(this.person) SingUtils.PERSON_ROOT
+        else if(this.opportunity) SingUtils.OPPORTUNITY_ROOT
+        else if(this.kase)  SingUtils.KASE_ROOT
   }
 
   protected def findEntityId(){

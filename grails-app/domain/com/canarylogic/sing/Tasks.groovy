@@ -44,8 +44,8 @@ class Tasks extends AbstractCanaryDomain implements Serializable{
 
 
     @Override
-    def toXml(def builder){
-       builder.task(){
+    def toXml(def builder, boolean isListView){
+       builder."$SingUtils.TASK_ROOT"(){
            id(id)
            body(body)
            due_at(dueDate)

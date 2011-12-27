@@ -31,7 +31,7 @@ class Company extends AbstractCanaryDomain implements Serializable{
         Member.findAllByCompany(this)
     }
 
-    def getNotesList(){
+    def getNoteList(){
         Notes.findAllByCompany(this)
     }
 
@@ -49,7 +49,7 @@ class Company extends AbstractCanaryDomain implements Serializable{
             memberList*.delete()
         }
         Notes.withNewSession {
-            notesList*.delete()
+            noteList*.delete()
         }
         CompanyTag.withNewSession {
             CompanyTag.removeAllWithCompany(this)
@@ -74,11 +74,13 @@ class Company extends AbstractCanaryDomain implements Serializable{
               tag_list(){
                   tagList.each{it.toXml(builder,isListView)}
               }
-              notes_list(){
-                  notesList.each{it.toXml(builder,isListView)}
+              note_list(){
+                  noteList.each{it.toXml(builder,isListView)}
               }
               task_list(){
-                  taskList.each{ it.toXml(builder,isListView)}
+                  taskList.each{
+                      it.toXml(builder,isListView)
+                  }
               }
               member_list(){
                   memberList.each{ it.toXml(builder,isListView)}

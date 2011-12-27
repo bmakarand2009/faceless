@@ -47,6 +47,7 @@ class PersonTag extends AbstractCanaryDomain implements Serializable{
 
 
 
+
     @Override
     String toString(){
         return "$person $tag"

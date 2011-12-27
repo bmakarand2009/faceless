@@ -18,7 +18,7 @@ class CustomFieldsDefinition  extends  AbstractCanaryDomain implements Serializa
         validationRule(nullable: true)
         customFieldsList(nullable: true)
         updatedBy(nullable:true)
-        entityType(inList:["Person","Company","Opportunity","Opportunity"])
+        entityType(inList:["person","company","kase","opportunity"])
    }
 
 
@@ -50,6 +50,8 @@ class CustomFieldsDefinition  extends  AbstractCanaryDomain implements Serializa
            updated_by(updatedBy)
        }
     }
+
+
 
     static void saveBean(String xmlRootName,def aMap,def pBean, def parent, boolean isUpdateCall){
         if(!isUpdateCall)

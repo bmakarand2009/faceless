@@ -37,8 +37,8 @@ class Notes extends AbstractCanaryDomain implements Serializable{
 
 
     @Override
-    def toXml(def builder){
-       builder.note(){
+    def toXml(def builder,boolean isListView){
+       builder."$SingUtils.NOTE_ROOT"(){
            id(type:SingUtils.INTEGER_TYPE, id)
            body(body)
            entity_id(findEntityId())

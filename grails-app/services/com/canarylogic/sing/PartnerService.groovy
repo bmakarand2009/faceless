@@ -1,76 +1,131 @@
 package com.canarylogic.sing
 
+import org.springframework.transaction.annotation.Transactional
+
 
 class PartnerService {
 
-    def listRecords(Client parent, Class domainClz, def params){
-//		def tableClass = domainName.class
-		String orderType=params.order?params.String(order):'asc'
-		def max = params.max?params.max.toInteger():10
-		def offset = params.offset?params.offset:0
-		String orderField = params.orderField?params.String(orderField):'id'
-		
-		def resultList = domainClz.withCriteria {
-			maxResults(max)
-			firstResult(offset)
-			order(orderField,orderType)
-			and{
-				eq('client', parent)
-			}
-//			or {
-//				params.each{k,v->
-//					like(k,"%$v%")
-//				}
-//			 }
-        }
-        return resultList
-		
-	}
+    def VALID_CHILD_DOMAINS = ["person","company",
+              "opportunity","kase"]
+
+
+
 
     def createOrUpdate(boolean isCreate,Client client,def user,def xmlBody){
-        try{
-            def proot = new XmlParser().parseText(xmlBody)
-            Integer curId=null
-            if(!isCreate){
-                curId = proot.id.text().toInteger()
-                if(!curId)
-                    throw new Exception("No Object found for $curId, Update Operation Failed")
-            }
+          try{
+              def proot = new XmlParser().parseText(xmlBody)
+              Integer curId=null
+              if(!isCreate){
+                  curId = proot.id.text().toInteger()
+                  if(!curId)
+                      throw new Exception("No Object found for $curId, Update Operation Failed")
+              }
 
-            def domainObj = pxmlClosure(proot,client,user,curId)
-            return domainObj
-        }catch(Exception ex){
-            throw new Exception(ex.message)
-        }
+              def domainObj = parseXmlClosure(proot,client,user,curId)
+              return domainObj
+          }catch(Exception ex){
+              throw new Exception(ex.message)
+          }
+    }
+
+    def getRecord(Client parent,def params){
+        def domainClz = SingUtils.DOMAIN_OBJECTS_MAP.get(params.domain)
+        def resultObj = domainClz.get(params.entityId)
+        if(!resultObj)
+            throw new Exception("No Object found for domain:$params.domain and entityId:$params.entityId")
+        return resultObj
     }
 
 
-    def domainObjectsMap =
-      ["$SingUtils.PERSON_ROOT":Person, "$SingUtils.COMPANY_ROOT":Company,
-              "$SingUtils.OPPORTUNITY_ROOT":Opportunity,"$SingUtils.KASE_ROOT":Kase,
-              "$SingUtils.CUSTOM_FIELD_DEFINITION_ROOT":CustomFieldsDefinition,
-              "$SingUtils.CUSTOM_FIELD_ROOT":CustomFields,
-              "$SingUtils.TAG_ROOT":Tag, "$SingUtils.MEMBER_ROOT":Member,
-              "$SingUtils.MEMBER_CATEGORY_ROOT":MemberCategory,
-              "$SingUtils.TASK_TYPE_ROOT":TaskType,
-              "$SingUtils.PERSON_TAG_ROOT":PersonTag,
-              "$SingUtils.COMPANY_TAG_ROOT":CompanyTag,
-              "$SingUtils.OPPORTUNITY_TAG_ROOT":OpportunityTag,
-              "$SingUtils.KASE_TAG_ROOT":KaseTag,
-                address:ContactAddress,email: ContactDetails,
-                note:Notes,task:Tasks]
+
+ // /tag/person/id  : list all the tags for the person with person id
+    // /tag/person : list all the person tags
+    @Transactional(readOnly = true)
+    def listRecords(Client parent, def params){
+        def resultList
+        if(params.entityOrAction || params.entityId)
+              resultList = listChildrenRecords(parent,params)
+        else
+            resultList = listDomainRecords(parent,params)
+
+        return resultList
+	}
+
+    private def listDomainRecords(def client,def params){
+        def domainClz = SingUtils.DOMAIN_OBJECTS_MAP."$params.domain"
+        String orderType=params.order?params.String(params.order):'asc'
+        def max = params.max?params.max.toInteger():10
+        def offset = params.offset?params.offset:0
+        String orderField = params.orderField?params.orderField:'id'
+
+        def resultList = domainClz.withCriteria {
+             maxResults(max)
+             firstResult(offset)
+             order(orderField,orderType)
+             and{
+                 eq('client', client)
+             }
+ //			or {
+ //				params.each{k,v->
+ //					like(k,"%$v%")
+ //				}
+ //			 }
+        }
+        return resultList
+    }
+
+    //list all the tag/note/tasK for a particular entity e.g person id representing john
+    private def listChildrenRecords(def client,def params){
+        String parentDomainName = params.domain
+        if (!VALID_CHILD_DOMAINS.contains(params.entityOrAction) )
+            throw new Exception("Invalid Child domain ${params.entityOrAction} for parent $parentDomainName")
+        def childDomainClz =  SingUtils.DOMAIN_OBJECTS_MAP."${params.entityOrAction}"
+        if(!childDomainClz) throw new Exception("Invalid entityName ${params.entityOrAction}  passed for domain${params.domain} ")
+
+        def resultList
+        if(params.entityId)
+            resultList = childDomainClz.get(params.entityId)?."${parentDomainName}List"
+        else{
+            println "this cases where entityId is not there needs to be identitfied"
+            if(parentDomainName==SingUtils.TAG_ROOT) getTagListForChildDomain(params.entityOrAction,client)
+            else if(parentDomainName == SingUtils.CUSTOM_FIELD_DEFINITION_ROOT)
+                resultList = CustomFieldsDefinition.findAllByClientAndEntityType(client,params.entityOrAction)
+            else{
+                def domainClz = SingUtils.DOMAIN_OBJECTS_MAP."$params.domainName"
+                resultList = domainClz.createCriteria().list{
+                "$params.entityOrAction"{
+                    eq('client', client)
+                 }
+                }
+            }
+        }
+
+        return  resultList
+    }
+
+    //url /tag/person or /tag/company..
+    private def getTagListForChildDomain(def childDomain, def client){
+          def resultList
+          if(childDomain == SingUtils.PERSON_ROOT)
+              resultList = PersonTag.list().findAll{client in it.person.client}
+            else if(childDomain == SingUtils.COMPANY_ROOT)
+              resultList = CompanyTag.list().findAll{client in it.company.client}
+            else if(childDomain == SingUtils.KASE_ROOT)
+              resultList = KaseTag.list().findAll{client in it.kase.client}
+            else if(childDomain == SingUtils.OPPORTUNITY_ROOT)
+              resultList = OpportunityTag.list().findAll{client in it.opportunity.client}
+          return resultList
+    }
 
 
 
 
 
-    def pxmlClosure = { pRoot,parentObj,user,curId ->
+
+    private def parseXmlClosure = { pRoot,parentObj,user,curId ->
         def xmlMap=[:]
-      //  def clzLoader = this.class.classLoader
         def rootName = pRoot.name()
-       // def domainClzName = domainObjectsMap."${rootName}"
-       // def domainClz = clzLoader.loadClass(domainClzName)
-        def domainClz = domainObjectsMap."${rootName}"
+        def domainClz = SingUtils.DOMAIN_OBJECTS_MAP."${rootName}"
         log.debug "domainc lass loaded as ${domainClz}"
 
         def curObj=null
@@ -94,7 +149,7 @@ class PartnerService {
                           Integer listObjId= null
                           String  listObjIdStr = it.id.text()
                           if(listObjIdStr) listObjId = listObjIdStr.toInteger()
-                          xmlListObj<<pxmlClosure(it,curObj,user,listObjId)
+                          xmlListObj<<parseXmlClosure(it,curObj,user,listObjId)
                        }
                       xmlMap."$v" = xmlListObj
                    }else

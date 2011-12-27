@@ -11,7 +11,7 @@ class Person extends AbstractCanaryDomain implements Serializable{
 
     //XML_ELEMENT_MAP : lists of xmlfield mappings based on which objct will get created
     def static XML_ELEMENT_MAP = [firstName:"firstName",lastName:"lastName",
-                  count:"count", address_list:"contactAddressList",contact_data_list:"contactDetailsList",
+                  count:"count", address_list:"contactA ddressList",contact_data_list:"contactDetailsList",
                   custom_fields_list:"customFieldsList"]
 
 	static hasMany = [contactAddressList:ContactAddress,contactDetailsList:ContactDetails,
@@ -45,7 +45,7 @@ class Person extends AbstractCanaryDomain implements Serializable{
        Member.findAllByPerson(this)
     }
 
-    def getNotesList(){
+    def getNoteList(){
         Notes.findAllByPerson(this)
     }
 
@@ -62,7 +62,7 @@ class Person extends AbstractCanaryDomain implements Serializable{
             oppMemberList*.delete()
         }
         Notes.withNewSession {
-            notesList*.delete()
+            noteList*.delete()
         }
         PersonTag.withNewSession {
             PersonTag.removeAllWithPerson(this)
@@ -91,10 +91,10 @@ class Person extends AbstractCanaryDomain implements Serializable{
           }
           if(!isListView){
               tag_list(){
-                  tagList.each{it.toXxml(builder,isListView)}
+                  tagList.each{ it.toXml(builder,isListView)  }
               }
-              notes_list(){
-                  notesList.each{it.toXml(builder,isListView)}
+              note_list(){
+                  noteList.each{it.toXml(builder,isListView)}
               }
               task_list(){
                   taskList.each{ it.toXml(builder,isListView)}

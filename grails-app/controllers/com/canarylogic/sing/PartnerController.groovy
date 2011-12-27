@@ -4,14 +4,15 @@ import groovy.xml.MarkupBuilder
 
 class PartnerController {
 
-
-    static String PERSON_DOMAIN="Person"
-
-    static def URL_DOMAIN_MAP=["/person":Person]
-
     def partnerService
 
     def index() { }
+
+    def VALID_DOMAINS=["$SingUtils.PERSON_ROOT","$SingUtils.COMPANY_ROOT",
+                       "$SingUtils.KASE_ROOT","$SingUtils.OPPORTUNITY_ROOT",
+                        "$SingUtils.TAG_ROOT",
+                        "$SingUtils.CUSTOM_FIELD_DEFINITION_ROOT",
+                       "$SingUtils.NOTE_ROOT","$SingUtils.TASK_ROOT"]
 
     /*
     (authkey,appId,domain('Contact,Company,,max,offset,order,orderField,
@@ -25,53 +26,74 @@ class PartnerController {
 //             return false
 //        }
 
+    private def populateEntityId(){
+        Integer entityId = null
+        if(params.id) entityId = params.id.toInteger()
+        else if(params.entityOrAction && params.entityOrAction.isNumber())
+            entityId = params.entityOrAction.toInteger()
+        params.entityId = entityId
+    }
+    private def populateEntityNameOrAction(){
+        String entityName =null
+        if(params.entityOrAction && !params.entityOrAction?.isNumber())
+           entityName = params.entityOrAction
+        params.entityOrAction = entityName
+    }
+
     def show = {
-        def dummy = request
-        def isTest = params.test
-        String requestPath
-        if(isTest){
-            requestPath="/person"
-        }else{
-            requestPath = request.getRequest().request.requestDispatcherPath
-        }
-        def domainClz = URL_DOMAIN_MAP.get(requestPath)
         log.debug(params)
-//        if (params.domain == PERSON_DOMAIN) domainName = new Person()
-        def client = Client.findByOrgId(params.applicationId)
+        log.debug(VALID_DOMAINS)
+        if(!VALID_DOMAINS.contains("$params.domain"))
+            throw new Exception("Resource Url not found for domain ${params?.domain}")
+        def client = Client.findByOrgId(params?.applicationId)
+        if(!client)
+            throw new Exception("client not found for applicationId ${params?.applicationId}")
 
+        populateEntityId()
+        populateEntityNameOrAction()
+        boolean  isList = true
 
-        def recList = partnerService.listRecords(client, domainClz, params)
+        log.debug "lats params $params"
 
-        def writer = new StringWriter()
-        def xmlbldr= new MarkupBuilder(writer)
-        xmlbldr.list(size:recList.size()) {
-            recList.each{ aContact->
-                      aContact.toXml(xmlbldr,false)
-            }
-            requestId(new Date().time)
-        }
-        def xmlResp =writer.toString()
-        log.debug("xmlResp recieved is $xmlResp")
+        if(params.entityOrAction && params.entityId) isList = true
+        else if(params.entityOrAction) isList = true
+        else if(params.entityId) isList = false
+
+        def results = isList?partnerService.listRecords(client,params):partnerService.getRecord(client,params)
+        def xmlResp = convToXml(isList,results)
         render(text: xmlResp as String, contentType: "text/xml", encoding: "UTF-8")
 
 //        withFormat {
-//            html {
-//                return [recList: recList]
+//            json {
+//                return "JSON Support is not yet available, please contact admin for the same"
 //            }
-//            xml {
-//                def writer = new StringWriter()
-//                def xmlbldr= new MarkupBuilder(writer)
-//                xmlbldr.list(size:recList.size()) {
-//                    recList.each{ aContact->
-//                              aContact.toXml(xmlbldr)
-//                    }
-//                    requestId(new Date().time)
-//                }
-//                def xmlResp =writer.toString()
-//                log.debug("xmlResp recieved is $xmlResp")
+//            html{
+//                String xmlResp = convToXml(isList,resultObjs)
 //                render(text: xmlResp as String, contentType: "text/xml", encoding: "UTF-8")
+//
+//            }xml{
+//                rendrXml(isList,resultObjs)
 //            }
 //        }
+
+    }
+
+    private String convToXml(def isList,def results){
+        def writer = new StringWriter()
+        def xmlbldr= new MarkupBuilder(writer)
+        if(isList){
+            xmlbldr.list(size:results.size()) {
+                results.each{ aContact->
+                          aContact.toXml(xmlbldr)
+                }
+                requestId(new Date().time)
+            }
+        }else{
+              results.toXml(xmlbldr)
+        }
+        def xmlResp =writer.toString()
+        log.debug("xmlResp recieved is $xmlResp")
+        return xmlResp
     }
 
     /*
@@ -118,6 +140,7 @@ class PartnerController {
     private def createOrUpdateCall(boolean isCreate){
          def createXmlBody = request.reader.getText()
          def client = Client.findByOrgId("canary-test-123")
+
          def domainObj = partnerService.createOrUpdate(isCreate,client,"mytestuser",createXmlBody)
          formatResult(domainObj)
     }

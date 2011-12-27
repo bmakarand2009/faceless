@@ -36,9 +36,9 @@ class ContactDetails  extends AbstractCanaryDomain implements Serializable{
         def mkp = builder.getMkp()
         builder."$contactType"(){
             id(type:SingUtils.INTEGER_TYPE, id)
-            value(contactValue)
+            value(contactValue);   mkp.comment("home | work| other")
             category(contactCategory)
-            mkp.comment("home | work| other")
+
             additionalInfo(additionalInfo)
         }
     }

@@ -33,9 +33,9 @@ class ContactAddress extends AbstractCanaryDomain implements  Serializable{
           [ 'company' ],
     ]
 
-    def toXml(builder){
+    def toXml(def builder, boolean isListView){
       //def mkp = builder.getMkp()
-      builder.address(){
+      builder."$SingUtils.ADDRESS_TAG_ROOT"(){
           id(type:SingUtils.INTEGER_TYPE, id)
           street(street)
           city(city)
@@ -45,14 +45,6 @@ class ContactAddress extends AbstractCanaryDomain implements  Serializable{
       }
 
     }
-
-
-    protected  void saveBean(def pBean, def parent, boolean isUpdateCall){
-       if(isUpdateCall)
-           pBean.save(failOnError:true)
-    }
-
-
 
     static void saveBean(String xmlRootName,def aMap,def pBean, def parent, boolean isUpdateCall){
         if(isUpdateCall){

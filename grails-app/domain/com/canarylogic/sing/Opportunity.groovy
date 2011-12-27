@@ -62,7 +62,7 @@ class Opportunity extends AbstractCanaryDomain implements Serializable{
 
     OppCategory oppCategory //Consulting,Training,Developemnt
 
-    def getNotesList(){
+    def getNoteList(){
         Notes.findAllByOpportunity(this)
     }
 
@@ -82,7 +82,7 @@ class Opportunity extends AbstractCanaryDomain implements Serializable{
 
     def beforeDelete() {
         Notes.withNewSession {
-            notesList*.delete()
+            noteList*.delete()
         }
         Member.withNewSession {
             memberList*.delete()
@@ -125,8 +125,8 @@ class Opportunity extends AbstractCanaryDomain implements Serializable{
               tag_list(){
                   tagList.each{ it.toXml(builder,isListView)}
               }
-              notes_list(){
-                  notesList.each{it.toXml(builder,isListView)}
+              note_list(){
+                  noteList.each{it.toXml(builder,isListView)}
               }
               task_list(){
                   taskList.each{ it.toXml(builder,isListView)}
