@@ -26,75 +26,34 @@ class PartnerController {
 //             return false
 //        }
 
-    private def populateEntityId(){
-        Integer entityId = null
-        if(params.id) entityId = params.id.toInteger()
-        else if(params.entityOrAction && params.entityOrAction.isNumber())
-            entityId = params.entityOrAction.toInteger()
-        params.entityId = entityId
-    }
-    private def populateEntityNameOrAction(){
-        String entityName =null
-        if(params.entityOrAction && !params.entityOrAction?.isNumber())
-           entityName = params.entityOrAction
-        params.entityOrAction = entityName
-    }
-
     def show = {
         log.debug(params)
         log.debug(VALID_DOMAINS)
-        if(!VALID_DOMAINS.contains("$params.domain"))
-            throw new Exception("Resource Url not found for domain ${params?.domain}")
-        def client = Client.findByOrgId(params?.applicationId)
-        if(!client)
-            throw new Exception("client not found for applicationId ${params?.applicationId}")
+        try{
+            if(!VALID_DOMAINS.contains("$params.domain"))
+                throw new Exception("Resource Url not found for domain ${params?.domain}")
+            def client = Client.findByOrgId(params?.applicationId)
+            if(!client)
+                throw new Exception("client not found for applicationId ${params?.applicationId}")
 
-        populateEntityId()
-        populateEntityNameOrAction()
-        boolean  isList = true
+            populateEntityId()
+            populateEntityNameOrAction()
+            boolean  isList = true
 
-        log.debug "lats params $params"
+            if(params.entityOrAction && params.entityId) isList = true
+            else if(params.entityOrAction) isList = true
+            else if(params.entityId) isList = false
 
-        if(params.entityOrAction && params.entityId) isList = true
-        else if(params.entityOrAction) isList = true
-        else if(params.entityId) isList = false
-
-        def results = isList?partnerService.listRecords(client,params):partnerService.getRecord(client,params)
-        def xmlResp = convToXml(isList,results)
-        render(text: xmlResp as String, contentType: "text/xml", encoding: "UTF-8")
-
-//        withFormat {
-//            json {
-//                return "JSON Support is not yet available, please contact admin for the same"
-//            }
-//            html{
-//                String xmlResp = convToXml(isList,resultObjs)
-//                render(text: xmlResp as String, contentType: "text/xml", encoding: "UTF-8")
-//
-//            }xml{
-//                rendrXml(isList,resultObjs)
-//            }
-//        }
-
+            def results = isList?partnerService.listRecords(client,params):partnerService.getRecord(client,params)
+            def xmlResp = convToXml(isList,results)
+            render(text: xmlResp as String, contentType: "text/xml", encoding: "UTF-8")
+        }catch(Exception ex) {
+            response.status = 400//Bad Request
+			displayError(ex)
+		}
     }
 
-    private String convToXml(def isList,def results){
-        def writer = new StringWriter()
-        def xmlbldr= new MarkupBuilder(writer)
-        if(isList){
-            xmlbldr.list(size:results.size()) {
-                results.each{ aContact->
-                          aContact.toXml(xmlbldr)
-                }
-                requestId(new Date().time)
-            }
-        }else{
-              results.toXml(xmlbldr)
-        }
-        def xmlResp =writer.toString()
-        log.debug("xmlResp recieved is $xmlResp")
-        return xmlResp
-    }
+
 
     /*
       * POST Request
@@ -145,6 +104,8 @@ class PartnerController {
          formatResult(domainObj)
     }
 
+
+
     private def formatResult(def domainObj){
         withFormat {
             html {
@@ -161,4 +122,48 @@ class PartnerController {
 
         }
     }
+
+    private String convToXml(def isList,def results){
+        def writer = new StringWriter()
+        def xmlbldr= new MarkupBuilder(writer)
+        if(isList){
+            xmlbldr.list(size:results.size()) {
+                results.each{ aContact->
+                          aContact.toXml(xmlbldr)
+                }
+                requestId(new Date().time)
+            }
+        }else{
+              results.toXml(xmlbldr)
+        }
+        def xmlResp =writer.toString()
+        log.debug("xmlResp recieved is $xmlResp")
+        return xmlResp
+    }
+
+    private def populateEntityId(){
+        Integer entityId = null
+        if(params.id) entityId = params.id.toInteger()
+        else if(params.entityOrAction && params.entityOrAction.isNumber())
+            entityId = params.entityOrAction.toInteger()
+        params.entityId = entityId
+    }
+    private def populateEntityNameOrAction(){
+        String entityName =null
+        if(params.entityOrAction && !params.entityOrAction?.isNumber())
+           entityName = params.entityOrAction
+        params.entityOrAction = entityName
+    }
+
+    protected def displayError(Exception ex) {
+		def messageStr = ex.message
+		render(contentType:"text/xml"){
+			capi{
+                error(code:ex.message){
+                    message(messageStr)
+                }
+			}
+		 }
+		 return
+	}
 }
