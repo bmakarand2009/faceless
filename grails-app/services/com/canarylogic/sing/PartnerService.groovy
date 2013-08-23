@@ -58,7 +58,7 @@ class PartnerService {
         def offset = params.offset?params.offset:0
         String orderField = params.orderField?params.orderField:'id'
 
-        def resultList = domainClz.withCriteria {
+        def resultList = dom ainClz.withCriteria {
              maxResults(max)
              firstResult(offset)
              order(orderField,orderType)

@@ -33,8 +33,8 @@ class PartnerController {
             if(!VALID_DOMAINS.contains("$params.domain"))
                 throw new Exception("Resource Url not found for domain ${params?.domain}")
             def client = Client.findByOrgId(params?.applicationId)
-            if(!client)
-                throw new Exception("client not found for applicationId ${params?.applicationId}")
+           // if(!client)
+             //   throw new Exception("client not found for applicationId ${params?.applicationId}")
 
             populateEntityId()
             populateEntityNameOrAction()
